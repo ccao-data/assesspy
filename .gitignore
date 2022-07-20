@@ -1,0 +1,6 @@
+# Package files
+.pytest_cache
+assesspy.egg-info
+build
+assesspy/__pycache__
+assesspy/tests/__pycache__
