@@ -1,0 +1,23 @@
+image: localhost:5000/sample-ci-python:3.8
+
+before_script:
+    - pip install -r requirements.txt
+    - pip install -e .
+    - pip show myapp
+
+run tests:
+    only:
+        - master
+    tags:
+        - python3
+        - tests
+    script:
+        - cd /workspace
+        - python -m pytest
+    artifacts:
+        name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
+        paths:
+            - /workspace/coverage/
+        when: on_success
+        expire_in: 1 week
+    coverage: '/TOTAL.*\s+(\d+%)$/'
