@@ -1,5 +1,4 @@
 # Import necessary libraries
-from logging import exception
 import numpy as np
 import statsmodels.api as sm
 from .utils import check_inputs

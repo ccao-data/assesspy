@@ -1,6 +1,18 @@
-# Package files
-.pytest_cache
-assesspy.egg-info
-build
-assesspy/__pycache__
-assesspy/tests/__pycache__
+# Compiled python modules.
+*.pyc
+
+# Setuptools distribution folder.
+dist/
+
+# Pip build folder
+build/
+
+# Python egg metadata, regenerated from source files by setuptools.
+/*.egg-info
+/*.egg
+/*.eggs
+
+# Caches
+.cache
+__pycache__/
+*~
