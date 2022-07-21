@@ -69,8 +69,10 @@ def detect_chasing(ratio, method='both'):
 
     if len(ratio) < 30:
         warnings.warn(
-            """Sales chasing detection can be misleading when applied to small samples (N < 30).
-            Increase N or use a different statistical test."""
+            """
+            Sales chasing detection can be misleading when applied to small
+            samples (N < 30). Increase N or use a different statistical test.
+            """
             )
 
         out = None

@@ -1,5 +1,4 @@
 # Import necessary libraries
-from pandas.api.types import is_numeric_dtype
 import numbers
 import numpy as np
 from scipy import stats
@@ -44,7 +43,7 @@ def iqr_outlier(x, mult=3):
 
         # Warn if IQR trimmed values are within 95% CI. This indicates
         # potentially non-normal/narrow distribution of data
-        if any(out & quantile_outlier(x) is False):
+        if any(out & (quantile_outlier(x) == False)):  # noqa
 
             warnings.warn(
                 """Some values flagged as outliers despite being within 95% CI.
