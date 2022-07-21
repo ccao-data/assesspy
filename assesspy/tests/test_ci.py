@@ -12,7 +12,21 @@ ratio = ratios_sample.ratio
 fmv = ratios_sample.assessed
 sale_price = ratios_sample.sale_price
 
+##### TEST BOOT CI ##### # noqa
+
+
+class TestBOOTCI:  # Ensure input function is appropriate
+
+    def test_in_fun(self):
+
+        with pt.raises(Exception):
+            assert assesspy.boot_ci(str, ratio)
+
+        with pt.raises(Exception):
+            assesspy.boot_ci(np.add, ratio, ratio, ratio)
+
 ##### TEST COD ##### # noqa
+
 
 # Calculate COD CI
 cod_ci_out_95 = assesspy.cod_ci(ratio, nboot=1000)

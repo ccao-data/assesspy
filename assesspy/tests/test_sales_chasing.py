@@ -26,6 +26,11 @@ chased_out = assesspy.detect_chasing(chased_ratios)
 
 class TestCHASE:
 
+    def test_method(self):
+
+        with pt.raises(Exception):
+            assesspy.detect_chasing(sample_ratios, method='hug')
+
     def test_output_type(self):  # Output is logical
 
         assert type(sample_out) is np.bool_

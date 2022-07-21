@@ -16,7 +16,7 @@ test_dist2 = np.append(np.random.normal(size=100), [3, 4, 5, 6, 7])
 # Non-normal, super narrow distribution
 test_dist3 = np.append(
     np.append(
-        np.random.normal(size=20), np.repeat(1, 50)
+        np.random.uniform(size=20), np.repeat(1, 50)
         ), [5, 6, 7]
         )
 
