@@ -3,6 +3,7 @@ import numpy as np
 import statsmodels.api as sm
 from .utils import check_inputs
 
+
 # COD, PRD, PRB functions
 def cod(ratio):
 
@@ -17,6 +18,7 @@ def cod(ratio):
 
     return cod
 
+
 def prd(fmv, sale_price):
 
     fmv = np.array(fmv)
@@ -26,9 +28,10 @@ def prd(fmv, sale_price):
     check_inputs(fmv, sale_price)
 
     ratio = fmv / sale_price
-    prd = ratio.mean() / np.average(a = ratio, weights = sale_price)
+    prd = ratio.mean() / np.average(a=ratio, weights=sale_price)
 
     return prd
+
 
 def prb(fmv, sale_price):
 
@@ -50,13 +53,16 @@ def prb(fmv, sale_price):
     prb_model = sm.OLS(lhs, rhs).fit()
 
     prb_val = float(prb_model.params)
-    prb_ci = prb_model.conf_int(alpha = 0.05)[0].tolist()
+    prb_ci = prb_model.conf_int(alpha=0.05)[0].tolist()
 
-    return {"prb" : prb_val, "95% ci" : prb_ci}
+    return {"prb": prb_val, "95% ci": prb_ci}
+
 
 # Functions to determine whether assessment fairness criteria has been met
-cod_met = lambda x: 5 <= x <= 15
+def cod_met(x): return 5 <= x <= 15
 
-prd_met = lambda x: 0.98 <= x <= 1.03
 
-prb_met = lambda x: -0.05 <= x <= 0.05
+def prd_met(x): return 0.98 <= x <= 1.03
+
+
+def prb_met(x): return -0.05 <= x <= 0.05

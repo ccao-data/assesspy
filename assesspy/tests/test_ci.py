@@ -12,25 +12,34 @@ ratio = ratios_sample.ratio
 fmv = ratios_sample.assessed
 sale_price = ratios_sample.sale_price
 
-##### TEST COD #####
+##### TEST COD ##### # noqa
 
 # Calculate COD CI
-cod_ci_out_95 = assesspy.cod_ci(ratio, nboot = 1000)
-cod_ci_out_80 = assesspy.cod_ci(ratio, nboot = 1000, alpha = 0.2)
+cod_ci_out_95 = assesspy.cod_ci(ratio, nboot=1000)
+cod_ci_out_80 = assesspy.cod_ci(ratio, nboot=1000, alpha=0.2)
+
 
 class TestCODCI:
 
-    def test_output_type(self): # Output is expected type
+    def test_output_type(self):  # Output is expected type
 
         assert type(cod_ci_out_95) is list
         assert type(cod_ci_out_95[0]) is np.float64
 
-    def test_cod(self): # Output equal to expected
+    def test_cod(self):  # Output equal to expected
 
-        npt.assert_allclose(cod_ci_out_80, [16.89576541901062, 18.641992815316588], rtol = 0.02)
-        npt.assert_allclose(cod_ci_out_95, [16.32413038955943, 19.226428249424757], rtol = 0.02)
+        npt.assert_allclose(
+            cod_ci_out_80,
+            [16.89576541901062, 18.641992815316588],
+            rtol=0.02
+            )
+        npt.assert_allclose(
+            cod_ci_out_95,
+            [16.32413038955943, 19.226428249424757],
+            rtol=0.02
+            )
 
-    def test_bad_input(self): # Bad input data stops execution
+    def test_bad_input(self):  # Bad input data stops execution
 
         with pt.raises(Exception):
             assesspy.cod_ci([1] * 29 + [0])
@@ -54,26 +63,35 @@ class TestCODCI:
         with pt.raises(Exception):
             assesspy.cod_ci([1] * 29 + ['1'])
 
-##### TEST PRD #####
+##### TEST PRD ##### # noqa
+
 
 # Calculate PRD CI
-prd_ci_out_95 = assesspy.prd_ci(fmv, sale_price, nboot = 1000)
-prd_ci_out_80 = assesspy.prd_ci(fmv, sale_price, nboot = 1000, alpha = 0.2)
+prd_ci_out_95 = assesspy.prd_ci(fmv, sale_price, nboot=1000)
+prd_ci_out_80 = assesspy.prd_ci(fmv, sale_price, nboot=1000, alpha=0.2)
+
 
 class TestPRDCI:
 
-    def test_output_type(self): # Output is expected type
+    def test_output_type(self):  # Output is expected type
 
         assert type(prd_ci_out_95) is list
         assert type(prd_ci_out_95[0]) is np.float64
 
-    def test_prd(self): # Output equal to expected
+    def test_prd(self):  # Output equal to expected
 
-        npt.assert_allclose(prd_ci_out_80, [1.0388355155405569, 1.0588098520230935], rtol = 0.02)
-        npt.assert_allclose(prd_ci_out_95, [1.0333716711646226, 1.0643056985556307], rtol = 0.02)
+        npt.assert_allclose(
+            prd_ci_out_80,
+            [1.0388355155405569, 1.0588098520230935],
+            rtol=0.02
+            )
+        npt.assert_allclose(
+            prd_ci_out_95,
+            [1.0333716711646226, 1.0643056985556307],
+            rtol=0.02
+            )
 
-    def test_bad_input(self): # Bad input data stops execution
-
+    def test_bad_input(self):  # Bad input data stops execution
 
         with pt.raises(Exception):
             assesspy.prd_ci([1] * 30, [1] * 29 + [0])

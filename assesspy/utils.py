@@ -3,6 +3,7 @@ from pandas.api.types import is_numeric_dtype
 import numpy as np
 import pandas as pd
 
+
 def check_inputs(*args):
 
     out = ['']
@@ -20,13 +21,13 @@ def check_inputs(*args):
 
         check = pd.Series(x)
 
-        if is_numeric_dtype(check) == False:
+        if not is_numeric_dtype(check):
             raise Exception('All input vectors must be numeric.')
         if check.isnull().values.any():
             out.append('\nInput vectors contain null values.')
         if len(check) <= 1:
             out.append('\nAll input vectors must have length greater than 1.')
-        if all(np.isfinite(check) | check.isnull()) == False:
+        if not all(np.isfinite(check) | check.isnull()):
             out.append('\nInfinite values in input vectors.')
         if any(check == 0):
             out.append('\nInput vectors cannot contain values of 0.')

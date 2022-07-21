@@ -5,8 +5,9 @@ from .formulas import cod
 from .formulas import prd
 from .utils import check_inputs
 
+
 # Calculate bootstrapped confidence intervals
-def boot_ci(fun, *args, nboot = 100, alpha = 0.05):
+def boot_ci(fun, *args, nboot=100, alpha=0.05):
 
     # Input checking and error handling
     check_inputs(args)
@@ -17,14 +18,15 @@ def boot_ci(fun, *args, nboot = 100, alpha = 0.05):
 
     # Check that the input function returns a numeric vector
     out = fun(args.iloc[:, 0]) if num_args < 2 else fun(args.iloc[:, 0], args.iloc[:, 1])
-    if is_numeric_dtype(out) == False:
+    if not is_numeric_dtype(out):
         raise Exception("Input function outputs non-numeric datatype.")
 
     ests = []
 
-    # Take a random sample of input, with the same number of rows as input, with replacement.
+    # Take a random sample of input, with the same number of rows as input,
+    # with replacement.
     for i in list(range(1, nboot)):
-        sample = args.sample(n = n, replace = True)
+        sample = args.sample(n=n, replace=True)
         if fun.__name__ == 'cod' or num_args == 1:
             ests.append(fun(sample.iloc[:, 0]))
         elif fun.__name__ in ['prd']:
@@ -38,11 +40,13 @@ def boot_ci(fun, *args, nboot = 100, alpha = 0.05):
 
     return ci
 
+
 # Formula specific bootstrapping functions
-def cod_ci(ratio, nboot = 100, alpha = 0.05):
+def cod_ci(ratio, nboot=100, alpha=0.05):
 
-    return boot_ci(cod, ratio, nboot = nboot, alpha = alpha)
+    return boot_ci(cod, ratio, nboot=nboot, alpha=alpha)
 
-def prd_ci(fmv, sale_price, nboot = 100, alpha = 0.05):
 
-    return boot_ci(prd, fmv, sale_price, nboot = nboot, alpha = alpha)
+def prd_ci(fmv, sale_price, nboot=100, alpha=0.05):
+
+    return boot_ci(prd, fmv, sale_price, nboot=nboot, alpha=alpha)

@@ -6,15 +6,16 @@ from scipy import stats
 import warnings
 from .utils import check_inputs
 
+
 # Outlier functions
-def quantile_outlier(x, probs = [0.05, 0.95]):
+def quantile_outlier(x, probs=[0.05, 0.95]):
 
     check_inputs(x)
 
     # Determine valid range of the data
     range = [
-        np.quantile(a = x, q = probs[0]),
-        np.quantile(a = x, q = probs[1])
+        np.quantile(a=x, q=probs[0]),
+        np.quantile(a=x, q=probs[1])
     ]
 
     # Determine which input values are in range
@@ -22,7 +23,8 @@ def quantile_outlier(x, probs = [0.05, 0.95]):
 
     return out
 
-def iqr_outlier(x, mult = 3):
+
+def iqr_outlier(x, mult=3):
 
     check_inputs(x)
 
@@ -31,8 +33,8 @@ def iqr_outlier(x, mult = 3):
 
         # Calculate quartiles and mult*IQR
         quartiles = [
-            np.quantile(a = x, q = 0.25),
-            np.quantile(a = x, q = 0.75)
+            np.quantile(a=x, q=0.25),
+            np.quantile(a=x, q=0.75)
             ]
 
         iqr_mult = mult * stats.iqr(x)
@@ -40,18 +42,19 @@ def iqr_outlier(x, mult = 3):
         # Find values that are outliers
         out = (x < (quartiles[0] - iqr_mult)) | (x > (quartiles[1] + iqr_mult))
 
-        # Warn if IQR trimmed values are within 95% CI. This indicates potentially
-        # non-normal/narrow distribution of data
-        if any(out & quantile_outlier(x) == False):
+        # Warn if IQR trimmed values are within 95% CI. This indicates
+        # potentially non-normal/narrow distribution of data
+        if any(out & quantile_outlier(x) is False):
 
             warnings.warn(
-            """Some values flagged as outliers despite being within 95% CI.
-            Check for narrow or skewed distribution."""
+                """Some values flagged as outliers despite being within 95% CI.
+                Check for narrow or skewed distribution."""
             )
 
         return out
 
-def is_outlier(x, method = 'iqr', probs = [0.05, 0.95]):
+
+def is_outlier(x, method='iqr', probs=[0.05, 0.95]):
 
     out = {
             'iqr': iqr_outlier(x),
@@ -62,7 +65,7 @@ def is_outlier(x, method = 'iqr', probs = [0.05, 0.95]):
     # ratio study outcomes
     if any(out) & (len(out) < 30):
 
-       warnings.warn(
+        warnings.warn(
             """Values flagged as outliers despite small sample size (N < 30).
             Use caution when removing values from a small sample."""
             )

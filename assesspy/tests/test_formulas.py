@@ -12,22 +12,23 @@ ratio = ratios_sample.ratio
 fmv = ratios_sample.assessed
 sale_price = ratios_sample.sale_price
 
-##### TEST COD #####
+##### TEST COD ##### # noqa
 
 # Calculate COD
 cod_out = assesspy.cod(ratios_sample.ratio)
 
+
 class TestCOD:
 
-    def test_cod(self): # Output equal to expected
+    def test_cod(self):  # Output equal to expected
 
-        npt.assert_allclose(cod_out, 17.81456901196891, rtol = 0.02)
+        npt.assert_allclose(cod_out, 17.81456901196891, rtol=0.02)
 
-    def test_numeric_output(self): # Output is numeric
+    def test_numeric_output(self):  # Output is numeric
 
         assert type(cod_out) is np.float64
 
-    def test_bad_input(self): # Bad input data stops execution
+    def test_bad_input(self):  # Bad input data stops execution
 
         with pt.raises(Exception):
             assesspy.cod([1] * 29 + [0])
@@ -51,27 +52,28 @@ class TestCOD:
         with pt.raises(Exception):
             assesspy.cod([1] * 29 + ['1'])
 
-    def test_cod_met(self): # Standard met function
+    def test_cod_met(self):  # Standard met function
 
-        assert assesspy.cod_met(cod_out) == False
+        assert not assesspy.cod_met(cod_out)
 
-##### TEST PRD #####
+##### TEST PRD ##### # noqa
+
 
 # Calculate PRD
 prd_out = assesspy.prd(fmv, sale_price)
 
+
 class TestPRD:
 
-    def test_prd(self): # Output equal to expected
+    def test_prd(self):  # Output equal to expected
 
-        npt.assert_allclose(prd_out, 1.0484192615223522, rtol = 0.02)
+        npt.assert_allclose(prd_out, 1.0484192615223522, rtol=0.02)
 
-    def test_numeric_output(self): # Output is numeric
+    def test_numeric_output(self):  # Output is numeric
 
         assert type(prd_out) is np.float64
 
-    def test_bad_input(self): # Bad input data stops execution
-
+    def test_bad_input(self):  # Bad input data stops execution
 
         with pt.raises(Exception):
             assesspy.prd_ci([1] * 30, [1] * 29 + [0])
@@ -100,27 +102,28 @@ class TestPRD:
         with pt.raises(Exception):
             assesspy.prd([1] * 30, [1] * 29 + ['1'])
 
-    def test_prd_met(self): # Standard met function
+    def test_prd_met(self):  # Standard met function
 
-        assert assesspy.prd_met(prd_out) == False
+        assert not assesspy.prd_met(prd_out)
 
 
-##### TEST PRB #####
+##### TEST PRB ##### # noqa
 
 # Calculate PRB
 prb_out = assesspy.prb(fmv, sale_price)['prb']
 
+
 class TestPRB:
 
-    def test_prb(self): # Output equal to expected
+    def test_prb(self):  # Output equal to expected
 
-        npt.assert_allclose(prb_out, 0.0009470721642262901, rtol = 0.02)
+        npt.assert_allclose(prb_out, 0.0009470721642262901, rtol=0.02)
 
-    def test_numeric_output(self): # Output is numeric
+    def test_numeric_output(self):  # Output is numeric
 
         assert type(prb_out) is float
 
-    def test_bad_input(self): # Bad input data stops execution
+    def test_bad_input(self):  # Bad input data stops execution
 
         with pt.raises(Exception):
             assesspy.prb_ci([1] * 30, [1] * 29 + [0])
@@ -149,6 +152,6 @@ class TestPRB:
         with pt.raises(Exception):
             assesspy.prb([1] * 30, [1] * 29 + ['1'])
 
-    def test_prb_met(self): # Standard met function
+    def test_prb_met(self):  # Standard met function
 
-        assert assesspy.prb_met(prb_out) == True
+        assert assesspy.prb_met(prb_out)

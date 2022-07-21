@@ -8,10 +8,10 @@ import pytest as pt
 np.random.seed(13378)
 
 # Normal distribution, no outliers
-test_dist1 = np.random.normal(size = 100)
+test_dist1 = np.random.normal(size=100)
 
 # Normal distribution, some outliers
-test_dist2 = np.append(np.random.normal(size = 100), [3, 4, 5, 6, 7])
+test_dist2 = np.append(np.random.normal(size=100), [3, 4, 5, 6, 7])
 
 # Non-normal, super narrow distribution
 test_dist3 = np.append(
@@ -21,16 +21,17 @@ test_dist3 = np.append(
         )
 
 # Create outputs for all distributions
-dist1_iqr_out = assesspy.is_outlier(test_dist1, method = "iqr")
-dist1_qnt_out = assesspy.is_outlier(test_dist1, method = "quantile")
-dist2_iqr_out = assesspy.is_outlier(test_dist2, method = "iqr")
-dist2_qnt_out = assesspy.is_outlier(test_dist2, method = "quantile")
+dist1_iqr_out = assesspy.is_outlier(test_dist1, method="iqr")
+dist1_qnt_out = assesspy.is_outlier(test_dist1, method="quantile")
+dist2_iqr_out = assesspy.is_outlier(test_dist2, method="iqr")
+dist2_qnt_out = assesspy.is_outlier(test_dist2, method="quantile")
 
-##### TEST OUTLIER #####
+##### TEST OUTLIER ##### # noqa
+
 
 class TestOUTTIES:
 
-    def test_output_type(self): # Output is logical array
+    def test_output_type(self):  # Output is logical array
 
         assert type(dist1_iqr_out[0]) is np.bool_
         assert type(dist1_iqr_out) is np.ndarray
@@ -45,7 +46,7 @@ class TestOUTTIES:
         assert sum(dist2_iqr_out) == 3
         assert sum(dist2_qnt_out) == 12
 
-    def test_bad_input(self): # Bad input data stops execution
+    def test_bad_input(self):  # Bad input data stops execution
 
         with pt.raises(Exception):
             assesspy.is_outlier([1] * 29 + [0])
@@ -72,7 +73,7 @@ class TestOUTTIES:
     def test_warnings(self):
 
         with pt.warns(UserWarning):
-            assesspy.is_outlier(test_dist3, method = "iqr")
+            assesspy.is_outlier(test_dist3, method="iqr")
 
         with pt.warns(UserWarning):
-            assesspy.is_outlier(np.random.normal(size = 20), method = "quantile")
+            assesspy.is_outlier(np.random.normal(size=20), method="quantile")
