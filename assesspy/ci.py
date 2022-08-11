@@ -6,18 +6,54 @@ from .formulas import prd
 from .utils import check_inputs
 
 
-# Calculate bootstrapped confidence intervals
 def boot_ci(fun, *args, nboot=100, alpha=0.05):
 
-    # Input checking and error handling
-    check_inputs(args)
+    """
+    Calculate the non-parametric bootstrap confidence interval
+    for a given numeric input and a chosen function.
+
+    Parameters
+    ----------
+    fun : function
+        Function to bootstrap. Must return a single value.
+    args* : numeric
+        Arguments passed on to `fun`.
+    nboot : int
+        Default 100. Number of iterations to use to estimate
+        the output statistic confidence interval.
+    alpha : float
+        Default 0.05. Numeric value indicating the confidence
+        interval to return. 0.05 will return the 95\% confidence interval.
+
+    Returns
+    -------
+    list[float]
+        A two-long list of floats containing the bootstrapped confidence
+        interval of the input vector(s).
+
+    Examples
+    --------
+    Calculate PRD confidence interval
+
+    boot_ci(
+        assesspy.prd,
+        assessed = assesspy.ratios_sample().assessed,
+        sale_price = assesspy.ratios_sample().sale_price,
+        nboot = 100
+        )
+
+    """
+
+    check_inputs(args)  # Input checking and error handling
 
     num_args = len(args)
     args = pd.DataFrame(args).T
     n = len(args)
 
     # Check that the input function returns a numeric vector
-    out = fun(args.iloc[:, 0]) if num_args < 2 else fun(args.iloc[:, 0], args.iloc[:, 1])
+    out = fun(args.iloc[:, 0]) if num_args < 2 else fun(
+        args.iloc[:, 0], args.iloc[:, 1]
+        )
     if not is_numeric_dtype(out):
         raise Exception("Input function outputs non-numeric datatype.")
 
@@ -32,7 +68,9 @@ def boot_ci(fun, *args, nboot=100, alpha=0.05):
         elif fun.__name__ in ['prd']:
             ests.append(fun(sample.iloc[:, 0], sample.iloc[:, 1]))
         else:
-            raise Exception("Input function should be 1 dimensional or prd.")
+            raise Exception(
+                "Input function should require 1 argument or be assesspy.prd."
+                )
 
     ests = pd.Series(ests)
 
