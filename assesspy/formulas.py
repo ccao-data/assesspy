@@ -19,33 +19,33 @@ def cod(ratio):
     return cod
 
 
-def prd(fmv, sale_price):
+def prd(assessed, sale_price):
 
-    fmv = np.array(fmv)
+    assessed = np.array(assessed)
     sale_price = np.array(sale_price)
 
     # Input checking and error handling
-    check_inputs(fmv, sale_price)
+    check_inputs(assessed, sale_price)
 
-    ratio = fmv / sale_price
+    ratio = assessed / sale_price
     prd = ratio.mean() / np.average(a=ratio, weights=sale_price)
 
     return prd
 
 
-def prb(fmv, sale_price):
+def prb(assessed, sale_price):
 
-    fmv = np.array(fmv)
+    assessed = np.array(assessed)
     sale_price = np.array(sale_price)
 
     # Input checking and error handling
-    check_inputs(fmv, sale_price)
+    check_inputs(assessed, sale_price)
 
-    ratio = fmv / sale_price
+    ratio = assessed / sale_price
     median_ratio = np.median(ratio)
 
     lhs = (ratio - median_ratio) / median_ratio
-    rhs = np.log(((fmv / median_ratio) + sale_price) / 2) / np.log(2)
+    rhs = np.log(((assessed / median_ratio) + sale_price) / 2) / np.log(2)
 
     lhs = np.array(lhs)
     rhs = np.array(rhs)
