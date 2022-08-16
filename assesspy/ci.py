@@ -6,7 +6,7 @@ from .formulas import prd
 from .utils import check_inputs
 
 
-def boot_ci(fun, *args, nboot=100, alpha=0.05):
+def boot_ci(fun, nboot=100, alpha=0.05, **kwargs):
 
     """
     Calculate the non-parametric bootstrap confidence interval
@@ -16,14 +16,14 @@ def boot_ci(fun, *args, nboot=100, alpha=0.05):
     ----------
     fun : function
         Function to bootstrap. Must return a single value.
-    args* : numeric
-        Arguments passed on to `fun`.
     nboot : int
         Default 100. Number of iterations to use to estimate
         the output statistic confidence interval.
     alpha : float
         Default 0.05. Numeric value indicating the confidence
         interval to return. 0.05 will return the 95\% confidence interval.
+    kwargs : numeric
+        Arguments passed on to `fun`.
 
     Returns
     -------
@@ -33,26 +33,38 @@ def boot_ci(fun, *args, nboot=100, alpha=0.05):
 
     Examples
     --------
-    Calculate PRD confidence interval
+    Calculate PRD confidence interval:
 
-    boot_ci(
-        assesspy.prd,
-        assessed = assesspy.ratios_sample().assessed,
-        sale_price = assesspy.ratios_sample().sale_price,
-        nboot = 100
+    import assesspy as ap
+
+    ap.boot_ci(\n
+        ap.prd,\n
+        assessed = ap.ratios_sample().assessed,\n
+        sale_price = ap.ratios_sample().sale_price,\n
+        nboot = 100\n
         )
 
     """
 
-    check_inputs(args)  # Input checking and error handling
+    # Make sure prd is passed arguments in correct order
+    if fun.__name__ == 'prd' and set(['assessed', 'sale_price']).issubset(kwargs.keys()):
+        kwargs = (kwargs["assessed"], kwargs["sale_price"])
+    elif fun.__name__ == 'prd' and not set(['assessed', 'sale_price']).issubset(kwargs.keys()):
+        raise Exception(
+                "PRD function expects argurments 'assessed' and 'sale_price'."
+                )
+    else:
+        kwargs = tuple(kwargs.values())
 
-    num_args = len(args)
-    args = pd.DataFrame(args).T
-    n = len(args)
+    check_inputs(kwargs)  # Input checking and error handling
+
+    num_kwargs = len(kwargs)
+    kwargs = pd.DataFrame(kwargs).T
+    n = len(kwargs)
 
     # Check that the input function returns a numeric vector
-    out = fun(args.iloc[:, 0]) if num_args < 2 else fun(
-        args.iloc[:, 0], args.iloc[:, 1]
+    out = fun(kwargs.iloc[:, 0]) if num_kwargs < 2 else fun(
+        kwargs.iloc[:, 0], kwargs.iloc[:, 1]
         )
     if not is_numeric_dtype(out):
         raise Exception("Input function outputs non-numeric datatype.")
@@ -62,10 +74,10 @@ def boot_ci(fun, *args, nboot=100, alpha=0.05):
     # Take a random sample of input, with the same number of rows as input,
     # with replacement.
     for i in list(range(1, nboot)):
-        sample = args.sample(n=n, replace=True)
-        if fun.__name__ == 'cod' or num_args == 1:
+        sample = kwargs.sample(n=n, replace=True)
+        if fun.__name__ == 'cod' or num_kwargs == 1:
             ests.append(fun(sample.iloc[:, 0]))
-        elif fun.__name__ in ['prd']:
+        elif fun.__name__ == 'prd':
             ests.append(fun(sample.iloc[:, 0], sample.iloc[:, 1]))
         else:
             raise Exception(
@@ -85,6 +97,6 @@ def cod_ci(ratio, nboot=100, alpha=0.05):
     return boot_ci(cod, ratio, nboot=nboot, alpha=alpha)
 
 
-def prd_ci(fmv, sale_price, nboot=100, alpha=0.05):
+def prd_ci(assessed, sale_price, nboot=100, alpha=0.05):
 
-    return boot_ci(prd, fmv, sale_price, nboot=nboot, alpha=alpha)
+    return boot_ci(prd, assessed, sale_price, nboot=nboot, alpha=alpha)
