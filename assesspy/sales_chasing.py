@@ -64,6 +64,73 @@ def detect_chasing_dist(ratio, bounds=[0.98, 1.02]):
 
 def detect_chasing(ratio, method='both'):
 
+    """
+    Sales chasing is when a property is selectively reappraised to
+    shift its assessed value toward its actual sale price. Sales chasing is
+    difficult to detect. This function is NOT a statistical test and does
+    not provide the probability of the given result. Rather, it combines two
+    novel methods to roughly estimate if sales chasing has occurred.
+
+    The first method (dist) uses the technique outlined in the
+    IAAO Standard on Ratio Studies Appendix E, Section 4. It compares the
+    percentage of real data within +-2% of the mean ratio to the percentage
+    of data within the same bounds given a constructed normal distribution
+    with the same mean and standard deviation. The intuition here is that
+    ratios that are sales chased may be more "bunched up" in the center
+    of the distribution.
+
+    The second method (cdf) detects discontinuities in the cumulative
+    distribution function (CDF) of the input vector. Ratios that are not sales
+    chased should have a fairly smooth CDF. Discontinuous jumps in the CDF,
+    particularly around 1, may indicate sales chasing. This can usually be seen
+    visually as a "flat spot" on the CDF.
+
+    Parameters
+    ----------
+    ratio : numeric
+        A numeric vector of ratios centered around 1, where the
+        numerator of the ratio is the estimated fair market value and the
+        denominator is the actual sale price.
+    method : str
+        Default "both". String indicating sales chasing detection
+        method. Options are `cdf`, `dist`, or `both`.
+
+    Returns
+    -------
+    bool
+        A logical value indicating whether or not the input ratios may
+        have been sales chased.
+
+    Examples
+    --------
+    ```
+    import assesspy as ap
+    import numpy as np
+    from statsmodels.distributions.empirical_distribution import ECDF
+    from matplotlib import pyplot
+
+    # Generate fake data with normal vs chased ratios
+    normal_ratios = np.random.normal(1, 0.15, 10000)
+    chased_ratios = list(np.random.normal(1, 0.15, 900)) + [1] * 100
+
+    # Plot to view discontinuity
+    ecdf = ECDF(normal_ratios)
+    pyplot.plot(ecdf.x, ecdf.y)
+    pyplot.show()
+    ap.detect_chasing(normal_ratios)
+
+    ecdf = ECDF(chased_ratios)
+    pyplot.plot(ecdf.x, ecdf.y)
+    pyplot.show()
+    ap.detect_chasing(chased_ratios)
+    ```
+
+    Notes
+    -----
+    IAAO Standard on Ratio Studies - https://www.iaao.org/media/standards/Standard_on_Ratio_Studies.pdf
+
+    """
+
     if method not in ('both', 'cdf', 'dist'):
         raise Exception('Unrecognized method.')
 

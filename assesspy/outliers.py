@@ -9,6 +9,11 @@ from .utils import check_inputs
 # Outlier functions
 def quantile_outlier(x, probs=[0.05, 0.95]):
 
+    """
+    Quantile method for identifying outliers.
+
+    """
+
     check_inputs(x)
 
     # Determine valid range of the data
@@ -24,6 +29,11 @@ def quantile_outlier(x, probs=[0.05, 0.95]):
 
 
 def iqr_outlier(x, mult=3):
+
+    """
+    IQR method for identifying outliers.
+
+    """
 
     check_inputs(x)
 
@@ -54,6 +64,51 @@ def iqr_outlier(x, mult=3):
 
 
 def is_outlier(x, method='iqr', probs=[0.05, 0.95]):
+
+    """
+    Detect outliers in a numeric vector using standard methods.
+
+    Certain assessment performance statistics are sensitive to extreme
+    outliers. As such, it is often necessary to remove outliers before
+    performing a sales ratio study.
+
+    Standard method is to remove outliers that are 3 * IQR. Warnings are thrown
+    when sample size is extremely small or when the IQR is extremely narrow. See
+    IAAO Standard on Ratio Studies Appendix B. Outlier Trimming Guidelines for
+    more information.
+
+    Parameters
+    ----------
+    x : numeric
+        A numeric vector. Must be longer than 2 and not contain
+        `Inf` or `NaN`.
+    method : str
+        Default "iqr". String indicating outlier detection method.
+        Options are `iqr` or `quantile`.
+    probs : list[numeric]
+        Upper and lower percentiles denoting outlier boundaries.
+
+    Returns
+    -------
+    list[bool]
+        A two-long list of floats containing the bootstrapped confidence
+        interval of the input vector(s).
+
+    Examples
+    --------
+    ```
+    # Calculate PRD confidence interval:
+    import assesspy as ap
+
+    ap.boot_ci(
+        ap.prd,
+        assessed = ap.ratios_sample().assessed,
+        sale_price = ap.ratios_sample().sale_price,
+        nboot = 100
+        )
+    ```
+
+    """
 
     out = {
             'iqr': iqr_outlier(x),

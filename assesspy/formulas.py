@@ -7,6 +7,49 @@ from .utils import check_inputs
 # COD, PRD, PRB functions
 def cod(ratio):
 
+    """
+    COD is the average absolute percent deviation from the
+    median ratio. It is a measure of horizontal equity in assessment.
+    Horizontal equity means properties with a similar fair market value
+    should be similarly assessed.
+
+    Lower COD indicates higher uniformity/horizontal equity in assessment.
+    The IAAO sets uniformity standards that define generally accepted ranges
+    for COD depending on property class. See IAAO Standard on Ratio Studies
+    Section 9.1, Table 1.3 for a full list of standard COD ranges.
+
+    NOTE - The IAAO recommends trimming outlier ratios before calculating COD,
+    as it is extremely sensitive to large outliers. The typical method used is
+    dropping values beyond 3 * IQR (inner-quartile range). See
+    IAAO Standard on Ratio Studies Appendix B.1.
+
+    Parameters
+    ----------
+    ratio : float
+        A numeric vector of ratios centered around 1, where the
+        numerator of the ratio is the estimated fair market value and the
+        denominator is the actual sale price.
+
+    Returns
+    -------
+    float
+        A numeric vector containing the COD of `ratios`.
+
+    Examples
+    --------
+    ```
+    # Calculate COD:
+    import assesspy as ap
+
+    ap.cod(ap.ratios_sample().ratio)
+    ```
+
+    Notes
+    -----
+    IAAO Standard on Ratio Studies - https://www.iaao.org/media/standards/Standard_on_Ratio_Studies.pdf
+
+    """
+
     # Input checking and error handling
     check_inputs(ratio)
 
@@ -21,6 +64,49 @@ def cod(ratio):
 
 def prd(assessed, sale_price):
 
+    """
+    PRD is the mean ratio divided by the mean ratio weighted by sale
+    price. It is a measure of vertical equity in assessment. Vertical equity
+    means that properties at different levels of the income distribution
+    should be similarly assessed.
+
+    PRD centers slightly above 1 and has a generally accepted value of between
+    0.98 and 1.03, as defined in the IAAO Standard on Ratio Studies
+    Section 9.2.7. Higher PRD values indicate regressivity in assessment.
+
+    NOTE - The IAAO recommends trimming outlier ratios before calculating PRD,
+    as it is extremely sensitive to large outliers. PRD is being deprecated in
+    favor of PRB, which is less sensitive to outliers and easier to interpret.
+
+    Parameters
+    ----------
+    assessed : numeric
+        A numeric vector of assessed values. Must be the same
+        length as `sale_price`.
+    sale_price : numeric
+        A numeric vector of sale prices. Must be the same length
+        as `assessed`.
+
+    Returns
+    -------
+    float
+        A numeric vector containing the PRD of the input vectors.
+
+    Examples
+    --------
+    ```
+    # Calculate PRD:
+    import assesspy as ap
+
+    ap.prd(ap.ratios_sample().assessed, ap.ratios_sample().sale_price)
+    ```
+
+    Notes
+    -----
+    IAAO Standard on Ratio Studies - https://www.iaao.org/media/standards/Standard_on_Ratio_Studies.pdf
+
+    """
+
     assessed = np.array(assessed)
     sale_price = np.array(sale_price)
 
@@ -34,6 +120,48 @@ def prd(assessed, sale_price):
 
 
 def prb(assessed, sale_price):
+
+    """
+    PRB is an index of vertical equity that quantifies the
+    relationship betweem ratios and assessed values as a percentage. In
+    concrete terms, a PRB of 0.02 indicates that, on average, ratios increase
+    by 2\% whenever assessed values increase by 100 percent.
+
+    PRB is centered around 0 and has a generally accepted value of between
+    -0.05 and 0.05, as defined in the IAAO Standard on Ratio Studies
+    Section 9.2.7. Higher PRB values indicate progressivity in assessment,
+    while negative values indicate regressivity.
+
+    NOTE: PRB is significantly less sensitive to outliers than PRD or COD.
+
+    Parameters
+    ----------
+    assessed : numeric
+        A numeric vector of assessed values. Must be the same
+        length as `sale_price`.
+    sale_price : numeric
+        A numeric vector of sale prices. Must be the same length
+        as `assessed`.
+
+    Returns
+    -------
+    float
+        A numeric vector containing the PRB of the input vectors.
+
+    Examples
+    --------
+    ```
+    # Calculate PRB:
+    import assesspy as ap
+
+    ap.prb(ap.ratios_sample().assessed, ap.ratios_sample().sale_price)
+    ```
+
+    Notes
+    -----
+    IAAO Standard on Ratio Studies - https://www.iaao.org/media/standards/Standard_on_Ratio_Studies.pdf
+
+    """
 
     assessed = np.array(assessed)
     sale_price = np.array(sale_price)
