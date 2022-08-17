@@ -9,7 +9,7 @@ import pytest as pt
 ratios_sample = assesspy.ratios_sample()
 
 ratio = ratios_sample.ratio
-fmv = ratios_sample.assessed
+assessed = ratios_sample.assessed
 sale_price = ratios_sample.sale_price
 
 ##### TEST BOOT CI ##### # noqa
@@ -20,10 +20,16 @@ class TestBOOTCI:  # Ensure input function is appropriate
     def test_in_fun(self):
 
         with pt.raises(Exception):
-            assert assesspy.boot_ci(str, ratio)
+            assert assesspy.boot_ci(str, ratio = ratio)
 
         with pt.raises(Exception):
-            assesspy.boot_ci(np.add, ratio, ratio, ratio)
+            assesspy.boot_ci(np.add, one = ratio, two = ratio, three = ratio)
+
+        with pt.raises(Exception):
+            assesspy.boot_ci(assesspy.prd, fmv = assessed, sale_price = sale_price)
+
+        with pt.raises(Exception):
+            assesspy.boot_ci(np.add, one = ratio, two = ratio)
 
 ##### TEST COD ##### # noqa
 
@@ -81,8 +87,8 @@ class TestCODCI:
 
 
 # Calculate PRD CI
-prd_ci_out_95 = assesspy.prd_ci(fmv, sale_price, nboot=1000)
-prd_ci_out_80 = assesspy.prd_ci(fmv, sale_price, nboot=1000, alpha=0.2)
+prd_ci_out_95 = assesspy.prd_ci(assessed, sale_price, nboot=1000)
+prd_ci_out_80 = assesspy.prd_ci(assessed, sale_price, nboot=1000, alpha=0.2)
 
 
 class TestPRDCI:
@@ -118,7 +124,7 @@ class TestPRDCI:
 
         with pt.raises(Exception):
             assesspy.prd_ci(
-                pd.concat([fmv, pd.Series(float('Inf'))]),
+                pd.concat([assessed, pd.Series(float('Inf'))]),
                 pd.concat([sale_price, pd.Series(1.0)])
                 )
 
@@ -127,7 +133,7 @@ class TestPRDCI:
 
         with pt.raises(Exception):
             assesspy.prd_ci(
-                pd.concat([fmv, pd.Series(float('NaN'))]),
+                pd.concat([assessed, pd.Series(float('NaN'))]),
                 pd.concat([sale_price, pd.Series(1.0)])
                 )
 

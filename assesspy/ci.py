@@ -21,7 +21,7 @@ def boot_ci(fun, nboot=100, alpha=0.05, **kwargs):
         the output statistic confidence interval.
     alpha : float
         Default 0.05. Numeric value indicating the confidence
-        interval to return. 0.05 will return the 95\% confidence interval.
+        interval to return. 0.05 will return the 95% confidence interval.
     kwargs : numeric
         Arguments passed on to `fun`.
 
@@ -90,9 +90,9 @@ def boot_ci(fun, nboot=100, alpha=0.05, **kwargs):
 # Formula specific bootstrapping functions
 def cod_ci(ratio, nboot=100, alpha=0.05):
 
-    return boot_ci(cod, ratio, nboot=nboot, alpha=alpha)
+    return boot_ci(cod, ratio=ratio, nboot=nboot, alpha=alpha)
 
 
 def prd_ci(assessed, sale_price, nboot=100, alpha=0.05):
 
-    return boot_ci(prd, assessed, sale_price, nboot=nboot, alpha=alpha)
+    return boot_ci(prd, assessed=assessed, sale_price=sale_price, nboot=nboot, alpha=alpha)
