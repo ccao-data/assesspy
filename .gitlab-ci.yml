@@ -52,7 +52,7 @@ run:
 pages:
   script:
     - pip install sphinx sphinx-rtd-theme
-    - cd vignettes
+    - cd docs
     - make html
     - mv build/html/ ../public/
   artifacts:
