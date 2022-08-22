@@ -17,6 +17,8 @@ setup(
         "pandas",
         "pyarrow",
         "numpy",
+        "pytest",
+        "pytest-cov",
         "scipy",
         "sklearn",
         "statsmodels"
