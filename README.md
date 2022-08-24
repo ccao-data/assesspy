@@ -1,9 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# AssessPy package <a href="https://gitlab.com/ccao-data-science---modeling/packages/assesspy"><img src="man/figures/logo.png" align="right" height="139"/></a>
+# AssessPy package <a href="https://gitlab.com/ccao-data-science---modeling/packages/assesspy"><img src="docs/images/logo.png" align="right" height="139"/></a>
 
-AssessPy is a software module for Python developed by the Cook County
+AssessPy is a software package for Python developed by the Cook County
 Assessor’s (CCAO) Data Science Department. The
 codebase for the CCAO’s CAMA system uses a wide range of functions
 regularly, and packaging these functions streamlines and standardizes
@@ -37,5 +37,5 @@ remotes::install_gitlab("ccao-data-science---modeling/packages/assesspy")
 remotes::install_gitlab("ccao-data-science---modeling/packages/assesspy@0.1")
 ```
 
-Once it is installed, you can use it just like any other module. Simply
+Once it is installed, you can use it just like any other package. Simply
 call `import assesspy` at the beginning of your script.
