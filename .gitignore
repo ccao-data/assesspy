@@ -17,3 +17,5 @@ build/
 __pycache__/
 *~
 .tox/log/GLOB-0.log
+.coverage
+.coveragerc.txt
