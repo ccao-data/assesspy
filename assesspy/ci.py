@@ -12,34 +12,37 @@ def boot_ci(fun, nboot=100, alpha=0.05, **kwargs):
     Calculate the non-parametric bootstrap confidence interval
     for a given numeric input and a chosen function.
 
-    Parameters
-    ----------
-    fun : function
+    :param fun:
         Function to bootstrap. Must return a single value.
-    nboot : int
+    :param nboot:
         Default 100. Number of iterations to use to estimate
         the output statistic confidence interval.
-    alpha : float
+    :param alpha:
         Default 0.05. Numeric value indicating the confidence
         interval to return. 0.05 will return the 95% confidence interval.
-    kwargs : numeric
-        Arguments passed on to `fun`.
+    :param kwargs:
+        Arguments passed on to ``fun``.
+    :type fun: function
+    :type nboot: int
+    :type alpha: float
+    :type kwargs: numeric
 
-    Returns
-    -------
-    list[float]
+    .. note::
+       Input function should require 1 argument or be ``assesspy.prd()``.
+
+    :return:
         A two-long list of floats containing the bootstrapped confidence
         interval of the input vector(s).
+    :rtype: list[float]
 
-    Examples
-    --------
-    ```
-    # Detect outliers:
-    import assesspy as ap
+    :Example:
 
-    ap.is_outlier(asspy.ratios_sample().ratio)
-    ```
+    .. code-block:: python
 
+        # Detect outliers:
+        import assesspy as ap
+
+        ap.is_outlier(ap.ratios_sample().ratio)
     """
 
     # Make sure prd is passed arguments in correct order

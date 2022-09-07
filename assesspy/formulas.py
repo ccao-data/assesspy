@@ -15,39 +15,34 @@ def cod(ratio):
 
     Lower COD indicates higher uniformity/horizontal equity in assessment.
     The IAAO sets uniformity standards that define generally accepted ranges
-    for COD depending on property class. See IAAO Standard on Ratio Studies
+    for COD depending on property class. See `IAAO Standard on Ratio Studies`_
     Section 9.1, Table 1.3 for a full list of standard COD ranges.
 
-    NOTE - The IAAO recommends trimming outlier ratios before calculating COD,
-    as it is extremely sensitive to large outliers. The typical method used is
-    dropping values beyond 3 * IQR (inner-quartile range). See
-    IAAO Standard on Ratio Studies Appendix B.1.
+    .. _IAAO Standard on Ratio Studies: https://www.iaao.org/media/standards/Standard_on_Ratio_Studies.pdf
 
-    Parameters
-    ----------
-    ratio : float
+    .. note::
+        The IAAO recommends trimming outlier ratios before calculating COD,
+        as it is extremely sensitive to large outliers. The typical method used is
+        dropping values beyond 3 * IQR (inner-quartile range). See
+        `IAAO Standard on Ratio Studies`_ Appendix B.1.
+
+    :param ratio:
         A numeric vector of ratios centered around 1, where the
         numerator of the ratio is the estimated fair market value and the
         denominator is the actual sale price.
+    :type ratio: numeric
 
-    Returns
-    -------
-    float
-        A numeric vector containing the COD of `ratios`.
+    :return: A numeric vector containing the COD of ``ratios``.
+    :rtype: float
 
-    Examples
-    --------
-    ```
-    # Calculate COD:
-    import assesspy as ap
+    :Example:
 
-    ap.cod(ap.ratios_sample().ratio)
-    ```
+    .. code-block:: python
 
-    Notes
-    -----
-    IAAO Standard on Ratio Studies - https://www.iaao.org/media/standards/Standard_on_Ratio_Studies.pdf
+        # Calculate COD:
+        import assesspy as ap
 
+        ap.cod(ap.ratios_sample().ratio)
     """
 
     # Input checking and error handling
@@ -71,40 +66,35 @@ def prd(assessed, sale_price):
     should be similarly assessed.
 
     PRD centers slightly above 1 and has a generally accepted value of between
-    0.98 and 1.03, as defined in the IAAO Standard on Ratio Studies
+    0.98 and 1.03, as defined in the `IAAO Standard on Ratio Studies`_
     Section 9.2.7. Higher PRD values indicate regressivity in assessment.
 
-    NOTE - The IAAO recommends trimming outlier ratios before calculating PRD,
-    as it is extremely sensitive to large outliers. PRD is being deprecated in
-    favor of PRB, which is less sensitive to outliers and easier to interpret.
+    .. _IAAO Standard on Ratio Studies: https://www.iaao.org/media/standards/Standard_on_Ratio_Studies.pdf
 
-    Parameters
-    ----------
-    assessed : numeric
-        A numeric vector of assessed values. Must be the same
-        length as `sale_price`.
-    sale_price : numeric
+    .. note::
+       The IAAO recommends trimming outlier ratios before calculating PRD,
+       as it is extremely sensitive to large outliers. PRD is being deprecated in
+       favor of PRB, which is less sensitive to outliers and easier to interpret.
+
+    :param assessed:
+        A numeric vector of assessed values. Must be the same length as ``sale_price``.
+    :param sale_price:
         A numeric vector of sale prices. Must be the same length
-        as `assessed`.
+        as ``assessed``.
+    :type assessed: numeric
+    :type sale_price: numeric
 
-    Returns
-    -------
-    float
-        A numeric vector containing the PRD of the input vectors.
+    :return: A numeric vector containing the PRD of the input vectors.
+    :rtype: float
 
-    Examples
-    --------
-    ```
-    # Calculate PRD:
-    import assesspy as ap
+    :Example:
 
-    ap.prd(ap.ratios_sample().assessed, ap.ratios_sample().sale_price)
-    ```
+    .. code-block:: python
 
-    Notes
-    -----
-    IAAO Standard on Ratio Studies - https://www.iaao.org/media/standards/Standard_on_Ratio_Studies.pdf
+        # Calculate PRD:
+        import assesspy as ap
 
+        ap.prd(ap.ratios_sample().assessed, ap.ratios_sample().sale_price)
     """
 
     assessed = np.array(assessed)
@@ -128,39 +118,34 @@ def prb(assessed, sale_price):
     by 2\% whenever assessed values increase by 100 percent.
 
     PRB is centered around 0 and has a generally accepted value of between
-    -0.05 and 0.05, as defined in the IAAO Standard on Ratio Studies
+    -0.05 and 0.05, as defined in the `IAAO Standard on Ratio Studies`_
     Section 9.2.7. Higher PRB values indicate progressivity in assessment,
     while negative values indicate regressivity.
 
-    NOTE: PRB is significantly less sensitive to outliers than PRD or COD.
+    .. _IAAO Standard on Ratio Studies: https://www.iaao.org/media/standards/Standard_on_Ratio_Studies.pdf
 
-    Parameters
-    ----------
-    assessed : numeric
+    .. note: PRB is significantly less sensitive to outliers than PRD or COD.
+
+    :param assessed:
         A numeric vector of assessed values. Must be the same
-        length as `sale_price`.
-    sale_price : numeric
+        length as ``sale_price``.
+    :param sale_price:
         A numeric vector of sale prices. Must be the same length
-        as `assessed`.
+        as ``assessed``.
+    :type assessed: numeric
+    :type sale_price: numeric
 
-    Returns
-    -------
-    float
-        A numeric vector containing the PRB of the input vectors.
+    :return: A numeric vector containing the PRB of the input vectors.
+    :rtype: float
 
-    Examples
-    --------
-    ```
-    # Calculate PRB:
-    import assesspy as ap
+    :Example:
 
-    ap.prb(ap.ratios_sample().assessed, ap.ratios_sample().sale_price)
-    ```
+    .. code-block:: python
 
-    Notes
-    -----
-    IAAO Standard on Ratio Studies - https://www.iaao.org/media/standards/Standard_on_Ratio_Studies.pdf
+        # Calculate PRB:
+        import assesspy as ap
 
+        ap.prb(ap.ratios_sample().assessed, ap.ratios_sample().sale_price)
     """
 
     assessed = np.array(assessed)

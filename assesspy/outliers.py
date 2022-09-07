@@ -77,37 +77,37 @@ def is_outlier(x, method='iqr', probs=[0.05, 0.95]):
     IAAO Standard on Ratio Studies Appendix B. Outlier Trimming Guidelines for
     more information.
 
-    Parameters
-    ----------
-    x : numeric
+    :param x:
         A numeric vector. Must be longer than 2 and not contain
-        `Inf` or `NaN`.
-    method : str
+        ``Inf`` or ``NaN``.
+    :param method:
         Default "iqr". String indicating outlier detection method.
-        Options are `iqr` or `quantile`.
-    probs : list[numeric]
+        Options are ``iqr`` or ``quantile``.
+    :param probs:
         Upper and lower percentiles denoting outlier boundaries.
+    :type x: numeric
+    :type method: str
+    :type probs: list[numeric]
 
-    Returns
-    -------
-    list[bool]
-        A two-long list of floats containing the bootstrapped confidence
-        interval of the input vector(s).
+    :return:
+        A logical vector this same length as ``x`` indicating whether or
+        not each value of ``x`` is an outlier.
 
-    Examples
-    --------
-    ```
-    # Calculate PRD confidence interval:
-    import assesspy as ap
+    :rtype: list[bool]
 
-    ap.boot_ci(
-        ap.prd,
-        assessed = ap.ratios_sample().assessed,
-        sale_price = ap.ratios_sample().sale_price,
-        nboot = 100
-        )
-    ```
+    :Example:
 
+    .. code-block:: python
+
+        # Calculate PRD confidence interval:
+        import assesspy as ap
+
+        ap.boot_ci(
+            ap.prd,
+            assessed = ap.ratios_sample().assessed,
+            sale_price = ap.ratios_sample().sale_price,
+            nboot = 100
+            )
     """
 
     out = {

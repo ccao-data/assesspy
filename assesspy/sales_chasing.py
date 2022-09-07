@@ -72,7 +72,7 @@ def detect_chasing(ratio, method='both'):
     novel methods to roughly estimate if sales chasing has occurred.
 
     The first method (dist) uses the technique outlined in the
-    IAAO Standard on Ratio Studies Appendix E, Section 4. It compares the
+    `IAAO Standard on Ratio Studies`_ Appendix E, Section 4. It compares the
     percentage of real data within +-2% of the mean ratio to the percentage
     of data within the same bounds given a constructed normal distribution
     with the same mean and standard deviation. The intuition here is that
@@ -85,50 +85,46 @@ def detect_chasing(ratio, method='both'):
     particularly around 1, may indicate sales chasing. This can usually be seen
     visually as a "flat spot" on the CDF.
 
-    Parameters
-    ----------
-    ratio : numeric
+    .. _IAAO Standard on Ratio Studies: https://www.iaao.org/media/standards/Standard_on_Ratio_Studies.pdf
+
+    :param ratio:
         A numeric vector of ratios centered around 1, where the
         numerator of the ratio is the estimated fair market value and the
         denominator is the actual sale price.
-    method : str
+    :param method:
         Default "both". String indicating sales chasing detection
-        method. Options are `cdf`, `dist`, or `both`.
+        method. Options are ``cdf``, ``dist``, or ``both``.
+    :type ratio: numeric
+    :type method: str
 
-    Returns
-    -------
-    bool
+    :return:
         A logical value indicating whether or not the input ratios may
         have been sales chased.
+    :rtype: bool
 
-    Examples
-    --------
-    ```
-    import assesspy as ap
-    import numpy as np
-    from statsmodels.distributions.empirical_distribution import ECDF
-    from matplotlib import pyplot
+    :Example:
 
-    # Generate fake data with normal vs chased ratios
-    normal_ratios = np.random.normal(1, 0.15, 10000)
-    chased_ratios = list(np.random.normal(1, 0.15, 900)) + [1] * 100
+    .. code-block:: python
 
-    # Plot to view discontinuity
-    ecdf = ECDF(normal_ratios)
-    pyplot.plot(ecdf.x, ecdf.y)
-    pyplot.show()
-    ap.detect_chasing(normal_ratios)
+        import assesspy as ap
+        import numpy as np
+        from statsmodels.distributions.empirical_distribution import ECDF
+        from matplotlib import pyplot
 
-    ecdf = ECDF(chased_ratios)
-    pyplot.plot(ecdf.x, ecdf.y)
-    pyplot.show()
-    ap.detect_chasing(chased_ratios)
-    ```
+        # Generate fake data with normal vs chased ratios
+        normal_ratios = np.random.normal(1, 0.15, 10000)
+        chased_ratios = list(np.random.normal(1, 0.15, 900)) + [1] * 100
 
-    Notes
-    -----
-    IAAO Standard on Ratio Studies - https://www.iaao.org/media/standards/Standard_on_Ratio_Studies.pdf
+        # Plot to view discontinuity
+        ecdf = ECDF(normal_ratios)
+        pyplot.plot(ecdf.x, ecdf.y)
+        pyplot.show()
+        ap.detect_chasing(normal_ratios)
 
+        ecdf = ECDF(chased_ratios)
+        pyplot.plot(ecdf.x, ecdf.y)
+        pyplot.show()
+        ap.detect_chasing(chased_ratios)
     """
 
     if method not in ('both', 'cdf', 'dist'):
