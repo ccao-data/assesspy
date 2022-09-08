@@ -13,7 +13,8 @@ sys.path.append(os.path.abspath('../..'))
 
 project = 'assesspy'
 author = 'Cook County Assessor Data Department'
-release = '0.1'
+copyright = "2022, Cook County Assessor Data Department"
+release = '1.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -23,8 +24,6 @@ extensions = [
     'sphinx.ext.doctest',
     'nbsphinx',
     'recommonmark',
-    #'sphinx_execute_code'
-    #'m2r2'
     ]
 
 templates_path = ['_templates']

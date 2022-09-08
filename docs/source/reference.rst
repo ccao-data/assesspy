@@ -1,3 +1,4 @@
+=========
 Reference
 =========
 
@@ -59,12 +60,6 @@ Data
 ----
 
 | Sample data used for testing and demonstrations
-:doc:`ratios_sample() <data>`
-
-Vignettes
---------
-
-| Examples using included data to showcase common AssessPy use cases
-:doc:`Example Ratio Study <notebooks/example-ratio-study>`
+:doc:`ratios_sample() <ratios_sample>`
 
 .. |nbsp| unicode:: 0xA0
