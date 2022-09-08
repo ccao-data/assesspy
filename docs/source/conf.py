@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 import sys
-import  os
+import os
 
 sys.path.append(os.path.abspath('../..'))
 
@@ -23,7 +23,8 @@ extensions = [
     'sphinx.ext.doctest',
     'nbsphinx',
     'recommonmark',
-    #'sphinx-execute-code'
+    #'sphinx_execute_code'
+    #'m2r2'
     ]
 
 templates_path = ['_templates']

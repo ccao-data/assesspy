@@ -1,5 +1,5 @@
 Reference
-====================================
+=========
 
 Functions
 ---------
@@ -65,6 +65,6 @@ Vignettes
 --------
 
 | Examples using included data to showcase common AssessPy use cases
-:doc:`Ratio Study <notebooks/example-ratio-study>`
+:doc:`Example Ratio Study <notebooks/example-ratio-study>`
 
 .. |nbsp| unicode:: 0xA0
