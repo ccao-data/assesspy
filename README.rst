@@ -16,9 +16,9 @@ this package helpful in monitoring the performance of local assessors
 and conducting research.
 
 For detailed documentation on included functions and data, `visit the
-full reference list`_.
+full reference list <https://ccao-data-science---modeling.gitlab.io/packages/assesspy/reference/>`_.
 
-.. _visit the full reference list: https://ccao-data-science---modeling.gitlab.io/packages/assesspy/reference/
+
 .. |visit the full reference list| replace:: **visit the full reference list**
 
 For examples of specific tasks you can complete with ``assesspy``
