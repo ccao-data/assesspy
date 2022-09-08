@@ -26,15 +26,10 @@ page**](https://ccao-data-science---modeling.gitlab.io/packages/assesspy/article
 
 ## Installation
 
-You can install the released version of `assesspy` directly from GitLab
-by running the following R command after installing
-[remotes](https://github.com/r-lib/remotes):
+You can install the released version of `assesspy` using pip.
 
-``` r
-remotes::install_gitlab("ccao-data-science---modeling/packages/assesspy")
-
-# Or, to install a specific version
-remotes::install_gitlab("ccao-data-science---modeling/packages/assesspy@0.1")
+``` python
+pip install assesspy
 ```
 
 Once it is installed, you can use it just like any other package. Simply
