@@ -1,5 +1,5 @@
 
-AssessPy package <a href="https://gitlab.com/ccao-data-science---modeling/packages/assesspy"><img src="docs/images/logo.png" align="right" height="139"/></a>
+AssessPy package
 ================
 
 AssessPy is a software package for Python developed by the Cook County
@@ -30,15 +30,9 @@ Installation
 
 You can install the released version of ``assesspy`` using pip:
 
-``pip install assesspy``
+.. code-block:: python
 
-.. code-block:: R
-
-    remotes::install_gitlab("ccao-data-science---modeling/packages/assesspy")
-
-    # Or, to install a specific version
-    remotes::install_gitlab("ccao-data-science---modeling/packages/assesspy@0.1")
-
+    pip install assesspy
 
 Once it is installed, you can use it just like any other package. Simply
 call ``import assesspy`` at the beginning of your script.
