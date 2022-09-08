@@ -3,6 +3,7 @@ AssessPy package
 ================
 
 .. image:: https://gitlab.com/ccao-data-science---modeling/packages/assesspy/-/raw/main/docs/images/logo.png
+    :align: right
 
 AssessPy is a software package for Python developed by the Cook County
 Assessor’s (CCAO) Data Science Department. The
