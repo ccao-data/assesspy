@@ -2,9 +2,7 @@
 AssessPy package
 ================
 
-|logo|
-
-.. |logo| image:: https://gitlab.com/ccao-data-science---modeling/packages/assesspy/-/raw/main/docs/images/logo.png
+.. image:: https://gitlab.com/ccao-data-science---modeling/packages/assesspy/-/raw/main/docs/images/logo.png
     :height: 139 px
     :align: right
 
