@@ -1,8 +1,9 @@
 
-AssessPy package
-================
+AssessPy package |logo|
+=======================
 
-.. image:: https://gitlab.com/ccao-data-science---modeling/packages/assesspy/-/raw/main/docs/images/logo.png
+.. |logo| image:: https://gitlab.com/ccao-data-science---modeling/packages/assesspy/-/raw/main/docs/images/logo.png
+    :height: 139 px
     :align: right
 
 AssessPy is a software package for Python developed by the Cook County
