@@ -19,6 +19,7 @@ For detailed documentation on included functions and data, `visit the
 full reference list`_.
 
 .. _visit the full reference list: https://ccao-data-science---modeling.gitlab.io/packages/assesspy/reference/
+.. |visit the full reference list| replace:: **visit the full reference list**
 
 For examples of specific tasks you can complete with ``assesspy``
 functions, see the `vignettes page`_.
