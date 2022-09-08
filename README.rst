@@ -15,16 +15,11 @@ believe that reporters, taxpayers, and members of academia will find
 this package helpful in monitoring the performance of local assessors
 and conducting research.
 
-For detailed documentation on included functions and data, `visit the
-full reference list <https://ccao-data-science---modeling.gitlab.io/packages/assesspy/reference/>`_.
-
-
-.. |visit the full reference list| replace:: **visit the full reference list**
+For detailed documentation on included functions and data, **`visit the
+full reference list <https://ccao-data-science---modeling.gitlab.io/packages/assesspy/reference/>`_**.
 
 For examples of specific tasks you can complete with ``assesspy``
-functions, see the `vignettes page`_.
-
-.. _vignettes page: https://ccao-data-science---modeling.gitlab.io/packages/assesspy/articles/index.html
+functions, see the `vignettes page <https://ccao-data-science---modeling.gitlab.io/packages/assesspy/articles/index.html>`_.
 
 Installation
 ------------
