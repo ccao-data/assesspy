@@ -51,7 +51,8 @@ run:
 
 pages:
   script:
-    - pip install sphinx sphinx-rtd-theme
+    - pip install sphinx
+    - pip install furo
     - pip install nbsphinx
     - pip install recommonmark
     - sphinx-build -d _build/doctrees docs/source _build/html
