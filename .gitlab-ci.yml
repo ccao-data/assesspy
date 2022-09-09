@@ -55,7 +55,6 @@ pages:
     - pip install furo
     - pip install nbsphinx
     - pip install recommonmark
-    - conda install nb_conda_kernels
     - sphinx-build -d _build/doctrees docs/source _build/html
     - mv _build/html public
   artifacts:
