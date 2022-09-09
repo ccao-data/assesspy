@@ -36,6 +36,8 @@ html_theme = 'furo'
 html_static_path = ['_static']
 html_logo = "../images/logo.png"
 
+# Use svg rather than png for matlib plots
+
 nbsphinx_execute_arguments = [
     "--InlineBackend.figure_formats={'svg', 'pdf'}",
     "--InlineBackend.rc=figure.dpi=96",
