@@ -18,11 +18,11 @@ and conducting research.
 
 For detailed documentation on included functions and data, [**visit the
 full reference
-list**](https://ccao-data-science---modeling.gitlab.io/packages/assesspy/reference/).
+list**](https://ccao-data-science---modeling.gitlab.io/packages/assesspy/reference.html).
 
 For examples of specific tasks you can complete with `assesspy`
 functions, see the [**vignettes
-page**](https://ccao-data-science---modeling.gitlab.io/packages/assesspy/articles/index.html).
+page**](https://ccao-data-science---modeling.gitlab.io/packages/assesspy/vignettes.html).
 
 ## Installation
 
