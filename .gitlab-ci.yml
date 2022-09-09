@@ -52,6 +52,7 @@ run:
 pages:
   script:
     - pip install sphinx sphinx-rtd-theme
+    - pip install nbsphinx
     - sphinx-build -d _build/doctrees docs/source _build/html
     - mv _build/html public
   artifacts:
