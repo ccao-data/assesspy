@@ -52,8 +52,6 @@ run:
 pages:
   script:
     - pip3 install ipykernel
-    - conda install -c conda-forge pandoc
-    - pip install --upgrade pandoc
     - pip install sphinx
     - pip install furo
     - pip install nbsphinx
