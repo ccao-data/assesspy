@@ -52,7 +52,6 @@ run:
 pages:
   script:
     - pip3 install ipykernel
-    - sudo apt-get install pandoc
     - pip install sphinx
     - pip install furo
     - pip install nbsphinx
