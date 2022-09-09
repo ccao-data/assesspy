@@ -1,9 +1,5 @@
 from setuptools import setup, find_packages
 
-def readme():
-    with open('README.md') as f:
-        return f.read()
-
 setup(
     name="assesspy",
     version="0.1",
