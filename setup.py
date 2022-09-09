@@ -16,6 +16,7 @@ setup(
     install_requires=[
         "pandas",
         "pyarrow",
+        "nbsphinx",
         "numpy",
         "scipy",
         "sklearn",
