@@ -22,8 +22,7 @@ release = '1.0'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
-    'nbsphinx',
-    'recommonmark',
+    'myst_nb',
     ]
 
 templates_path = ['_templates']
@@ -41,3 +40,8 @@ nbsphinx_execute_arguments = [
     "--InlineBackend.figure_formats={'svg', 'pdf'}",
     "--InlineBackend.rc=figure.dpi=96",
 ]
+
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.ipynb': 'myst-nb'
+}

@@ -54,8 +54,7 @@ pages:
     - pip3 install ipykernel
     - pip install sphinx
     - pip install furo
-    - pip install nbsphinx
-    - pip install recommonmark
+    - pip install myst-nb
     - sphinx-build -d _build/doctrees docs/source _build/html
     - mv _build/html public
   artifacts:
