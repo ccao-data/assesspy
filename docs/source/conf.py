@@ -20,7 +20,7 @@ release = '1.0'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
-    'myst_nb'
+    'myst_nb',
     ]
 
 templates_path = ['_templates']
