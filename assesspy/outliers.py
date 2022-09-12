@@ -99,15 +99,10 @@ def is_outlier(x, method='iqr', probs=[0.05, 0.95]):
 
     .. code-block:: python
 
-        # Calculate PRD confidence interval:
+        # Detect outliers:
         import assesspy as ap
 
-        ap.boot_ci(
-            ap.prd,
-            assessed = ap.ratios_sample().assessed,
-            sale_price = ap.ratios_sample().sale_price,
-            nboot = 100
-            )
+        ap.is_outlier(ap.ratios_sample().ratio)
     """
 
     out = {

@@ -39,10 +39,15 @@ def boot_ci(fun, nboot=100, alpha=0.05, **kwargs):
 
     .. code-block:: python
 
-        # Detect outliers:
+        # Calculate PRD confidence interval:
         import assesspy as ap
 
-        ap.is_outlier(ap.ratios_sample().ratio)
+        ap.boot_ci(
+            ap.prd,
+            assessed = ap.ratios_sample().assessed,
+            sale_price = ap.ratios_sample().sale_price,
+            nboot = 100
+            )
     """
 
     # Make sure prd is passed arguments in correct order

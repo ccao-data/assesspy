@@ -152,6 +152,11 @@ class TestPRB:
         with pt.raises(Exception):
             assesspy.prb([1] * 30, [1] * 29 + ['1'])
 
+    def test_round(self):  # Rounding must be int
+
+        with pt.raises(Exception):
+            assesspy.prb(fmv, sale_price, 'z')
+
     def test_prb_met(self):  # Standard met function
 
         assert assesspy.prb_met(prb_out)

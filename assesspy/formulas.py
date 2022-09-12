@@ -109,7 +109,7 @@ def prd(assessed, sale_price):
     return prd
 
 
-def prb(assessed, sale_price):
+def prb(assessed, sale_price, round=None):
 
     """
     PRB is an index of vertical equity that quantifies the
@@ -132,8 +132,11 @@ def prb(assessed, sale_price):
     :param sale_price:
         A numeric vector of sale prices. Must be the same length
         as ``assessed``.
+    :param round:
+        Indicate desired rounding for output.
     :type assessed: numeric
     :type sale_price: numeric
+    :type round: int
 
     :return: A numeric vector containing the PRB of the input vectors.
     :rtype: float
@@ -167,6 +170,11 @@ def prb(assessed, sale_price):
 
     prb_val = float(prb_model.params)
     prb_ci = prb_model.conf_int(alpha=0.05)[0].tolist()
+
+    if round is not None:
+
+        prb_val = np.round(prb_val, round)
+        prb_ci = np.round(prb_ci, round)
 
     return {"prb": prb_val, "95% ci": prb_ci}
 
