@@ -55,6 +55,7 @@ pages:
     - pip install sphinx
     - pip install furo
     - pip install matplotlib
+    - pip install pandas
     - pip install myst-nb
     - sphinx-build -d _build/doctrees docs/source _build/html
     - mv _build/html public
