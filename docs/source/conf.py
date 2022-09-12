@@ -39,3 +39,13 @@ source_suffix = {
     '.rst': 'restructuredtext',
     '.ipynb': 'myst-nb'
 }
+
+myst_enable_extensions = [
+    "amsmath",
+    "colon_fence",
+    "deflist",
+    "dollarmath",
+    "html_image",
+]
+
+suppress_warnings = ["mystnb.unknown_mime_type"]
