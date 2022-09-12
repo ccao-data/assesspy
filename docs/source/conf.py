@@ -20,7 +20,7 @@ release = '1.0'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
-    'myst_nb',
+    'myst_nb'
     ]
 
 templates_path = ['_templates']
@@ -39,13 +39,3 @@ source_suffix = {
     '.rst': 'restructuredtext',
     '.ipynb': 'myst-nb'
 }
-
-myst_enable_extensions = [
-    "amsmath",
-    "colon_fence",
-    "deflist",
-    "dollarmath",
-    "html_image",
-]
-
-suppress_warnings = ["mystnb.unknown_mime_type"]
