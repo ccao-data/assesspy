@@ -52,12 +52,8 @@ run:
 pages:
   script:
     - pip3 install ipykernel
-    - pip install assesspy
     - pip install sphinx
     - pip install furo
-    - pip install pandas
-    - pip install statsmodels
-    - pip install matplotlib
     - pip install myst-nb
     - sphinx-build -d _build/doctrees docs/source _build/html
     - mv _build/html public
