@@ -17,6 +17,7 @@ AssessPy package
    :hidden:
    :caption: Appendix:
 
+   authors
    license
    Source Code <https://gitlab.com/ccao-data-science---modeling/packages/assesspy>
 
