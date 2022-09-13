@@ -1,13 +1,14 @@
 from setuptools import setup, find_packages
 
-# read the contents of your README file
+# read the contents of your README file, remove image
 from pathlib import Path
 this_directory = Path(__file__).parent
-long_description = (this_directory / "README.md").read_text()
+image = '<a href="https://gitlab.com/ccao-data-science---modeling/packages/assesspy"><img src="docs/images/logo.png" align="right" height="139"/></a>'
+long_description = (this_directory / "README.md").read_text().replace(image, '')
 
 setup(
     name="assesspy",
-    version="0.1.3",
+    version="1.0",
     description="General purpose Python package for measuring assessment performance",
     long_description=long_description,
     long_description_content_type='text/markdown',
