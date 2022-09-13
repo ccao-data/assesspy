@@ -51,6 +51,7 @@ run:
 
 pages:
   script:
+    - pip install .
     - pip3 install ipykernel
     - pip install sphinx
     - pip install furo
