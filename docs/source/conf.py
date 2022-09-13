@@ -37,7 +37,7 @@ myst_enable_extensions = [
 ]
 
 nb_render_image_options = {
-    "width": "500px",
+    "width": "450px",
     "align": "center"
     }
 
