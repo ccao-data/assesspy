@@ -8,7 +8,7 @@ long_description = (this_directory / "README.md").read_text().replace(image, '')
 
 setup(
     name="assesspy",
-    version="1.0.0",
+    version="1.0.1",
     description="General purpose Python package for measuring assessment performance",
     long_description=long_description,
     long_description_content_type='text/markdown',
