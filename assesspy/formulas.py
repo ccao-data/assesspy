@@ -173,10 +173,16 @@ def prb(assessed, sale_price, round=None):
 
     if round is not None:
 
-        prb_val = np.round(prb_val, round)
-        prb_ci = np.round(prb_ci, round)
+        out = {
+            "prb": np.round(prb_val, round),
+            "95% ci": np.round(prb_ci, round)
+            }
 
-    return {"prb": prb_val, "95% ci": prb_ci}
+    else:
+
+        out = {"prb": prb_val, "95% ci": prb_ci}
+
+    return out
 
 
 # Functions to determine whether assessment fairness criteria has been met

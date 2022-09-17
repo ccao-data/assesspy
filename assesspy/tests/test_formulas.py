@@ -157,6 +157,9 @@ class TestPRB:
         with pt.raises(Exception):
             assesspy.prb(fmv, sale_price, 'z')
 
+        with pt.raises(Exception):
+            assesspy.prb(fmv, sale_price, 1.1)
+
     def test_prb_met(self):  # Standard met function
 
         assert assesspy.prb_met(prb_out)
