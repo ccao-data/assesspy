@@ -38,6 +38,9 @@ test:
     - python setup.py test
     - pip install tox flake8  # you can also use tox
     - tox -e py39
+  # Test coverage report that is output to the build logs of each pipeline
+  # This output gets scraped by GitLab and turned into a coverage badge
+  coverage: '/TOTAL.*\s+(\d+\%)/'
 
 run:
   script:
