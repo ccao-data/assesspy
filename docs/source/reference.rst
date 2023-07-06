@@ -44,14 +44,17 @@ Other functions
 ^^^^^^^^^^^^^^^
 
 | Calculate bootstrapped confidence intervals
+
 :doc:`boot_ci() <ci>`
 
 | Detect sales chasing in a vector of sales ratios
+
 :doc:`detect_chasing() <sales_chasing>` |nbsp|
 :doc:`detect_chasing_cdf() <sales_chasing>` |nbsp|
 :doc:`detect_chasing_dist() <sales_chasing>`
 
 | Calculate bootstrapped confidence intervals
+
 :doc:`is_outlier() <outliers>` |nbsp|
 :doc:`quantile_outlier() <outliers>` |nbsp|
 :doc:`iqr_outlier() <outliers>`
@@ -60,6 +63,7 @@ Data
 ----
 
 | Sample data used for testing and demonstrations
+
 :doc:`ratios_sample() <ratios_sample>`
 
 .. |nbsp| unicode:: 0xA0

@@ -13,7 +13,7 @@ Authors
 Citation
 --------
 
-Ridgeway W (2022). assesspy: Measure Property Assessment Performance. \https://ccao-data-science---modeling.gitlab.io/packages/assesspy/index.html, \https://gitlab.com/ccao-data-science---modeling/packages/assesspy.
+Ridgeway W (2022). assesspy: Measure Property Assessment Performance. \https://ccao-data.github.io/assesspy/, \https://github.com/ccao-data/assesspy.
 
 ::
 
@@ -21,5 +21,5 @@ Ridgeway W (2022). assesspy: Measure Property Assessment Performance. \https://c
    title = {assesspy: Measure Property Assessment Performance},
    author = {William Ridgeway},
    year = {2022},
-   note = {https://ccao-data-science---modeling.gitlab.io/packages/assesspy/index.html, https://gitlab.com/ccao-data-science---modeling/packages/assesspy},
+   note = {https://ccao-data.github.io/assesspy/, https://github.com/ccao-data/assesspy},
    }

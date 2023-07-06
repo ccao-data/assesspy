@@ -1,11 +1,15 @@
-# AssessPy package <a href="https://gitlab.com/ccao-data-science---modeling/packages/assesspy"><img src="docs/images/logo.png" align="right" height="139"/></a>
+# AssessPy <a href="https://github.com/ccao-data/assesspy"><img src="docs/images/logo.png" align="right" height="139"/></a>
+
+[![package-build](https://github.com/ccao-data/assesspy/actions/workflows/python-package.yaml/badge.svg)](https://github.com/ccao-data/assesspy/actions/workflows/python-package.yaml)
+[![test-coverage](https://github.com/ccao-data/assesspy/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/ccao-data/assesspy/actions/workflows/test-coverage.yaml)
+[![pre-commit](https://github.com/ccao-data/assesspy/actions/workflows/pre-commit.yaml/badge.svg)](https://github.com/ccao-data/assesspy/actions/workflows/pre-commit.yaml)
+[![codecov](https://codecov.io/gh/ccao-data/assesspy/branch/main/graph/badge.svg)](https://codecov.io/gh/ccao-data/assesspy)
 
 AssessPy is a software package for Python developed by the Cook County
-Assessor's (CCAO) Data Science Department. The
-codebase for the CCAO's CAMA system uses a wide range of functions
-regularly, and packaging these functions streamlines and standardizes
-their use. The CCAO is publishing this package to make it available to
-assessors, reporters, and citizens everywhere.
+Assessor's (CCAO) Data Department. The codebase for the CCAO's CAMA system
+uses a wide range of functions regularly, and packaging these functions
+streamlines and standardizes their use. The CCAO is publishing this package
+to make it available to assessors, reporters, and citizens everywhere.
 
 For assessors, we believe that this package will reduce the complexity
 of calculating ratio statistics and detecting sales chasing. We also
@@ -15,19 +19,19 @@ and conducting research.
 
 For detailed documentation on included functions and data, [**visit the
 full reference
-list**](https://ccao-data-science---modeling.gitlab.io/packages/assesspy/reference.html).
+list**](https://ccao-data.github.io/assesspy/reference.html).
 
 For examples of specific tasks you can complete with `assesspy`
 functions, see the [**vignettes
-page**](https://ccao-data-science---modeling.gitlab.io/packages/assesspy/vignettes.html).
+page**](https://ccao-data.github.io/assesspy/vignettes.html).
 
 ## Installation
 
 You can install the released version of `assesspy` using pip.
 
-``` python
+```python
 pip install assesspy
 ```
 
-Once it is installed, you can use it just like any other package. Simply
+Once it's installed, you can use it just like any other package. Simply
 call `import assesspy` at the beginning of your script.

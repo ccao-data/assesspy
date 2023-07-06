@@ -1,7 +1,9 @@
 # Import necessary libraries
+import warnings
+
 import numpy as np
 from statsmodels.distributions.empirical_distribution import ECDF
-import warnings
+
 from .utils import check_inputs
 
 
@@ -25,9 +27,7 @@ def detect_chasing_cdf(ratio, bounds=[0.98, 1.02], cdf_gap=0.03):
     # Check if the largest difference is greater than the threshold and make
     # sure it's within the specified boundaries
     diff_loc = sorted_ratio[np.argmax(diffs)]
-    out = (max(diffs) > cdf_gap) & (
-        (diff_loc > bounds[0]) & (diff_loc < bounds[1])
-        )
+    out = (max(diffs) > cdf_gap) & ((diff_loc > bounds[0]) & (diff_loc < bounds[1]))
 
     return out
 
@@ -46,11 +46,7 @@ def detect_chasing_dist(ratio, bounds=[0.98, 1.02]):
         return out
 
     # Calculate the ideal normal distribution using observed values from input
-    ideal_dist = np.random.normal(
-        np.mean(ratio),
-        np.std(ratio),
-        10000
-        )
+    ideal_dist = np.random.normal(np.mean(ratio), np.std(ratio), 10000)
 
     # Determine what percentage of the data would be within the specified
     # bounds in the ideal distribution
@@ -62,8 +58,7 @@ def detect_chasing_dist(ratio, bounds=[0.98, 1.02]):
     return pct_actual > pct_ideal
 
 
-def detect_chasing(ratio, method='both'):
-
+def detect_chasing(ratio, method="both"):
     """
     Sales chasing is when a property is selectively reappraised to
     shift its assessed value toward its actual sale price. Sales chasing is
@@ -127,8 +122,8 @@ def detect_chasing(ratio, method='both'):
         ap.detect_chasing(chased_ratios)
     """
 
-    if method not in ('both', 'cdf', 'dist'):
-        raise Exception('Unrecognized method.')
+    if method not in ("both", "cdf", "dist"):
+        raise Exception("Unrecognized method.")
 
     if len(ratio) < 30:
         warnings.warn(
@@ -136,15 +131,15 @@ def detect_chasing(ratio, method='both'):
             Sales chasing detection can be misleading when applied to small
             samples (N < 30). Increase N or use a different statistical test.
             """
-            )
+        )
 
         out = None
 
     else:
         out = {
-            'cdf': detect_chasing_cdf(ratio),
-            'dist': detect_chasing_dist(ratio),
-            'both': (detect_chasing_cdf(ratio) & detect_chasing_dist(ratio))
+            "cdf": detect_chasing_cdf(ratio),
+            "dist": detect_chasing_dist(ratio),
+            "both": (detect_chasing_cdf(ratio) & detect_chasing_dist(ratio)),
         }.get(method)
 
     return out

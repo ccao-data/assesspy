@@ -1,11 +1,10 @@
 # Import necessary libraries
-import pkg_resources
 import pandas as pd
+import pkg_resources
 
 
 # Load pre-made ratios sample data.
 def ratios_sample():
-
     """
     This sample was take from Evanston and New Trier in 2019. Ratios are
     calculated using assessor certified (post-appeal) fair market values.
@@ -24,8 +23,5 @@ def ratios_sample():
     :rtype: DataFrame
     """
 
-    stream = pkg_resources.resource_stream(
-        __name__,
-        'data/ratios_sample.parquet'
-        )
+    stream = pkg_resources.resource_stream(__name__, "data/ratios_sample.parquet")
     return pd.read_parquet(stream)

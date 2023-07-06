@@ -1,12 +1,12 @@
 # Import necessary libraries
 import numpy as np
 import statsmodels.api as sm
+
 from .utils import check_inputs
 
 
 # COD, PRD, PRB functions
 def cod(ratio):
-
     """
     COD is the average absolute percent deviation from the
     median ratio. It is a measure of horizontal equity in assessment.
@@ -58,7 +58,6 @@ def cod(ratio):
 
 
 def prd(assessed, sale_price):
-
     """
     PRD is the mean ratio divided by the mean ratio weighted by sale
     price. It is a measure of vertical equity in assessment. Vertical equity
@@ -110,8 +109,7 @@ def prd(assessed, sale_price):
 
 
 def prb(assessed, sale_price, round=None):
-
-    """
+    r"""
     PRB is an index of vertical equity that quantifies the
     relationship betweem ratios and assessed values as a percentage. In
     concrete terms, a PRB of 0.02 indicates that, on average, ratios increase
@@ -172,24 +170,22 @@ def prb(assessed, sale_price, round=None):
     prb_ci = prb_model.conf_int(alpha=0.05)[0].tolist()
 
     if round is not None:
-
-        out = {
-            "prb": np.round(prb_val, round),
-            "95% ci": np.round(prb_ci, round)
-            }
+        out = {"prb": np.round(prb_val, round), "95% ci": np.round(prb_ci, round)}
 
     else:
-
         out = {"prb": prb_val, "95% ci": prb_ci}
 
     return out
 
 
 # Functions to determine whether assessment fairness criteria has been met
-def cod_met(x): return 5 <= x <= 15
+def cod_met(x):
+    return 5 <= x <= 15
 
 
-def prd_met(x): return 0.98 <= x <= 1.03
+def prd_met(x):
+    return 0.98 <= x <= 1.03
 
 
-def prb_met(x): return -0.05 <= x <= 0.05
+def prb_met(x):
+    return -0.05 <= x <= 0.05
