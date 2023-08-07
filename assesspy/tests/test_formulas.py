@@ -6,6 +6,9 @@ from numpy import testing as npt
 
 import assesspy
 
+# Does it need to be pulled to git first?
+from assesspy.formulas import ki_mki, ki_mki_met
+
 # Load the ratios sample dataset for testing
 ratios_sample = assesspy.ratios_sample()
 
@@ -145,3 +148,48 @@ class TestPRB:
 
     def test_prb_met(self):  # Standard met function
         assert assesspy.prb_met(prb_out)
+
+
+ki_mki_out = ki_mki(fmv, sale_price)
+
+
+class TestKI_MKI:
+    def test_ki_mki(self):  # Output equal to expected
+        npt.assert_allclose(ki_mki_out, 0.911, rtol=0.02)
+
+    def test_numeric_output(self):  # Output is numeric
+        assert type(ki_mki_out) is float
+
+        with pt.raises(Exception):
+            ki_mki([1, 1, 1], [1, 1])
+
+        with pt.raises(Exception):
+            ki_mki(10, 10)
+
+        with pt.raises(Exception):
+            ki_mki(
+                pd.concat([fmv, pd.Series(float("Inf"))]),
+                pd.concat([sale_price, pd.Series(1.0)]),
+            )
+
+        with pt.raises(Exception):
+            ki_mki(pd.DataFrame(ratio))
+
+        with pt.raises(Exception):
+            ki_mki(
+                pd.concat([fmv, pd.Series(float("NaN"))]),
+                pd.concat([sale_price, pd.Series(1.0)]),
+            )
+
+        with pt.raises(Exception):
+            ki_mki([1] * 30, [1] * 29 + ["1"])
+
+    def test_round(self):  # Rounding must be int
+        with pt.raises(Exception):
+            ki_mki(fmv, sale_price, "z")
+
+        with pt.raises(Exception):
+            ki_mki(fmv, sale_price, 1.1)
+
+    def test_ki_mki_met(self):  # Standard met function
+        assert ki_mki_met(ki_mki_out)
