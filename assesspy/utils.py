@@ -13,7 +13,7 @@ def check_inputs(*args):
             args = x
 
     for x in args:
-        if type(x) == pd.core.frame.DataFrame:
+        if isinstance(x, pd.core.frame.DataFrame):
             raise Exception("Input cannot be a dataframe.")
 
         check = pd.Series(x)
