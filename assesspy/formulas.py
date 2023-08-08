@@ -1,5 +1,6 @@
 # Import necessary libraries
 import numpy as np
+import pandas as pd
 import statsmodels.api as sm
 
 from .utils import check_inputs
@@ -178,7 +179,25 @@ def prb(assessed, sale_price, round=None):
     return out
 
 
-def ki_mki(assessed, sale_price, round=None, mki = True):
+def calculate_gini(assessed, sale_price):
+    df = pd.DataFrame({'av': assessed, 'sp': sale_price})
+    df = df.sort_values(by='sp')
+    assessed_price = df['av'].values
+    sale_price = df['sp'].values
+    n = len(assessed_price)
+    
+    av_sum = np.sum(assessed_price * np.arange(1, n+1))
+    g_assessed = 2 * av_sum / np.sum(assessed_price) - (n + 1)
+    gini_assessed = g_assessed / n
+    
+    sale_sum = np.sum(sale_price * np.arange(1, n+1))
+    g_sale = 2 * sale_sum / np.sum(sale_price) - (n + 1)
+    gini_sale = g_sale / n
+    
+    return float(gini_assessed), float(gini_sale)
+
+
+def ki_mki(assessed, sale_price, round=None):
     r"""
     The Kakwani Index (ki) and the Modified Kakwani Index (mki) are GINI-based measures
     to test for vertical equity. The method first orders the housing stock by
@@ -213,37 +232,20 @@ def ki_mki(assessed, sale_price, round=None, mki = True):
         # Calculate MKI:
         import assesspy as ap
 
-        ki_mki(ap.ratios_sample().assessed, ap.ratios_sample().sale_price, mki = True)
+        mki(ap.ratios_sample().assessed, ap.ratios_sample().sale_price)
     """
 
-    assessed = np.array(assessed)
-    sale_price = np.array(sale_price)
+def mki(assessed, sale_price):
     check_inputs(assessed, sale_price)
+    gini_assessed, gini_sale = calculate_gini(assessed, sale_price)
+    MKI = gini_assessed / gini_sale
+    return float(round(MKI, 3))
 
-    dataset = list(zip(sale_price, assessed))
-    dataset.sort(key=lambda x: x[0])
-    assessed_price = [a for _, a in dataset]
-    sale_price = [s for s, _ in dataset]
-    n = len(assessed_price)
-
-    G_assessed = sum(a * (i + 1) for i, a in enumerate(assessed_price))
-    G_assessed = 2 * G_assessed / sum(assessed_price) - (n + 1)
-    GINI_assessed = G_assessed / n
-
-    G_sale = sum(s * (i + 1) for i, s in enumerate(sale_price))
-    G_sale = 2 * G_sale / sum(sale_price) - (n + 1)
-    GINI_sale = G_sale / n
-
-    if mki:
-        MKI = GINI_assessed / GINI_sale
-        out = {"MKI": MKI}
-
-    else:
-        KI = GINI_assessed - GINI_sale
-        out = {"KI": KI}
-
-    return out
-
+def ki(assessed, sale_price):
+    check_inputs(assessed, sale_price)
+    gini_assessed, gini_sale = calculate_gini(assessed, sale_price)
+    KI = gini_assessed - gini_sale
+    return float(round(KI, 3))
 
 # Functions to determine whether assessment fairness criteria has been met
 def cod_met(x):
@@ -258,5 +260,5 @@ def prb_met(x):
     return -0.05 <= x <= 0.05
 
 
-def ki_mki_met(x):
+def mki_met(x):
     return 0.95 <= x <= 1.05
