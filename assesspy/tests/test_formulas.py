@@ -150,32 +150,32 @@ class TestPRB:
         assert assesspy.prb_met(prb_out)
 
 
-
-with open('assesspy/tests/__pycache__/test_data_2.csv', 'r') as input_csvfile:
+with open("assesspy/tests/GINI_Data.csv", "r") as input_csvfile:
     # Create a list to store the extracted columns
     GINI_data_sale = []
     GINI_data_assessed = []
-    
+
     # Iterate through each line in the input CSV
     for line in input_csvfile:
-        columns = line.strip().split(',')
-        
+        columns = line.strip().split(",")
+
         # Extract and store the first and second columns
         first_column = columns[0].split('"')[1]
         second_column = columns[1]
-        
+
         GINI_data_sale.append(first_column)
         GINI_data_assessed.append(second_column)
-        
-GINI_data_assessed = [int(value.replace('"', '')) for value in GINI_data_assessed]
-GINI_data_sale = [int(value.replace('"', '')) for value in GINI_data_sale]
+
+GINI_data_assessed = [int(value.replace('"', "")) for value in GINI_data_assessed]
+GINI_data_sale = [int(value.replace('"', "")) for value in GINI_data_sale]
 
 
 mki_out = mki(GINI_data_assessed, GINI_data_sale)
 
+
 class Test_MKI:
     def test_mki(self):  # Output equal to expected
-        npt.assert_allclose(mki_out, .794, rtol=0.02)
+        npt.assert_allclose(mki_out, 0.794, rtol=0.02)
 
     def test_numeric_output(self):  # Output is numeric
         assert type(mki_out) is float
@@ -214,7 +214,9 @@ class Test_MKI:
     def test_mki_met(self):  # Standard met function
         assert not mki_met(mki_out)
 
+
 ki_out = ki(GINI_data_assessed, GINI_data_sale)
+
 
 class Test_KI:
     def test_ki(self):  # Output equal to expected

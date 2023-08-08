@@ -180,20 +180,20 @@ def prb(assessed, sale_price, round=None):
 
 
 def calculate_gini(assessed, sale_price):
-    df = pd.DataFrame({'av': assessed, 'sp': sale_price})
-    df = df.sort_values(by='sp')
-    assessed_price = df['av'].values
-    sale_price = df['sp'].values
+    df = pd.DataFrame({"av": assessed, "sp": sale_price})
+    df = df.sort_values(by="sp")
+    assessed_price = df["av"].values
+    sale_price = df["sp"].values
     n = len(assessed_price)
-    
-    av_sum = np.sum(assessed_price * np.arange(1, n+1))
+
+    av_sum = np.sum(assessed_price * np.arange(1, n + 1))
     g_assessed = 2 * av_sum / np.sum(assessed_price) - (n + 1)
     gini_assessed = g_assessed / n
-    
-    sale_sum = np.sum(sale_price * np.arange(1, n+1))
+
+    sale_sum = np.sum(sale_price * np.arange(1, n + 1))
     g_sale = 2 * sale_sum / np.sum(sale_price) - (n + 1)
     gini_sale = g_sale / n
-    
+
     return float(gini_assessed), float(gini_sale)
 
 
@@ -235,17 +235,20 @@ def ki_mki(assessed, sale_price, round=None):
         mki(ap.ratios_sample().assessed, ap.ratios_sample().sale_price)
     """
 
+
 def mki(assessed, sale_price):
     check_inputs(assessed, sale_price)
     gini_assessed, gini_sale = calculate_gini(assessed, sale_price)
     MKI = gini_assessed / gini_sale
     return float(round(MKI, 3))
 
+
 def ki(assessed, sale_price):
     check_inputs(assessed, sale_price)
     gini_assessed, gini_sale = calculate_gini(assessed, sale_price)
     KI = gini_assessed - gini_sale
     return float(round(KI, 3))
+
 
 # Functions to determine whether assessment fairness criteria has been met
 def cod_met(x):
