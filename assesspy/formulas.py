@@ -45,8 +45,6 @@ def cod(ratio):
 
         ap.cod(ap.ratios_sample().ratio)
     """
-
-    # Input checking and error handling
     check_inputs(ratio)
 
     ratio = np.array(ratio)
@@ -99,8 +97,6 @@ def prd(assessed, sale_price):
 
     assessed = np.array(assessed)
     sale_price = np.array(sale_price)
-
-    # Input checking and error handling
     check_inputs(assessed, sale_price)
 
     ratio = assessed / sale_price
@@ -152,8 +148,6 @@ def prb(assessed, sale_price, round=None):
 
     assessed = np.array(assessed)
     sale_price = np.array(sale_price)
-
-    # Input checking and error handling
     check_inputs(assessed, sale_price)
 
     ratio = assessed / sale_price

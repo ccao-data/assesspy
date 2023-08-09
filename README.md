@@ -5,17 +5,16 @@
 [![pre-commit](https://github.com/ccao-data/assesspy/actions/workflows/pre-commit.yaml/badge.svg)](https://github.com/ccao-data/assesspy/actions/workflows/pre-commit.yaml)
 [![codecov](https://codecov.io/gh/ccao-data/assesspy/branch/main/graph/badge.svg)](https://codecov.io/gh/ccao-data/assesspy)
 
-AssessPy is a software package for Python developed by the Cook County
-Assessor's (CCAO) Data Department. The codebase for the CCAO's CAMA system
-uses a wide range of functions regularly, and packaging these functions
-streamlines and standardizes their use. The CCAO is publishing this package
-to make it available to assessors, reporters, and citizens everywhere.
+AssessR is a software package for R developed by the Cook County Assessor’s (CCAO) Data Department. 
+This package is used in the CCAO’s custom-built [Automated Valuation Model (AVM)](https://github.com/ccao-data/model-res-avm). 
+The codebase for the CCAO’s AVM uses a wide range of functions regularly, 
+and packaging these functions streamlines and standardizes their use.
 
-For assessors, we believe that this package will reduce the complexity
-of calculating ratio statistics and detecting sales chasing. We also
-believe that reporters, taxpayers, and members of academia will find
-this package helpful in monitoring the performance of local assessors
-and conducting research.
+
+For assessors, we believe that this package will reduce the complexity of calculating 
+ratio statistics and detecting sales chasing. We also hope that reporters, taxpayers, 
+and members of academia will find this package helpful in monitoring the performance 
+of local assessors and conducting research.
 
 For detailed documentation on included functions and data, [**visit the
 full reference

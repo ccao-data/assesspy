@@ -3,7 +3,6 @@ import numpy as np
 import pandas as pd
 import pytest as pt
 from numpy import testing as npt
-
 import assesspy
 
 # Does it need to be pulled to git first?
@@ -150,10 +149,10 @@ class TestPRB:
         assert assesspy.prb_met(prb_out)
 
 
-with open("assesspy/tests/GINI_Data.csv", "r") as input_csvfile:
+with open("assesspy/tests/data/mki_ki_data.csv", "r") as input_csvfile:
     # Create a list to store the extracted columns
-    GINI_data_sale = []
-    GINI_data_assessed = []
+    gini_data_sale = []
+    gini_data_assessed = []
 
     # Iterate through each line in the input CSV
     for line in input_csvfile:
@@ -163,14 +162,14 @@ with open("assesspy/tests/GINI_Data.csv", "r") as input_csvfile:
         first_column = columns[0].split('"')[1]
         second_column = columns[1]
 
-        GINI_data_sale.append(first_column)
-        GINI_data_assessed.append(second_column)
+        gini_data_sale.append(first_column)
+        gini_data_assessed.append(second_column)
 
-GINI_data_assessed = [int(value.replace('"', "")) for value in GINI_data_assessed]
-GINI_data_sale = [int(value.replace('"', "")) for value in GINI_data_sale]
+gini_data_assessed = [int(value.replace('"', "")) for value in gini_data_assessed]
+gini_data_sale = [int(value.replace('"', "")) for value in gini_data_sale]
 
 
-mki_out = mki(GINI_data_assessed, GINI_data_sale)
+mki_out = mki(gini_data_assessed, gini_data_sale)
 
 
 class Test_MKI:
@@ -188,8 +187,8 @@ class Test_MKI:
 
         with pt.raises(Exception):
             mki(
-                pd.concat([GINI_data_assessed, pd.Series(float("Inf"))]),
-                pd.concat([GINI_data_sale, pd.Series(1.0)]),
+                pd.concat([gini_data_assessed, pd.Series(float("Inf"))]),
+                pd.concat([gini_data_sale, pd.Series(1.0)]),
             )
 
         with pt.raises(Exception):
@@ -197,8 +196,8 @@ class Test_MKI:
 
         with pt.raises(Exception):
             mki(
-                pd.concat([GINI_data_assessed, pd.Series(float("NaN"))]),
-                pd.concat([GINI_data_sale, pd.Series(1.0)]),
+                pd.concat([gini_data_assessed, pd.Series(float("NaN"))]),
+                pd.concat([gini_data_sale, pd.Series(1.0)]),
             )
 
         with pt.raises(Exception):
@@ -206,16 +205,16 @@ class Test_MKI:
 
     def test_round(self):  # Rounding must be int
         with pt.raises(Exception):
-            mki(GINI_data_assessed, sale_price, "z")
+            mki(gini_data_assessed, sale_price, "z")
 
         with pt.raises(Exception):
-            mki(GINI_data_assessed, sale_price, 1.1)
+            mki(gini_data_assessed, sale_price, 1.1)
 
     def test_mki_met(self):  # Standard met function
         assert not mki_met(mki_out)
 
 
-ki_out = ki(GINI_data_assessed, GINI_data_sale)
+ki_out = ki(gini_data_assessed, gini_data_sale)
 
 
 class Test_KI:
@@ -233,8 +232,8 @@ class Test_KI:
 
         with pt.raises(Exception):
             ki(
-                pd.concat([GINI_data_assessed, pd.Series(float("Inf"))]),
-                pd.concat([GINI_data_sale, pd.Series(1.0)]),
+                pd.concat([gini_data_assessed, pd.Series(float("Inf"))]),
+                pd.concat([gini_data_sale, pd.Series(1.0)]),
             )
 
         with pt.raises(Exception):
@@ -242,8 +241,8 @@ class Test_KI:
 
         with pt.raises(Exception):
             ki(
-                pd.concat([GINI_data_assessed, pd.Series(float("NaN"))]),
-                pd.concat([GINI_data_sale, pd.Series(1.0)]),
+                pd.concat([gini_data_assessed, pd.Series(float("NaN"))]),
+                pd.concat([gini_data_sale, pd.Series(1.0)]),
             )
 
         with pt.raises(Exception):
@@ -251,7 +250,7 @@ class Test_KI:
 
     def test_round(self):  # Rounding must be int
         with pt.raises(Exception):
-            ki(GINI_data_assessed, GINI_data_sale, "z")
+            ki(gini_data_assessed, gini_data_sale, "z")
 
         with pt.raises(Exception):
-            ki(GINI_data_assessed, GINI_data_sale, 1.1)
+            ki(gini_data_assessed, gini_data_sale, 1.1)
