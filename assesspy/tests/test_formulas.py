@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import pytest as pt
 from numpy import testing as npt
+
 import assesspy
 
 # Load the ratios sample dataset for testing

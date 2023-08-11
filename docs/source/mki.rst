@@ -1,5 +1,5 @@
 =========================================
-Kakwani Index and Modified Kakwani Index
+Modified Kakwani Index
 =========================================
 
-.. autofunction:: assesspy.ki_mki
+.. autofunction:: assesspy.mki
