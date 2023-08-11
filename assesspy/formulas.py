@@ -191,18 +191,34 @@ def calculate_gini(assessed, sale_price):
     return float(gini_assessed), float(gini_sale)
 
 
-def ki_mki(assessed, sale_price, round=None):
+def mki(assessed, sale_price):
     r"""
     The Kakwani Index (ki) and the Modified Kakwani Index (mki) are GINI-based measures
-    to test for vertical equity. The method first orders the housing stock by
-    increasing sale prices, and then calculates the GINI coefficient for sale value and
-    assessed value (remaining ordered by sales price). The Kakwani Index the
-    calculates the difference (GINI of Assessed - GINI of Sale), and the
-    Modified Kakwani Index calculates the ratio (GINI of Assessed / GINI of Sale).
+    to test for vertical equity.
 
-    .. _IAAO Standard on Ratio Studies: https://www.iaao.org/media/standards/Standard_on_Ratio_Studies.pdf
+    These methods first order properties by sale price (ascending), then
+    calculate the Gini coefficient for sale values and assessed values (while
+    remaining ordered by sale price). The Kakwani Index then
+    calculates the difference (Gini of assessed - Gini of sale), and the
+    Modified Kakwani Index calculates the ration(Gini of Assessed / Gini of Sale).
 
-    .. note: PRB is significantly less sensitive to outliers than PRD or COD.
+    For the Kakwani Index:
+
+    KI < 0 is regressive
+    KI = 0 is vertical equity
+    KI > 0 is progressive
+
+    For the Modified Kakwani Index:
+
+    MKI < 1 is regressive
+    MKI = 1 is vertical equity
+    MKI > 1 is progressive
+
+    .. Quintos, C. (2020). A Gini measure for vertical equity in property
+    assessments. https://researchexchange.iaao.org/jptaa/vol17/iss2/2.
+
+    .. Quintos, C. (2021). A Gini decomposition of the sources of inequality in
+    property assessments. https://researchexchange.iaao.org/jptaa/vol18/iss2/6
 
     :param assessed:
         A numeric vector of assessed values. Must be the same
@@ -210,13 +226,9 @@ def ki_mki(assessed, sale_price, round=None):
     :param sale_price:
         A numeric vector of sale prices. Must be the same length
         as ``assessed``.
-    :param round:
-        Indicate desired rounding for output.
     :type assessed: numeric
     :type sale_price: numeric
-    :type round: int
-
-    :return: A numeric vector containing the KI or MKI of the input vectors.
+    :return: A numeric vector MKI of the input vectors.
     :rtype: float
 
     :Example:
@@ -229,22 +241,20 @@ def ki_mki(assessed, sale_price, round=None):
         mki(ap.ratios_sample().assessed, ap.ratios_sample().sale_price)
     """
 
-
-def mki(assessed, sale_price):
     check_inputs(assessed, sale_price)
     gini_assessed, gini_sale = calculate_gini(assessed, sale_price)
     MKI = gini_assessed / gini_sale
-    return float(round(MKI, 3))
+    return float(MKI)
 
 
 def ki(assessed, sale_price):
     check_inputs(assessed, sale_price)
     gini_assessed, gini_sale = calculate_gini(assessed, sale_price)
     KI = gini_assessed - gini_sale
-    return float(round(KI, 3))
+    return float(KI)
 
 
-# Functions to determine whether assessment fairness criteria has been met
+# Functions to determine whether IAAO/Quintos fairness criteria has been met
 def cod_met(x):
     return 5 <= x <= 15
 

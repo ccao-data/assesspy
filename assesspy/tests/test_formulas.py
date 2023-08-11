@@ -5,9 +5,6 @@ import pytest as pt
 from numpy import testing as npt
 import assesspy
 
-# Does it need to be pulled to git first?
-from assesspy.formulas import mki_met, ki, mki
-
 # Load the ratios sample dataset for testing
 ratios_sample = assesspy.ratios_sample()
 
@@ -168,8 +165,7 @@ with open("assesspy/tests/data/mki_ki_data.csv", "r") as input_csvfile:
 gini_data_assessed = [int(value.replace('"', "")) for value in gini_data_assessed]
 gini_data_sale = [int(value.replace('"', "")) for value in gini_data_sale]
 
-
-mki_out = mki(gini_data_assessed, gini_data_sale)
+mki_out = assesspy.mki(gini_data_assessed, gini_data_sale)
 
 
 class Test_MKI:
@@ -180,41 +176,41 @@ class Test_MKI:
         assert type(mki_out) is float
 
         with pt.raises(Exception):
-            mki([1, 1, 1], [1, 1])
+            assesspy.mki([1, 1, 1], [1, 1])
 
         with pt.raises(Exception):
-            mki(10, 10)
+            assesspy.mki(10, 10)
 
         with pt.raises(Exception):
-            mki(
+            assesspy.mki(
                 pd.concat([gini_data_assessed, pd.Series(float("Inf"))]),
                 pd.concat([gini_data_sale, pd.Series(1.0)]),
             )
 
         with pt.raises(Exception):
-            mki(pd.DataFrame(ratio))
+            assesspy.mki(pd.DataFrame(ratio))
 
         with pt.raises(Exception):
-            mki(
+            assesspy.mki(
                 pd.concat([gini_data_assessed, pd.Series(float("NaN"))]),
                 pd.concat([gini_data_sale, pd.Series(1.0)]),
             )
 
         with pt.raises(Exception):
-            mki([1] * 30, [1] * 29 + ["1"])
+            assesspy.mki([1] * 30, [1] * 29 + ["1"])
 
     def test_round(self):  # Rounding must be int
         with pt.raises(Exception):
-            mki(gini_data_assessed, sale_price, "z")
+            assesspy.mki(gini_data_assessed, sale_price, "z")
 
         with pt.raises(Exception):
-            mki(gini_data_assessed, sale_price, 1.1)
+            assesspy.mki(gini_data_assessed, sale_price, 1.1)
 
     def test_mki_met(self):  # Standard met function
-        assert not mki_met(mki_out)
+        assert not assesspy.mki_met(mki_out)
 
 
-ki_out = ki(gini_data_assessed, gini_data_sale)
+ki_out = assesspy.ki(gini_data_assessed, gini_data_sale)
 
 
 class Test_KI:
@@ -225,32 +221,32 @@ class Test_KI:
         assert type(ki_out) is float
 
         with pt.raises(Exception):
-            ki([1, 1, 1], [1, 1])
+            assesspy.ki([1, 1, 1], [1, 1])
 
         with pt.raises(Exception):
-            ki(10, 10)
+            assesspy.ki(10, 10)
 
         with pt.raises(Exception):
-            ki(
+            assesspy.ki(
                 pd.concat([gini_data_assessed, pd.Series(float("Inf"))]),
                 pd.concat([gini_data_sale, pd.Series(1.0)]),
             )
 
         with pt.raises(Exception):
-            ki(pd.DataFrame(ratio))
+            assesspy.ki(pd.DataFrame(ratio))
 
         with pt.raises(Exception):
-            ki(
+            assesspy.ki(
                 pd.concat([gini_data_assessed, pd.Series(float("NaN"))]),
                 pd.concat([gini_data_sale, pd.Series(1.0)]),
             )
 
         with pt.raises(Exception):
-            ki([1] * 30, [1] * 29 + ["1"])
+            assesspy.ki([1] * 30, [1] * 29 + ["1"])
 
     def test_round(self):  # Rounding must be int
         with pt.raises(Exception):
-            ki(gini_data_assessed, gini_data_sale, "z")
+            assesspy.ki(gini_data_assessed, gini_data_sale, "z")
 
         with pt.raises(Exception):
-            ki(gini_data_assessed, gini_data_sale, 1.1)
+            assesspy.ki(gini_data_assessed, gini_data_sale, 1.1)
