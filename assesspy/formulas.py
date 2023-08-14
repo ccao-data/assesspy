@@ -5,7 +5,7 @@ import statsmodels.api as sm
 from .utils import check_inputs
 
 
-# COD, PRD, PRB functions
+# COD, PRD, PRB, MKI functions
 def cod(ratio):
     """
     COD is the average absolute percent deviation from the
@@ -172,6 +172,10 @@ def prb(assessed, sale_price, round=None):
     return out
 
 
+
+##### MKI_KI #####
+
+# Calculate the Gini cofficients needed for KI and MKI
 def calculate_gini(assessed, sale_price):
     data = list(zip(assessed, sale_price))
     data.sort(key=lambda x: x[1])
@@ -189,9 +193,9 @@ def calculate_gini(assessed, sale_price):
 
     return float(gini_assessed), float(gini_sale)
 
-
 def mki(assessed, sale_price):
     r"""
+    
     The Kakwani Index (ki) and the Modified Kakwani Index (mki) are GINI-based measures
     to test for vertical equity.
 
@@ -247,6 +251,27 @@ def mki(assessed, sale_price):
 
 
 def ki(assessed, sale_price):
+    r"""
+:param assessed:
+        A numeric vector of assessed values. Must be the same
+        length as ``sale_price``.
+    :param sale_price:
+        A numeric vector of sale prices. Must be the same length
+        as ``assessed``.
+    :type assessed: numeric
+    :type sale_price: numeric
+    :return: A numeric vector KI of the input vectors.
+    :rtype: float
+
+    :Example:
+
+    .. code-block:: python
+
+        # Calculate KI:
+        import assesspy as ap
+
+        ki(ap.ratios_sample().assessed, ap.ratios_sample().sale_price)
+    """
     check_inputs(assessed, sale_price)
     gini_assessed, gini_sale = calculate_gini(assessed, sale_price)
     KI = gini_assessed - gini_sale

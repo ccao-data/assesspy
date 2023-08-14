@@ -156,7 +156,6 @@ with open("assesspy/tests/data/mki_ki_data.csv", "r") as input_csvfile:
     for line in input_csvfile:
         columns = line.strip().split(",")
 
-        # Extract and store the first and second columns
         first_column = columns[0].split('"')[1]
         second_column = columns[1]
 
