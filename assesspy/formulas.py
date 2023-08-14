@@ -195,7 +195,6 @@ def calculate_gini(assessed, sale_price):
 
 def mki(assessed, sale_price):
     r"""
-    
     The Kakwani Index (ki) and the Modified Kakwani Index (mki) are GINI-based measures
     to test for vertical equity.
 
@@ -252,7 +251,7 @@ def mki(assessed, sale_price):
 
 def ki(assessed, sale_price):
     r"""
-:param assessed:
+    :param assessed:
         A numeric vector of assessed values. Must be the same
         length as ``sale_price``.
     :param sale_price:
