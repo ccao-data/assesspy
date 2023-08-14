@@ -172,8 +172,8 @@ def prb(assessed, sale_price, round=None):
     return out
 
 
-
 ##### MKI_KI #####
+
 
 # Calculate the Gini cofficients needed for KI and MKI
 def calculate_gini(assessed, sale_price):
@@ -192,6 +192,7 @@ def calculate_gini(assessed, sale_price):
     gini_sale = g_sale / n
 
     return float(gini_assessed), float(gini_sale)
+
 
 def mki(assessed, sale_price):
     r"""
