@@ -246,7 +246,6 @@ def mki(assessed, sale_price):
     MKI = gini_assessed / gini_sale
     return float(MKI)
 
-
 def ki(assessed, sale_price):
     r"""
     :param assessed:
