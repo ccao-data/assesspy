@@ -1,6 +1,5 @@
 # Import necessary libraries
 import numpy as np
-import pandas as pd
 import statsmodels.api as sm
 
 from .utils import check_inputs
@@ -175,10 +174,11 @@ def prb(assessed, sale_price, round=None):
 
 # Calculate the Gini cofficients needed for KI and MKI
 def calculate_gini(assessed, sale_price):
-    df = pd.DataFrame({"av": assessed, "sp": sale_price})
-    df = df.sort_values(by="sp")
-    assessed_price = df["av"].values
-    sale_price = df["sp"].values
+    assessed_price = np.array(assessed)
+    sale_price = np.array(sale_price)
+    sort_indices = np.argsort(sale_price)
+    assessed_price = assessed_price[sort_indices]
+    sale_price = sale_price[sort_indices]
     n = len(assessed_price)
 
     av_sum = np.sum(assessed_price * np.arange(1, n + 1))
@@ -246,6 +246,7 @@ def mki(assessed, sale_price):
     gini_assessed, gini_sale = calculate_gini(assessed, sale_price)
     MKI = gini_assessed / gini_sale
     return float(MKI)
+
 
 def ki(assessed, sale_price):
     r"""
