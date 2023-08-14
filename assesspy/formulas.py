@@ -172,9 +172,6 @@ def prb(assessed, sale_price, round=None):
     return out
 
 
-##### MKI_KI #####
-
-
 # Calculate the Gini cofficients needed for KI and MKI
 def calculate_gini(assessed, sale_price):
     data = list(zip(assessed, sale_price))
