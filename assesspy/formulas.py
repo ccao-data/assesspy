@@ -1,6 +1,5 @@
 # Import necessary libraries
 import numpy as np
-import pandas as pd
 import statsmodels.api as sm
 
 from .utils import check_inputs
@@ -174,10 +173,10 @@ def prb(assessed, sale_price, round=None):
 
 
 def calculate_gini(assessed, sale_price):
-    df = pd.DataFrame({"av": assessed, "sp": sale_price})
-    df = df.sort_values(by="sp")
-    assessed_price = df["av"].values
-    sale_price = df["sp"].values
+    data = list(zip(assessed, sale_price))
+    data.sort(key=lambda x: x[1])
+    assessed_price = [x[0] for x in data]
+    sale_price = [x[1] for x in data]
     n = len(assessed_price)
 
     av_sum = np.sum(assessed_price * np.arange(1, n + 1))
