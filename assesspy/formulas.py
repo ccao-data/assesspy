@@ -248,6 +248,11 @@ def mki(assessed, sale_price):
 
 
 def ki(assessed, sale_price):
+     r""":
+
+     
+     """
+
     check_inputs(assessed, sale_price)
     gini_assessed, gini_sale = calculate_gini(assessed, sale_price)
     KI = gini_assessed - gini_sale
