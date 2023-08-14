@@ -23,3 +23,4 @@ venv/
 .Rproj.user
 .tox
 .Rhistory
+.Rproj

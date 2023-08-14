@@ -10,7 +10,6 @@ This package is used in the CCAO’s custom-built [Automated Valuation Model (AV
 The codebase for the CCAO’s AVM uses a wide range of functions regularly, 
 and packaging these functions streamlines and standardizes their use.
 
-
 For assessors, we believe that this package will reduce the complexity of calculating 
 ratio statistics and detecting sales chasing. We also hope that reporters, taxpayers, 
 and members of academia will find this package helpful in monitoring the performance 
