@@ -174,6 +174,7 @@ def prb(assessed, sale_price, round=None):
 
 # Calculate the Gini cofficients needed for KI and MKI
 def calculate_gini(assessed, sale_price):
+    check_inputs(assessed, sale_price)
     data = list(zip(assessed, sale_price))
     data.sort(key=lambda x: x[1])
     assessed_price = [x[0] for x in data]
@@ -191,7 +192,7 @@ def calculate_gini(assessed, sale_price):
     return float(gini_assessed), float(gini_sale)
 
 
-def ki(assessed, sale_price):
+def mki(assessed, sale_price):
     r"""
     The Kakwani Index (ki) and the Modified Kakwani Index (mki) are GINI-based measures
     to test for vertical equity.
@@ -238,15 +239,15 @@ def ki(assessed, sale_price):
         # Calculate MKI:
         import assesspy as ap
 
-        ki(ap.ratios_sample().assessed, ap.ratios_sample().sale_price)
+        mki(ap.ratios_sample().assessed, ap.ratios_sample().sale_price)
     """
 
     check_inputs(assessed, sale_price)
     gini_assessed, gini_sale = calculate_gini(assessed, sale_price)
-    KI = gini_assessed / gini_sale
-    return float(KI)
+    MKI = gini_assessed / gini_sale
+    return float(MKI)
 
-def mki(assessed, sale_price):
+def ki(assessed, sale_price):
     r"""
     :param assessed:
         A numeric vector of assessed values. Must be the same
@@ -263,15 +264,16 @@ def mki(assessed, sale_price):
 
     .. code-block:: python
 
-        # Calculate MKI:
+        # Calculate KI:
         import assesspy as ap
 
-        mki(ap.ratios_sample().assessed, ap.ratios_sample().sale_price)
+        ki(ap.ratios_sample().assessed, ap.ratios_sample().sale_price)
     """
+
     check_inputs(assessed, sale_price)
     gini_assessed, gini_sale = calculate_gini(assessed, sale_price)
-    MKI = gini_assessed - gini_sale
-    return float(MKI)
+    KI = gini_assessed - gini_sale
+    return float(KI)
 
 
 # Functions to determine whether IAAO/Quintos fairness criteria has been met
