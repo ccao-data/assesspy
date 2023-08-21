@@ -40,16 +40,27 @@ increase by 100 percent.
 :doc:`prb_ci() <prb>` |nbsp|
 :doc:`prb_met() <prb>`
 
-Kakwani Index and Modified Kakwani Index (KI_MKI)
+
+Kakwani Index (KI)
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Kakwani Index (KI) and the Modified Kakwani Index (MKI) are Gini-based measures
-to test for vertical equity. The work by comparing the cumulative distribution of
+The Kakwani Index (KI) is a Gini-based measure to test for vertical equity. 
+It works by subtracting the cumulative distribution of
+assessed values from the distribution of sale prices.
+
+:doc:`ki() <ki>`
+
+
+Modified Kakwani Index (MKI)
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+The Modified Kakwani Index (MKI) is a Gini-based measure to test for vertical 
+equity. It works by identifying the ratio of the cumulative distribution of
 assessed values to the distribution of sale prices.
 
 :doc:`mki() <mki>` |nbsp|
 :doc:`mk_met() <mki_met>` |nbsp|
-:doc:`ki() <ki>`
+
 
 Other functions
 ^^^^^^^^^^^^^^^
