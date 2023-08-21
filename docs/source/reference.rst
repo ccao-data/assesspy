@@ -49,7 +49,7 @@ It works by subtracting the cumulative distribution of
 assessed values from the distribution of sale prices.
 
 :doc:`ki() <ki>`
-:doc:`mki_ki() <mki_ki>`
+
 
 Modified Kakwani Index (MKI)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -60,8 +60,6 @@ assessed values to the distribution of sale prices.
 
 :doc:`mki() <mki>` |nbsp|
 :doc:`mk_met() <mki_met>` |nbsp|
-:doc:`mki_ki() <mki_met>` |nbsp|
-
 
 
 Other functions
@@ -89,5 +87,6 @@ Data
 | Sample data used for testing and demonstrations
 
 :doc:`ratios_sample() <ratios_sample>`
+:doc:`mki_ki() <mki_ki>`
 
 .. |nbsp| unicode:: 0xA0

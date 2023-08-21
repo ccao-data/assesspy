@@ -147,7 +147,7 @@ class TestPRB:
         assert assesspy.prb_met(prb_out)
 
 
-with open("assesspy/tests/data/mki_ki_data.csv", "r") as input_csvfile:
+with open("assesspy/data/mki_ki.csv", "r") as input_csvfile:
     # Create a list to store the extracted columns
     gini_data_sale = []
     gini_data_assessed = []
