@@ -201,6 +201,7 @@ def mki(assessed, sale_price):
     Modified Kakwani Index is the the ratio of Gini of Assessed / Gini of Sale.
 
     For the Modified Kakwani Index:
+    
     MKI < 1 is regressive
     MKI = 1 is vertical equity
     MKI > 1 is progressive
