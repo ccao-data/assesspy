@@ -52,7 +52,7 @@ assessed values from the distribution of sale prices.
 
 
 Modified Kakwani Index (MKI)
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Modified Kakwani Index (MKI) is a Gini-based measure to test for vertical 
 equity. It works by identifying the ratio of the cumulative distribution of
