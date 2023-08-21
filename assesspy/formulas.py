@@ -194,7 +194,7 @@ def calculate_gini(assessed, sale_price):
 
 def mki(assessed, sale_price):
     r"""
-    The Kakwani Index (ki) and the Modified Kakwani Index (mki) are GINI-based measures
+    The  Modified Kakwani Index (mki) are GINI-based measures
     to test for vertical equity.
 
     These methods first order properties by sale price (ascending), then
