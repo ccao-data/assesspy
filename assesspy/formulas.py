@@ -195,8 +195,8 @@ def calculate_gini(assessed, sale_price):
 def mki(assessed, sale_price):
     r"""
     The Modified Kakwani Index (mki) is a GINI-based measures
-    to test for vertical equity. It first orders properties by sale price 
-    (ascending), then calculates the Gini coefficient for sale values 
+    to test for vertical equity. It first orders properties by sale price
+    (ascending), then calculates the Gini coefficient for sale values
     and assessed values (while remaining ordered by sale price). The
     Modified Kakwani Index is then the the ratio of Gini of Assessed / Gini of Sale.
 
@@ -241,9 +241,9 @@ def mki(assessed, sale_price):
 
 def ki(assessed, sale_price):
     r"""
-    The Kakwani Index (ki) is a GINI-based measure to test for vertical equity. 
-    It first orders properties by sale price (ascending), then calculates the Gini 
-    coefficient for sale values and assessed values (while remaining ordered by sale price). 
+    The Kakwani Index (ki) is a GINI-based measure to test for vertical equity.
+    It first orders properties by sale price (ascending), then calculates the Gini
+    coefficient for sale values and assessed values (while remaining ordered by sale price).
     The Kakwani Index is the difference (Gini of Assessed - Gini of Sale).
 
     For the Kakwani Index:
