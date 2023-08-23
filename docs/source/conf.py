@@ -10,7 +10,7 @@ sys.path.append(os.path.abspath("../.."))
 project = "assesspy"
 author = "Cook County Assessor Data Department"
 copyright = "4022, Cook County Assessor Data Department"
-release = "1.0.2"
+release = "1.1.0"
 
 # -- General configuration -----------------------------------------------------
 
