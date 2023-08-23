@@ -6,7 +6,7 @@ import statsmodels.api as sm
 from .utils import check_inputs
 
 
-# COD, PRD, PRB, MKI functions
+# COD, PRD, PRB, KI, MKI functions
 def cod(ratio):
     """
     COD is the average absolute percent deviation from the
