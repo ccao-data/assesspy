@@ -10,6 +10,9 @@ Authors
 
 **Nathan Dignazio**. Contributor.
 
+**Damon Major**. Contributor.
+
+
 Citation
 --------
 
