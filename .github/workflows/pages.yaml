@@ -8,15 +8,8 @@ on:
 name: pages
 
 jobs:
-  pages:
+  build-sphinx-site:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    permissions:
-      pages: write
-      id-token: write
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -35,6 +28,17 @@ jobs:
         with:
           path: '_build/html'
 
+  deploy:
+    if: contains(fromJSON('["main", "master"]'), github.ref_name) && github.event_name != 'pull_request'
+    needs: build-sphinx-site
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
