@@ -207,10 +207,10 @@ def mki(assessed, sale_price):
     MKI > 1 is progressive
 
     .. Quintos, C. (2020). A Gini measure for vertical equity in property
-    assessments. https://researchexchange.iaao.org/jptaa/vol17/iss2/2.
+        assessments. https://researchexchange.iaao.org/jptaa/vol17/iss2/2
 
     .. Quintos, C. (2021). A Gini decomposition of the sources of inequality in
-    property assessments. https://researchexchange.iaao.org/jptaa/vol18/iss2/6
+        property assessments. https://researchexchange.iaao.org/jptaa/vol18/iss2/6
 
     :param assessed:
         A numeric vector of assessed values. Must be the same
