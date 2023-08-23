@@ -44,8 +44,8 @@ increase by 100 percent.
 Kakwani Index (KI)
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Kakwani Index (KI) is a Gini-based measure to test for vertical equity. 
-The output is the cumulative distribution of assessed values minus 
+The Kakwani Index (KI) is a Gini-based measure to test for vertical equity.
+The output is the cumulative distribution of assessed values minus
 the distribution of sale prices.
 
 :doc:`ki() <ki>`
@@ -54,12 +54,12 @@ the distribution of sale prices.
 Modified Kakwani Index (MKI)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Modified Kakwani Index (MKI) is a Gini-based measure to test for vertical 
-equity. The output is the cumulative distribution of assessed values divided by 
+The Modified Kakwani Index (MKI) is a Gini-based measure to test for vertical
+equity. The output is the cumulative distribution of assessed values divided by
 the distribution of sale prices.
 
 :doc:`mki() <mki>` |nbsp|
-:doc:`mk_met() <mki_met>` |nbsp|
+:doc:`mki_met() <mki>` |nbsp|
 
 
 Other functions
