@@ -6,7 +6,7 @@ on:
 name: pypi-publish
 
 jobs:
-  pypi-upload:
+  pypi-publish:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
