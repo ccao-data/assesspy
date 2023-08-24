@@ -3,7 +3,7 @@ on:
   release:
     types: [published]
 
-name: pypi-upload
+name: pypi-publish
 
 jobs:
   pypi-upload:
