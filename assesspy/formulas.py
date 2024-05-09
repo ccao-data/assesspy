@@ -176,7 +176,7 @@ def prb(assessed, sale_price, round=None):
 # Calculate the Gini cofficients needed for KI and MKI
 def calculate_gini(assessed, sale_price):
     df = pd.DataFrame({"av": assessed, "sp": sale_price})
-    df = df.sort_values(by="sp")
+    df = df.sort_values(by="sp", kind="mergesort")  # for stable sort results
     assessed_price = df["av"].values
     sale_price = df["sp"].values
     n = len(assessed_price)
