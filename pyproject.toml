@@ -99,3 +99,6 @@ myst_enable_extensions = [
   "dollarmath",
   "html_image"
 ]
+
+[tool.pyright]
+reportUnusedImport = false
