@@ -20,7 +20,7 @@ jobs:
           cache: "pip"
 
       - name: Install dependencies
-        run: pip install . Ruff
+        run: pip install . ruff
 
       - name: Lint with ruff
         run: ruff check --output-format=github .
