@@ -13,7 +13,7 @@ readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
   "numpy >= 1.23.0",
-  "pandas >= 1.4.*",
+  "pandas >= 1.4.0",
   "pyarrow >= 9.0.0",
   "scipy >= 1.8.1",
   "statsmodels >= 0.13.0"
@@ -26,10 +26,13 @@ test = [
 ]
 
 [tool.setuptools]
-include_package_data = true
+include-package-data = true
 
-[tool.setuptools.package_data]
-"" = ["*.parquet"]
+[tool.setuptools.packages.find]
+where = ["assesspy/data"]
+
+[tool.setuptools.package-data]
+"*" = ["*.parquet"]
 
 [project.urls]
 Repository = "https://github.com/ccao-data/assesspy"
