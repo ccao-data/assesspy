@@ -1,43 +1,13 @@
-# Configuration file for the Sphinx documentation builder.
-
 import os
 import sys
 
 sys.path.append(os.path.abspath("../.."))
 
-# -- Project information -------------------------------------------------------
+# Loads config from pyproject.toml
+from sphinx_pyproject import SphinxConfig
+config = SphinxConfig("../../pyproject.toml", globalns=globals())
 
-project = "assesspy"
-author = "Cook County Assessor Data Department"
-copyright = "4022, Cook County Assessor Data Department"
-release = "1.1.0"
-
-# -- General configuration -----------------------------------------------------
-
-extensions = [
-    "sphinx.ext.autodoc",
-    "sphinx.ext.doctest",
-    "myst_nb",
-]
-
-templates_path = ["_templates"]
-exclude_patterns = []
-
+# These options need to stay here since they're dictionaries
+# which can't be parsed by sphinx-pyproject
 source_suffix = {".rst": "restructuredtext", ".ipynb": "myst-nb"}
-
-myst_enable_extensions = [
-    "amsmath",
-    "colon_fence",
-    "deflist",
-    "dollarmath",
-    "html_image",
-]
-
 nb_render_image_options = {"width": "450px", "align": "center"}
-
-# -- Options for HTML output ---------------------------------------------------
-
-highlight_language = "none"
-html_theme = "pydata_sphinx_theme"
-html_logo = "../images/logo.png"
-html_show_copyright = False
