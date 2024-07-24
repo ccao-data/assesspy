@@ -2,6 +2,7 @@
 name = "assesspy"
 version = "0.1.0"
 description = "Python package for measuring assessment performance"
+keywords = ["assessment", "property taxes", "local government"]
 authors = [
   {name = "William Ridgeway", email = "william.ridgeway@cookcountyil.gov"},
   {name = "Dan Snow", email = "daniel.snow@cookcountyil.gov"},
@@ -9,22 +10,30 @@ authors = [
 ]
 license = {file = "LICENSE"}
 readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "numpy >= 1.23.0",
+  "pandas >= 1.4.*",
+  "pyarrow >= 9.0.0",
+  "scipy >= 1.8.1",
+  "statsmodels >= 0.13.0"
+]
+
+[project.optional-dependencies]
+test = [
+  "pytest >= 7.3.0",
+  "pytest-cov >= 4.1.0"
+]
+
+[tool.setuptools]
+include_package_data = true
+
+[tool.setuptools.package_data]
+"" = ["*.parquet"]
 
 [project.urls]
 Repository = "https://github.com/ccao-data/assesspy"
 Documentation = "https://ccao-data.github.io/assesspy/"
-
-[tool.poetry.dependencies]
-python = "^3.9"
-numpy = ">= 1.26.0"
-pandas = "2.*"
-
-[tool.poetry.group.dev.dependencies]
-pyarrow = ">= 13.0.0"
-pytest = ">= 7.3.0"
-pytest-cov = ">= 4.1.0"
-scipy = ">= 1.11.0"
-statsmodels = ">= 0.14.0"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
@@ -42,5 +51,5 @@ envlist = py39, py310, py311
 """
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
