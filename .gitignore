@@ -13,6 +13,7 @@ __pycache__/
 *.egg-info
 *.egg
 *.eggs
+.ipynb_checkpoints/
 
 # Miscellaneous files created by build and test system
 *~
