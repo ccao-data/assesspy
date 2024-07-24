@@ -20,18 +20,20 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.x"
           cache: "pip"
+
+      - name: Install dependencies
+        run: pip install .[docs]
 
       - name: Generate HTML
         run: |
-          pip install .[docs]
           sphinx-build -d _build/doctrees docs/source _build/html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '_build/html'
+          path: "_build/html"
 
   deploy:
     if: contains(fromJSON('["main", "master"]'), github.ref_name) && github.event_name != 'pull_request'

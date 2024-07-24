@@ -24,9 +24,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
 
+      - name: Install dependencies
+        run: pip install .[test]
+
       - name: Run pytest
         run: |
-          pip install .[test]
           pytest --doctest-modules \
             --junitxml=junit/test-results-${{ matrix.python-version }}.xml
 
