@@ -1,0 +1,31 @@
+[project]
+name = "assesspy"
+version = "0.1.0"
+description = "Python package for measuring assessment performance"
+authors = [
+  {name = "William Ridgeway", email = "william.ridgeway@cookcountyil.gov"},
+  {name = "Dan Snow", email = "daniel.snow@cookcountyil.gov"},
+  {name = "Michael Wagner", email = "michael.wagner2@cookcountyil.gov"}
+]
+license = {file = "LICENSE"}
+readme = "README.md"
+
+[project.urls]
+Repository = "https://github.com/ccao-data/assesspy"
+Documentation = "https://ccao-data.github.io/assesspy/"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+numpy = ">= 1.26.0"
+pandas = "2.*"
+
+[tool.poetry.group.dev.dependencies]
+pyarrow = ">= 13.0.0"
+pytest = ">= 7.3.0"
+pytest-cov = ">= 4.1.0"
+scipy = ">= 1.11.0"
+statsmodels = ">= 0.14.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
