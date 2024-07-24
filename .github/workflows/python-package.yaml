@@ -24,7 +24,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: pip install .[test]
+        run: pip install .[dev]
 
       - name: Test installs with tox
-        run: tox
+        run: tox -v --notest
