@@ -1,26 +1,24 @@
 # Compiled python modules.
 *.pyc
 
-# Setuptools distribution folder.
+# Setuptools distribution folder
 dist/
 
-# Pip build folder
+# Pip build folders
 build/
-
-# Python egg metadata, regenerated from source files by setuptools.
-/*.egg-info
-/*.egg
-/*.eggs
-
-# Caches
 .cache
 __pycache__/
+
+# Python egg metadata, regenerated from source files by setuptools.
+*.egg-info
+*.egg
+*.eggs
+
+# Miscellaneous files created by build system
 *~
-.tox/log/GLOB-0.log
-.coverage
+.coverage/
 .coveragerc.txt
+.tox/
+
+# Local virtualenv directory
 venv/
-.Rproj.user
-.tox
-.Rhistory
-.Rproj
