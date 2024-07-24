@@ -14,11 +14,13 @@ __pycache__/
 *.egg
 *.eggs
 
-# Miscellaneous files created by build system
+# Miscellaneous files created by build and test system
 *~
-.coverage/
+.coverage
 .coveragerc.txt
 .tox/
+coverage.xml
+coverage.html
 
 # Local virtualenv directory
 venv/

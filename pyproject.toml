@@ -22,7 +22,9 @@ dependencies = [
 [project.optional-dependencies]
 test = [
   "pytest >= 7.3.0",
-  "pytest-cov >= 4.1.0"
+  "pytest-cov >= 4.1.0",
+  "tox >= 3.24.0",
+  "tox-gh-actions >= 2.3.0"
 ]
 
 [tool.setuptools]
