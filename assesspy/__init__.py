@@ -1,7 +1,7 @@
 from .ci import (
     boot_ci,
     cod_ci,
-    prd_ci
+    prd_ci,
 )
 from .formulas import (
     cod,
@@ -12,12 +12,12 @@ from .formulas import (
     prd_met,
     ki,
     mki,
-    mki_met
+    mki_met,
 )
 from .outliers import (
     iqr_outlier,
     is_outlier,
-    quantile_outlier
+    quantile_outlier,
 )
 from .load_data import ratios_sample
 from .sales_chasing import detect_chasing
