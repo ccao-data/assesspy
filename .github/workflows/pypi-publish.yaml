@@ -7,7 +7,7 @@ name: pypi-publish
 
 jobs:
   pypi-publish:
-    name: Upload release to PyPI
+    name: pypi-publish
     runs-on: ubuntu-latest
     environment:
       name: pypi
