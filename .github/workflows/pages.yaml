@@ -14,19 +14,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Configure pages
+        uses: actions/configure-pages@v5
+
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install .[docs]
+
       - name: Generate HTML
         run: |
-          python -m pip install sphinx myst_nb pydata_sphinx_theme ipykernel pandas statsmodels matplotlib
-          python -m pip install .
           sphinx-build -d _build/doctrees docs/source _build/html
 
-      - name: Configure pages
-        uses: actions/configure-pages@v3
-
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: '_build/html'
+          path: "_build/html"
 
   deploy:
     if: contains(fromJSON('["main", "master"]'), github.ref_name) && github.event_name != 'pull_request'
@@ -41,4 +48,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4

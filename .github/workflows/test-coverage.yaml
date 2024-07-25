@@ -9,31 +9,32 @@ name: test-coverage
 jobs:
   test-coverage:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup python
-        uses: actions/setup-python@v4
+      - name: Setup python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.11
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install .[test]
 
       - name: Run pytest
         run: |
-          pip install pytest pytest-cov
-          pip install -r requirements.txt
-          pytest --cov=./ --cov-report=xml
+          pytest --doctest-modules \
+            --junitxml=junit/test-results-${{ matrix.python-version }}.xml
 
-      - name: Upload to codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage.xml
-
-      - name: Upload artifact
+      - name: Upload artifacts
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: coverage-results
-          path: ./coverage.xml
+          name: pytest-results-${{ matrix.python-version }}
+          path: junit/test-results-${{ matrix.python-version }}.xml

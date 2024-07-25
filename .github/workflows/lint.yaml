@@ -1,0 +1,26 @@
+on:
+  pull_request:
+    branches: [main, master]
+  push:
+    branches: [main, master]
+
+name: lint
+
+jobs:
+  lint-ruff:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install . ruff
+
+      - name: Lint with ruff
+        run: ruff check --output-format=github .
