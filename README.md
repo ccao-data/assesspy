@@ -4,7 +4,7 @@
 [![test-coverage](https://github.com/ccao-data/assesspy/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/ccao-data/assesspy/actions/workflows/test-coverage.yaml)
 [![pre-commit](https://github.com/ccao-data/assesspy/actions/workflows/pre-commit.yaml/badge.svg)](https://github.com/ccao-data/assesspy/actions/workflows/pre-commit.yaml)
 
-Assesspy is a software package for python developed by the Cook County Assessor’s (CCAO)
+Assesspy is a software package for Python developed by the Cook County Assessor’s (CCAO)
 Data Department. It contains many of the functions necessary to perform a standard
 [sales ratio study](https://www.iaao.org/media/standards/Standard_on_Ratio_Studies.pdf).
 
