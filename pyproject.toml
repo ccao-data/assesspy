@@ -8,6 +8,15 @@ authors = [
   {name = "Dan Snow", email = "daniel.snow@cookcountyil.gov"},
   {name = "Michael Wagner", email = "michael.wagner2@cookcountyil.gov"}
 ]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: GNU Affero General Public License v3"
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12"
+]
 license = {file = "LICENSE"}
 readme = "README.md"
 requires-python = ">=3.9"
