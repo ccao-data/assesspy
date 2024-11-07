@@ -39,7 +39,7 @@ jobs:
 
       - name: Run pytest
         run: |
-          uv run pytest --doctest-modules \
+          pytest --doctest-modules \
             --junitxml=junit/test-results-${{ matrix.python-version }}.xml
 
       - name: Upload artifacts
