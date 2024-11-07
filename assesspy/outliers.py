@@ -96,7 +96,9 @@ def is_outlier(x, method="iqr", probs=[0.05, 0.95]):
         ap.is_outlier(ap.ratios_sample().ratio)
     """
 
-    out = {"iqr": iqr_outlier(x), "quantile": quantile_outlier(x, probs)}.get(method)
+    out = {"iqr": iqr_outlier(x), "quantile": quantile_outlier(x, probs)}.get(
+        method
+    )
 
     # Warn about removing data from small samples, as it can severely distort
     # ratio study outcomes

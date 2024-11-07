@@ -162,7 +162,9 @@ with open("assesspy/data/mki_ki.csv", "r") as input_csvfile:
         gini_data_sale.append(first_column)
         gini_data_assessed.append(second_column)
 
-gini_data_assessed = [int(value.replace('"', "")) for value in gini_data_assessed]
+gini_data_assessed = [
+    int(value.replace('"', "")) for value in gini_data_assessed
+]
 gini_data_sale = [int(value.replace('"', "")) for value in gini_data_sale]
 
 mki_out = assesspy.mki(gini_data_assessed, gini_data_sale)

@@ -27,7 +27,9 @@ def detect_chasing_cdf(ratio, bounds=[0.98, 1.02], cdf_gap=0.03):
     # Check if the largest difference is greater than the threshold and make
     # sure it's within the specified boundaries
     diff_loc = sorted_ratio[np.argmax(diffs)]
-    out = (max(diffs) > cdf_gap) & ((diff_loc > bounds[0]) & (diff_loc < bounds[1]))
+    out = (max(diffs) > cdf_gap) & (
+        (diff_loc > bounds[0]) & (diff_loc < bounds[1])
+    )
 
     return out
 

@@ -23,5 +23,7 @@ def ratios_sample():
     :rtype: DataFrame
     """
 
-    stream = pkg_resources.resource_stream(__name__, "data/ratios_sample.parquet")
+    stream = pkg_resources.resource_stream(
+        __name__, "data/ratios_sample.parquet"
+    )
     return pd.read_parquet(stream)

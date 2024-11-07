@@ -54,10 +54,12 @@ def boot_ci(fun, nboot=100, alpha=0.05, **kwargs):
         kwargs.keys()
     ):
         kwargs = (kwargs["assessed"], kwargs["sale_price"])
-    elif fun.__name__ == "prd" and not set(["assessed", "sale_price"]).issubset(
-        kwargs.keys()
-    ):
-        raise Exception("PRD function expects argurments 'assessed' and 'sale_price'.")
+    elif fun.__name__ == "prd" and not set(
+        ["assessed", "sale_price"]
+    ).issubset(kwargs.keys()):
+        raise Exception(
+            "PRD function expects argurments 'assessed' and 'sale_price'."
+        )
     else:
         kwargs = tuple(kwargs.values())
 
