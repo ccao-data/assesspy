@@ -6,6 +6,10 @@ on:
 
 name: test-coverage
 
+env:
+  PYTHONUNBUFFERED: "1"
+  UV_SYSTEM_PYTHON: 1
+
 jobs:
   test-coverage:
     runs-on: ubuntu-latest

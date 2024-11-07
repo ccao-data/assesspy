@@ -6,6 +6,10 @@ on:
 
 name: package-build
 
+env:
+  PYTHONUNBUFFERED: "1"
+  UV_SYSTEM_PYTHON: 1
+
 jobs:
   build:
     runs-on: ubuntu-latest
