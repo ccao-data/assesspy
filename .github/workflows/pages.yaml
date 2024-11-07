@@ -28,17 +28,17 @@ jobs:
           cache-dependency-glob: pyproject.toml
           cache-suffix: docs
 
-      - name: Install Python dependencies
-        run: uv pip install .[docs]
-
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version-file: pyproject.toml
 
+      - name: Install Python dependencies
+        run: uv pip install .[docs]
+
       - name: Generate HTML
         run: |
-          sphinx-build -d _build/doctrees docs/source _build/html
+          uv run sphinx-build -d _build/doctrees docs/source _build/html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

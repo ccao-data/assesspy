@@ -38,6 +38,7 @@ jobs:
         run: |
           uv tool install tox --with tox-uv
           tox --version
+          uv pip install .[test]
 
       - name: Test install with tox
         run: tox r -v --notest
