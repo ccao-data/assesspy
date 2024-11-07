@@ -6,10 +6,6 @@ on:
 
 name: package-build
 
-env:
-  PYTHONUNBUFFERED: "1"
-  UV_SYSTEM_PYTHON: 1
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -38,6 +34,7 @@ jobs:
         run: |
           uv tool install tox --with tox-uv
           tox --version
+          uv pip install .[test]
 
       - name: Test install with tox
         run: |
