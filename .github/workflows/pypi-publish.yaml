@@ -28,13 +28,13 @@ jobs:
           enable-cache: true
           cache-dependency-glob: pyproject.toml
 
-      - name: Install Python dependencies
-        run: uv pip install .
-
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version-file: pyproject.toml
+
+      - name: Install Python dependencies
+        run: uv pip install .
 
       - name: Build Python dist
         run: uv build
