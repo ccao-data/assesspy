@@ -71,19 +71,24 @@ testpaths = "assesspy/tests"
 legacy_tox_ini = """
 [tox]
 min_version = 4.0
-envlist = py39, py38, py310, py311, py312
+envlist = py39, py310, py311, py312
 
-[gh]
-python =
-    3.12 = py312
-    3.11 = py311
-    3.10 = py310
-    3.9 = py39
-    3.8 = py38
+[testenv]
+deps =
+    setuptools>=61.0
 """
+
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.lint]
+extend-select = ["I"]
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]
+
+[tool.pyright]
+reportUnusedImport = false
 
 [tool.sphinx-pyproject]
 github_username = "ccao-data"
@@ -109,6 +114,3 @@ myst_enable_extensions = [
   "dollarmath",
   "html_image"
 ]
-
-[tool.pyright]
-reportUnusedImport = false

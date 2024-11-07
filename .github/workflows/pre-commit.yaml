@@ -5,6 +5,10 @@ on:
 
 name: pre-commit
 
+env:
+  PYTHONUNBUFFERED: "1"
+  UV_SYSTEM_PYTHON: 1
+
 jobs:
   pre-commit:
     runs-on: ubuntu-latest

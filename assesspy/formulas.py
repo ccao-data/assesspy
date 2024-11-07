@@ -165,7 +165,10 @@ def prb(assessed, sale_price, round=None):
     prb_ci = prb_model.conf_int(alpha=0.05)[0].tolist()
 
     if round is not None:
-        out = {"prb": np.round(prb_val, round), "95% ci": np.round(prb_ci, round)}
+        out = {
+            "prb": np.round(prb_val, round),
+            "95% ci": np.round(prb_ci, round),
+        }
 
     else:
         out = {"prb": prb_val, "95% ci": prb_ci}

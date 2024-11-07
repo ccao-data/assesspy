@@ -1,5 +1,6 @@
 import os
 import sys
+
 from sphinx_pyproject import SphinxConfig
 
 sys.path.append(os.path.abspath("../.."))
