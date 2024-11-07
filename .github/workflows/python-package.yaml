@@ -18,14 +18,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup python ${{ matrix.python-version }}
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+          cache-dependency-glob: pyproject.toml
+
+      - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: "pip"
 
       - name: Install tox
-        run: pip install tox-gh>=1.3.0
+        shell: bash
+        run: |
+          uv tool install tox --with tox-uv
+          tox --version
 
       - name: Test install with tox
-        run: tox -v --notest
+        run: tox r -v --notest

@@ -7,6 +7,10 @@ on:
 
 name: pages
 
+env:
+  PYTHONUNBUFFERED: "1"
+  UV_SYSTEM_PYTHON: 1
+
 jobs:
   build-sphinx-site:
     runs-on: ubuntu-latest
@@ -17,14 +21,20 @@ jobs:
       - name: Configure pages
         uses: actions/configure-pages@v5
 
-      - name: Setup python
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+          cache-dependency-glob: pyproject.toml
+          cache-suffix: docs
+
+      - name: Install Python dependencies
+        run: uv pip install .[docs]
+
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
-          cache: "pip"
-
-      - name: Install dependencies
-        run: pip install .[docs]
+          python-version-file: pyproject.toml
 
       - name: Generate HTML
         run: |
