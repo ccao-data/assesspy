@@ -73,13 +73,6 @@ legacy_tox_ini = """
 min_version = 4.0
 envlist = py39, py310, py311, py312
 
-[gh]
-python =
-    3.12 = py312
-    3.11 = py311
-    3.10 = py310
-    3.9 = py39
-
 [testenv]
 deps =
     setuptools>=61.0
