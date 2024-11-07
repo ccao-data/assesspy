@@ -82,8 +82,17 @@ python =
     3.8 = py38
 """
 
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.lint]
+extend-select = ["I"]
+
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]
+
+[tool.pyright]
+reportUnusedImport = false
 
 [tool.sphinx-pyproject]
 github_username = "ccao-data"
@@ -109,6 +118,3 @@ myst_enable_extensions = [
   "dollarmath",
   "html_image"
 ]
-
-[tool.pyright]
-reportUnusedImport = false
