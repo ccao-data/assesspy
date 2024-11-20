@@ -2,6 +2,7 @@ from .ci import (
     boot_ci,
     cod_ci,
     prd_ci,
+    prb_ci,
 )
 from .metrics import (
     cod,
