@@ -44,7 +44,7 @@ increase by 100 percent.
 
 
 Kakwani Index (KI)
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 The Kakwani Index (KI) is a Gini-based measure to test for vertical equity.
 The output is the ordered cumulative distribution of assessed values minus
@@ -54,7 +54,7 @@ the ordered distribution of sale prices.
 
 
 Modified Kakwani Index (MKI)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Modified Kakwani Index (MKI) is a Gini-based measure to test for vertical
 equity. The output is the ordered cumulative distribution of assessed values
@@ -67,7 +67,7 @@ divided by the ordered distribution of sale prices.
 Other functions
 ^^^^^^^^^^^^^^^
 
-| Calculate bootstrapped confidence intervals
+| Calculate confidence intervals
 
 :doc:`boot_ci() <ci>`
 
