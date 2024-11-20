@@ -34,8 +34,8 @@ def cod(
     :param sale_price:
         A list or ``pd.Series`` of sale prices.
         Must be the same length as ``estimate``.
-    :type estimate: pd.Series
-    :type sale_price: pd.Series
+    :type estimate: list[int] | list[float] | pd.Series
+    :type sale_price: list[int] | list[float] | pd.Series
 
     :return: A single float value containing the COD of the inputs.
     :rtype: float
@@ -64,8 +64,8 @@ def cod(
 
 
 def prd(
-    estimate: list[float | int] | pd.Series,
-    sale_price: list[float | int] | pd.Series,
+    estimate: list[int] | list[float] | pd.Series,
+    sale_price: list[int] | list[float] | pd.Series,
 ) -> float:
     """
     PRD is the mean ratio divided by the mean ratio weighted by sale
@@ -91,8 +91,8 @@ def prd(
     :param sale_price:
         A list or ``pd.Series`` of sale prices.
         Must be the same length as ``estimate``.
-    :type estimate: pd.Series
-    :type sale_price: pd.Series
+    :type estimate: list[int] | list[float] | pd.Series
+    :type sale_price: list[int] | list[float] | pd.Series
 
     :return: A single float value containing the PRD of the inputs.
     :rtype: float
@@ -119,8 +119,8 @@ def prd(
 
 
 def prb(
-    estimate: list[float | int] | pd.Series,
-    sale_price: list[float | int] | pd.Series,
+    estimate: list[int] | list[float] | pd.Series,
+    sale_price: list[int] | list[float] | pd.Series,
 ) -> float:
     r"""
     PRB is an index of vertical equity that quantifies the
@@ -143,8 +143,8 @@ def prb(
     :param sale_price:
         A list or ``pd.Series`` of sale prices.
         Must be the same length as ``estimate``.
-    :type estimate: pd.Series
-    :type sale_price: pd.Series
+    :type estimate: list[int] | list[float] | pd.Series
+    :type sale_price: list[int] | list[float] | pd.Series
 
     :return: A single float value containing the PRB of the inputs.
     :rtype: float
@@ -205,49 +205,49 @@ def _calculate_gini(
 
 
 def mki(
-    estimate: list[float | int] | pd.Series,
-    sale_price: list[float | int] | pd.Series,
+    estimate: list[int] | list[float] | pd.Series,
+    sale_price: list[int] | list[float] | pd.Series,
 ) -> float:
     r"""
-        The Modified Kakwani Index (MKI) is a Gini-based measure to test for
-        vertical equity in assessment. It first orders properties by sale price
-        (ascending), then calculates the Gini coefficient for sale values
-        and estimated values (while remaining ordered by sale price). The
-        Modified Kakwani Index is the ratio between the coefficients:
-        $Gini of Estimated Values / Gini of Sale Prices$.
-    _
-        For the Modified Kakwani Index:
+    The Modified Kakwani Index (MKI) is a Gini-based measure to test for
+    vertical equity in assessment. It first orders properties by sale price
+    (ascending), then calculates the Gini coefficient for sale values
+    and estimated values (while remaining ordered by sale price). The
+    Modified Kakwani Index is the ratio between the coefficients:
+    $Gini of Estimated Values / Gini of Sale Prices$.
 
-        MKI < 1 is regressive
-        MKI = 1 is vertical equity
-        MKI > 1 is progressive
+    For the Modified Kakwani Index:
 
-        .. Quintos, C. (2020). A Gini measure for vertical equity in property
-            assessments. https://researchexchange.iaao.org/jptaa/vol17/iss2/2
+    MKI < 1 is regressive
+    MKI = 1 is vertical equity
+    MKI > 1 is progressive
 
-        .. Quintos, C. (2021). A Gini decomposition of the sources of inequality in
-            property assessments. https://researchexchange.iaao.org/jptaa/vol18/iss2/6
+    .. Quintos, C. (2020). A Gini measure for vertical equity in property
+        assessments. https://researchexchange.iaao.org/jptaa/vol17/iss2/2
 
-        :param estimate:
-            A list or ``pd.Series`` of estimated values.
-            Must be the same length as ``sale_price``.
-        :param sale_price:
-            A list or ``pd.Series`` of sale prices.
-            Must be the same length as ``estimate``.
-        :type estimate: pd.Series
-        :type sale_price: pd.Series
+    .. Quintos, C. (2021). A Gini decomposition of the sources of inequality in
+        property assessments. https://researchexchange.iaao.org/jptaa/vol18/iss2/6
 
-        :return: A single float value containing the MKI of the inputs.
-        :rtype: float
+    :param estimate:
+        A list or ``pd.Series`` of estimated values.
+        Must be the same length as ``sale_price``.
+    :param sale_price:
+        A list or ``pd.Series`` of sale prices.
+        Must be the same length as ``estimate``.
+    :type estimate: list[int] | list[float] | pd.Series
+    :type sale_price: list[int] | list[float] | pd.Series
 
-        :Example:
+    :return: A single float value containing the MKI of the inputs.
+    :rtype: float
 
-        .. code-block:: python
+    :Example:
 
-            # Calculate MKI:
-            import assesspy as ap
+    .. code-block:: python
 
-            ap.mki(ap.ccao_sample().estimate, ap.ccao_sample().sale_price)
+        # Calculate MKI:
+        import assesspy as ap
+
+        ap.mki(ap.ccao_sample().estimate, ap.ccao_sample().sale_price)
     """
     check_inputs(estimate, sale_price)
     estimate = pd.Series(estimate, dtype=float)
@@ -260,8 +260,8 @@ def mki(
 
 
 def ki(
-    estimate: list[float | int] | pd.Series,
-    sale_price: list[float | int] | pd.Series,
+    estimate: list[int] | list[float] | pd.Series,
+    sale_price: list[int] | list[float] | pd.Series,
 ) -> float:
     r"""
     The Kakwani Index (KI) is a Gini-based measure to test for
@@ -283,8 +283,8 @@ def ki(
     :param sale_price:
         A list or ``pd.Series`` of sale prices.
         Must be the same length as ``estimate``.
-    :type estimate: pd.Series
-    :type sale_price: pd.Series
+    :type estimate: list[int] | list[float] | pd.Series
+    :type sale_price: list[int] | list[float] | pd.Series
 
     :return: A single float value containing the PRB of the inputs.
     :rtype: float
