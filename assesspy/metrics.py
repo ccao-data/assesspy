@@ -311,16 +311,55 @@ def ki(
 
 # Functions to determine whether IAAO/Quintos fairness criteria is met
 def cod_met(x: float) -> bool:
-    return 5 <= x <= 15
+    """
+    Check whether COD meets IAAO standards (between 5 and 15, inclusive).
+
+    :param x: A single float value containing the COD.
+    :type x: float
+
+    :return: A boolean value indicating whether the COD meets IAAO standards.
+    :rtype: bool
+    """
+    return 5 < x <= 15
 
 
 def prd_met(x: float) -> bool:
-    return 0.98 <= x <= 1.03
+    """
+    Check whether PRD meets IAAO standards (between 0.98 and 1.03, inclusive).
+
+    :param x: A single float value containing the PRD.
+    :type x: float
+
+    :return: A boolean value indicating whether the PRD meets IAAO standards.
+    :rtype: bool
+    """
+    return 0.98 < x <= 1.03
 
 
 def prb_met(x: float) -> bool:
-    return -0.05 <= x <= 0.05
+    """
+    Check whether PRB meets IAAO standards (between -0.05 and 0.05, inclusive).
+
+    :param x: A single float value containing the PRB.
+    :type x: float
+
+    :return: A boolean value indicating whether the PRB meets IAAO standards.
+    :rtype: bool
+    """
+    return -0.05 < x <= 0.05
 
 
 def mki_met(x: float) -> bool:
-    return 0.95 <= x <= 1.05
+    """
+    Check whether MKI meets the recommendations outlined by Quintos
+    (between 0.95 and 1.05, inclusive).
+
+    :param x: A single float value containing the MKI.
+    :type x: float
+
+    :return:
+        A boolean value indicating whether the MKI meets
+        Quintos' recommendations.
+    :rtype: bool
+    """
+    return 0.95 < x <= 1.05
