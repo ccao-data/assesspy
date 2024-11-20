@@ -3,18 +3,26 @@ import pytest as pt
 
 import assesspy as ap
 
+# Load random CCAO value sample
 ratios_sample = ap.ratios_sample()
 estimate = ratios_sample.estimate
 sale_price = ratios_sample.sale_price
 
+# Load MKI / KI data from Quintos paper
+gini_data = pd.read_csv("assesspy/data/mki_ki.csv", header=None)
+gini_estimate = gini_data[1]
+gini_sale_price = gini_data[0]
+
 
 class TestMetrics:
-    @pt.fixture(params=["cod", "prd", "prb"])
+    @pt.fixture(params=["cod", "prd", "prb", "mki", "ki"])
     def metric(self, request):
         return request.param
 
     @pt.fixture
     def metric_val(self, metric):
+        if metric in ["mki", "ki"]:
+            return getattr(ap, metric)(gini_estimate, gini_sale_price)
         return getattr(ap, metric)(estimate, sale_price)
 
     def test_metric(self, metric, metric_val):
@@ -22,6 +30,8 @@ class TestMetrics:
             "cod": 17.81456901196891,
             "prd": 1.0484192615223522,
             "prb": 0.0009470721642262903,
+            "mki": 0.794,
+            "ki": -0.06,
         }
         assert pt.approx(metric_val, rel=0.02) == expected_values[metric]
 
@@ -69,118 +79,14 @@ class TestMetrics:
             pt.fail(f"Unexpected exception {e}")
 
     def test_metric_met(self, metric, metric_val):
+        if metric == "ki":
+            pt.skip("Skipping test for 'ki' metric (ki_met does not exist)")
         expected_values = {
             "cod": False,
             "prd": False,
             "prb": True,
+            "mki": False,
         }
         assert (
             getattr(ap, f"{metric}_met")(metric_val) == expected_values[metric]
         )
-
-
-with open("assesspy/data/mki_ki.csv", "r") as input_csvfile:
-    # Create a list to store the extracted columns
-    gini_data_sale = []
-    gini_data_assessed = []
-
-    # Iterate through each line in the input CSV
-    for line in input_csvfile:
-        columns = line.strip().split(",")
-
-        first_column = columns[0].split('"')[1]
-        second_column = columns[1]
-
-        gini_data_sale.append(first_column)
-        gini_data_assessed.append(second_column)
-
-gini_data_assessed = [
-    int(value.replace('"', "")) for value in gini_data_assessed
-]
-gini_data_sale = [int(value.replace('"', "")) for value in gini_data_sale]
-
-mki_out = ap.mki(gini_data_assessed, gini_data_sale)
-
-
-class Test_MKI:
-    def test_mki(self):  # Output equal to expected
-        npt.assert_allclose(mki_out, 0.794, rtol=0.02)
-
-    def test_numeric_output(self):  # Output is numeric
-        assert type(mki_out) is float
-
-        with pt.raises(Exception):
-            ap.mki([1, 1, 1], [1, 1])
-
-        with pt.raises(Exception):
-            ap.mki(10, 10)
-
-        with pt.raises(Exception):
-            ap.mki(
-                pd.concat([gini_data_assessed, pd.Series(float("Inf"))]),
-                pd.concat([gini_data_sale, pd.Series(1.0)]),
-            )
-
-        with pt.raises(Exception):
-            ap.mki(pd.DataFrame(ratio))
-
-        with pt.raises(Exception):
-            ap.mki(
-                pd.concat([gini_data_assessed, pd.Series(float("NaN"))]),
-                pd.concat([gini_data_sale, pd.Series(1.0)]),
-            )
-
-        with pt.raises(Exception):
-            ap.mki([1] * 30, [1] * 29 + ["1"])
-
-    def test_round(self):  # Rounding must be int
-        with pt.raises(Exception):
-            ap.mki(gini_data_assessed, sale_price, "z")
-
-        with pt.raises(Exception):
-            ap.mki(gini_data_assessed, sale_price, 1.1)
-
-    def test_mki_met(self):  # Standard met function
-        assert not ap.mki_met(mki_out)
-
-
-ki_out = ap.ki(gini_data_assessed, gini_data_sale)
-
-
-class Test_KI:
-    def test_ki(self):  # Output equal to expected
-        npt.assert_allclose(ki_out, -0.06, rtol=0.02)
-
-    def test_numeric_output(self):  # Output is numeric
-        assert type(ki_out) is float
-
-        with pt.raises(Exception):
-            ap.ki([1, 1, 1], [1, 1])
-
-        with pt.raises(Exception):
-            ap.ki(10, 10)
-
-        with pt.raises(Exception):
-            ap.ki(
-                pd.concat([gini_data_assessed, pd.Series(float("Inf"))]),
-                pd.concat([gini_data_sale, pd.Series(1.0)]),
-            )
-
-        with pt.raises(Exception):
-            ap.ki(pd.DataFrame(ratio))
-
-        with pt.raises(Exception):
-            ap.ki(
-                pd.concat([gini_data_assessed, pd.Series(float("NaN"))]),
-                pd.concat([gini_data_sale, pd.Series(1.0)]),
-            )
-
-        with pt.raises(Exception):
-            ap.ki([1] * 30, [1] * 29 + ["1"])
-
-    def test_round(self):  # Rounding must be int
-        with pt.raises(Exception):
-            ap.ki(gini_data_assessed, gini_data_sale, "z")
-
-        with pt.raises(Exception):
-            ap.ki(gini_data_assessed, gini_data_sale, 1.1)
