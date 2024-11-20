@@ -1,6 +1,6 @@
 [project]
 name = "assesspy"
-version = "1.2.0"
+version = "2.0.0"
 description = "Python package for measuring assessment performance"
 keywords = ["assessment", "property taxes", "local government"]
 authors = [
@@ -96,7 +96,7 @@ reportUnusedImport = false
 github_username = "ccao-data"
 github_repository = "assesspy"
 project = "assesspy"
-copyright = "2022, Cook County Assessor's Office"
+copyright = "2024, Cook County Assessor's Office"
 language = "en"
 package_root = "assesspy"
 extensions = [
