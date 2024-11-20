@@ -25,4 +25,3 @@ from .outliers import (
     quantile_outlier,
 )
 from .sales_chasing import detect_chasing
-from .utils import check_inputs
