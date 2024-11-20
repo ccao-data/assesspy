@@ -16,6 +16,7 @@ properties with a similar fair market value should be similarly assessed.
 :doc:`cod_ci() <cod>` |nbsp|
 :doc:`cod_met() <cod>`
 
+
 Price-Related Differential (PRD)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -27,6 +28,7 @@ similarly assessed.
 :doc:`prd() <prd>` |nbsp|
 :doc:`prd_ci() <prd>` |nbsp|
 :doc:`prd_met() <prd>`
+
 
 Price-Related Bias (PRB)
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -45,8 +47,8 @@ Kakwani Index (KI)
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Kakwani Index (KI) is a Gini-based measure to test for vertical equity.
-The output is the cumulative distribution of assessed values minus
-the distribution of sale prices.
+The output is the ordered cumulative distribution of assessed values minus
+the ordered distribution of sale prices.
 
 :doc:`ki() <ki>`
 
@@ -55,8 +57,8 @@ Modified Kakwani Index (MKI)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Modified Kakwani Index (MKI) is a Gini-based measure to test for vertical
-equity. The output is the cumulative distribution of assessed values divided by
-the distribution of sale prices.
+equity. The output is the ordered cumulative distribution of assessed values
+divided by the ordered distribution of sale prices.
 
 :doc:`mki() <mki>` |nbsp|
 :doc:`mki_met() <mki>` |nbsp|
@@ -69,24 +71,25 @@ Other functions
 
 :doc:`boot_ci() <ci>`
 
-| Detect sales chasing in a vector of sales ratios
+| Detect sales chasing in sale ratios
 
 :doc:`detect_chasing() <sales_chasing>` |nbsp|
 :doc:`detect_chasing_cdf() <sales_chasing>` |nbsp|
 :doc:`detect_chasing_dist() <sales_chasing>`
 
-| Calculate bootstrapped confidence intervals
+| Detect outlier values
 
 :doc:`is_outlier() <outliers>` |nbsp|
 :doc:`quantile_outlier() <outliers>` |nbsp|
 :doc:`iqr_outlier() <outliers>`
+
 
 Data
 ----
 
 | Sample data used for testing and demonstrations
 
-:doc:`ratios_sample() <ratios_sample>`
-:doc:`mki_ki() <mki_ki>`
+:doc:`ccao_sample() <ccao_sample>`
+:doc:`quintos_sample() <quintos_sample>`
 
 .. |nbsp| unicode:: 0xA0

@@ -1,5 +1,5 @@
 =======================================================
-Sample of ratio and sales data pulled from CCAO records
+Sample data from Quintos studies
 =======================================================
 
-.. autofunction:: assesspy.ratios_sample
+.. autofunction:: assesspy.quintos_sample
