@@ -2,7 +2,7 @@
 import pandas as pd
 from pandas.api.types import is_numeric_dtype
 
-from .formulas import cod, prd
+from .metrics import cod, prd
 from .utils import check_inputs
 
 

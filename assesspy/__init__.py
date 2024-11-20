@@ -3,16 +3,16 @@ from .ci import (
     cod_ci,
     prd_ci,
 )
-from .formulas import (
+from .metrics import (
     cod,
-    cod_met,
-    ki,
-    mki,
-    mki_met,
-    prb,
-    prb_met,
     prd,
+    prb,
+    mki,
+    ki,
+    cod_met,
     prd_met,
+    prb_met,
+    mki_met,
 )
 from .load_data import ratios_sample
 from .outliers import (

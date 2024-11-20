@@ -1,11 +1,10 @@
-# Import necessary libraries
 import numpy as np
 import pandas as pd
 from pandas.api.types import is_numeric_dtype
 
 
-def check_inputs(*args):
-    out = [""]
+def check_inputs(*args) -> None:
+    out_msg = [""]
 
     for x in args:
         # *args passed into *args can created nested tuples - unnest
@@ -13,23 +12,23 @@ def check_inputs(*args):
             args = x
 
     for x in args:
-        if isinstance(x, pd.core.frame.DataFrame):
-            raise Exception("Input cannot be a dataframe.")
-
         check = pd.Series(x)
 
         if not is_numeric_dtype(check):
-            raise Exception("All input vectors must be numeric.")
-        if check.isnull().values.any():
-            out.append("\nInput vectors contain null values.")
+            out_msg.append("\nAll input values must be numeric.")
+        if check.isnull().any():
+            out_msg.append("\nAll input values cannot be null.")
         if len(check) <= 1:
-            out.append("\nAll input vectors must have length greater than 1.")
+            out_msg.append("\nAll input values must have length greater than 1.")
         if not all(np.isfinite(check) | check.isnull()):
-            out.append("\nInfinite values in input vectors.")
-        if any(check == 0):
-            out.append("\nInput vectors cannot contain values of 0.")
+            out_msg.append("\nAll input values cannot be infinite.")
+        if any(check <= 0):
+            out_msg.append("\nAll input values must be greater than 0.")
 
-    out = set(out)
+    lengths = [len(pd.Series(x)) for x in args]
+    if len(set(lengths)) > 1:
+        out_msg.append("\nAll input values must have the same length.")
 
-    if len(out) > 1:
-        raise Exception("".join(map(str, out)))
+    out_msg_set = set(out_msg)
+    if len(out_msg_set) > 1:
+        raise Exception("".join(map(str, out_msg_set)))
