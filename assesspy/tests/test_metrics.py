@@ -4,14 +4,14 @@ import pytest as pt
 import assesspy as ap
 
 # Load random CCAO value sample
-ratios_sample = ap.ratios_sample()
-estimate = ratios_sample.estimate
-sale_price = ratios_sample.sale_price
+ccao_sample = ap.ccao_sample()
+estimate = ccao_sample.estimate
+sale_price = ccao_sample.sale_price
 
 # Load MKI / KI data from Quintos paper
-gini_data = pd.read_csv("assesspy/data/mki_ki.csv", header=None)
-gini_estimate = gini_data[1]
-gini_sale_price = gini_data[0]
+gini_data = ap.quintos_sample()
+gini_estimate = gini_data.estimate
+gini_sale_price = gini_data.sale_price
 
 
 class TestMetrics:

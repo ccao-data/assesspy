@@ -47,7 +47,7 @@ def cod(
         # Calculate COD:
         import assesspy as ap
 
-        ap.cod(ap.ratios_sample().estimate, ap.ratios_sample().sale_price)
+        ap.cod(ap.ccao_sample().estimate, ap.ccao_sample().sale_price)
     """
     check_inputs(estimate, sale_price)
     estimate = pd.Series(estimate, dtype=float)
@@ -104,7 +104,7 @@ def prd(
         # Calculate PRD:
         import assesspy as ap
 
-        ap.prd(ap.ratios_sample().estimate, ap.ratios_sample().sale_price)
+        ap.prd(ap.ccao_sample().estimate, ap.ccao_sample().sale_price)
     """
     check_inputs(estimate, sale_price)
     estimate = pd.Series(estimate, dtype=float)
@@ -156,7 +156,7 @@ def prb(
         # Calculate PRB:
         import assesspy as ap
 
-        ap.prb(ap.ratios_sample().estimate, ap.ratios_sample().sale_price)
+        ap.prb(ap.ccao_sample().estimate, ap.ccao_sample().sale_price)
     """
     check_inputs(estimate, sale_price)
     estimate = pd.Series(estimate, dtype=float)
@@ -247,7 +247,7 @@ def mki(
             # Calculate MKI:
             import assesspy as ap
 
-            ap.mki(ap.ratios_sample().estimate, ap.ratios_sample().sale_price)
+            ap.mki(ap.ccao_sample().estimate, ap.ccao_sample().sale_price)
     """
     check_inputs(estimate, sale_price)
     estimate = pd.Series(estimate, dtype=float)
@@ -296,7 +296,7 @@ def ki(
         # Calculate KI:
         import assesspy as ap
 
-        ap.ki(ap.ratios_sample().estimate, ap.ratios_sample().sale_price)
+        ap.ki(ap.ccao_sample().estimate, ap.ccao_sample().sale_price)
     """
 
     check_inputs(estimate, sale_price)

@@ -14,7 +14,10 @@ from .metrics import (
     prb_met,
     mki_met,
 )
-from .load_data import ratios_sample
+from .load_data import (
+    ccao_sample,
+    quintos_sample
+)
 from .outliers import (
     iqr_outlier,
     is_outlier,
