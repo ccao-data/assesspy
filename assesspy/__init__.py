@@ -19,9 +19,5 @@ from .load_data import (
     ccao_sample,
     quintos_sample
 )
-from .outliers import (
-    iqr_outlier,
-    is_outlier,
-    quantile_outlier,
-)
+from .outliers import is_outlier
 from .sales_chasing import detect_chasing

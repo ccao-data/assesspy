@@ -1,58 +1,57 @@
-# Import necessary libraries
-import numbers
 import warnings
 
 import numpy as np
+import pandas as pd
 from scipy import stats
 
 from .utils import check_inputs
 
 
-# Outlier functions
-def quantile_outlier(x, probs=[0.05, 0.95]):
+def _quantile_outlier(
+    x: list[int] | list[float] | pd.Series,
+    probs: tuple[float, float] = (0.05, 0.95),
+) -> pd.Series[bool]:
     """
-    Quantile method for identifying outliers.
-
+    Quantile method for identifying outliers. This simply identifies data
+    within the percentiles specified in the ``probs`` parameter.
     """
-
     check_inputs(x)
+    if not isinstance(x, pd.Series):
+        x = pd.Series(x)
 
-    # Determine valid range of the data
-    range = [np.quantile(a=x, q=probs[0]), np.quantile(a=x, q=probs[1])]
-
-    # Determine which input values are in range
-    out = (x < range[0]) | (x > range[1])
+    # Determine which input values are in the valid quantile range
+    valid_range = [x.quantile(q=probs[0]), x.quantile(q=probs[1])]
+    out = (x < valid_range[0]) | (x > valid_range[1])
 
     return out
 
 
-def iqr_outlier(x, mult=3):
+def _iqr_outlier(
+    x: list[int] | list[float] | pd.Series,
+    mult: int = 3
+) -> pd.Series[bool]:
     """
-    IQR method for identifying outliers.
-
+    IQR method for identifying outliers as specified in Appendix B.1
+    of the IAAO Standard on Ratio Studies.
     """
-
     check_inputs(x)
+    if not isinstance(x, pd.Series):
+        x = pd.Series(x)
 
-    # Check that inputs are well-formed numeric vector
-    if isinstance(mult, numbers.Number) & mult > 0:
-        # Calculate quartiles and mult*IQR
-        quartiles = [np.quantile(a=x, q=0.25), np.quantile(a=x, q=0.75)]
+    # Calculate quartiles and mult*IQR
+    quartiles = [x.quantile(q=0.25), x.quantile(q=0.75)]
+    iqr_mult = mult * stats.iqr(x)
+    out = (x < (quartiles[0] - iqr_mult)) | (x > (quartiles[1] + iqr_mult))
 
-        iqr_mult = mult * stats.iqr(x)
+    # Warn if IQR trimmed values are also within 95% CI. This indicates
+    # potentially non-normal/narrow distribution of data
+    if any(out & (not _quantile_outlier(x))):
+        warnings.warn(
+            "Some values flagged as outliers despite being within 95% CI."
+            "Check for narrow or skewed distribution."
+        )
 
-        # Find values that are outliers
-        out = (x < (quartiles[0] - iqr_mult)) | (x > (quartiles[1] + iqr_mult))
-
-        # Warn if IQR trimmed values are within 95% CI. This indicates
-        # potentially non-normal/narrow distribution of data
-        if any(out & (quantile_outlier(x) == False)):  # noqa
-            warnings.warn(
-                """Some values flagged as outliers despite being within 95% CI.
-                Check for narrow or skewed distribution."""
-            )
-
-        return out
+    return out
 
 
 def is_outlier(x, method="iqr", probs=[0.05, 0.95]):
@@ -96,9 +95,10 @@ def is_outlier(x, method="iqr", probs=[0.05, 0.95]):
         ap.is_outlier(ap.ratios_sample().ratio)
     """
 
-    out = {"iqr": iqr_outlier(x), "quantile": quantile_outlier(x, probs)}.get(
-        method
-    )
+    out = {
+        "iqr": _iqr_outlier(x),
+        "quantile": _quantile_outlier(x, probs),
+    }.get(method)
 
     # Warn about removing data from small samples, as it can severely distort
     # ratio study outcomes

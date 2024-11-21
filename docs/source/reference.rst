@@ -80,8 +80,6 @@ Other functions
 | Detect outlier values
 
 :doc:`is_outlier() <outliers>` |nbsp|
-:doc:`quantile_outlier() <outliers>` |nbsp|
-:doc:`iqr_outlier() <outliers>`
 
 
 Data
