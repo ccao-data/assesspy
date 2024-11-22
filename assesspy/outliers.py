@@ -13,7 +13,7 @@ def _quantile_outlier(
     Quantile method for identifying outliers. This simply identifies data
     within the percentiles specified in the ``probs`` parameter.
     """
-    check_inputs(x)
+    check_inputs(x, check_gt_zero=False)
     x = pd.Series(x)
 
     # Determine which input values are in the valid quantile range
@@ -30,7 +30,7 @@ def _iqr_outlier(
     IQR method for identifying outliers as specified in Appendix B.1
     of the IAAO Standard on Ratio Studies.
     """
-    check_inputs(x)
+    check_inputs(x, check_gt_zero=False)
     x = pd.Series(x)
 
     quartiles = [x.quantile(q=0.25), x.quantile(q=0.75)]

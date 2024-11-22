@@ -1,69 +1,92 @@
-# Import necessary libraries
 import numpy as np
 import pandas as pd
 import pytest as pt
 
-import assesspy
-
-# Create test vectors of data with certain distributions
-np.random.seed(13378)
-
-# Normal distribution, no outliers
-test_dist1 = np.random.normal(size=100)
-
-# Normal distribution, some outliers
-test_dist2 = np.append(np.random.normal(size=100), [3, 4, 5, 6, 7])
-
-# Non-normal, super narrow distribution
-test_dist3 = np.append(
-    np.append(np.random.uniform(size=20), np.repeat(1, 50)), [5, 6, 7]
-)
-
-# Create outputs for all distributions
-dist1_iqr_out = assesspy.is_outlier(test_dist1, method="iqr")
-dist1_qnt_out = assesspy.is_outlier(test_dist1, method="quantile")
-dist2_iqr_out = assesspy.is_outlier(test_dist2, method="iqr")
-dist2_qnt_out = assesspy.is_outlier(test_dist2, method="quantile")
-
-##### TEST OUTLIER ##### # noqa
+import assesspy as ap
 
 
-class TestOUTTIES:
-    def test_output_type(self):  # Output is logical array
-        assert type(dist1_iqr_out[0]) is np.bool_
-        assert type(dist1_iqr_out) is np.ndarray
+class TestOutlierDetection:
+    @pt.fixture(autouse=True)
+    def set_seed(self):
+        np.random.seed(42)
 
-        assert type(dist1_qnt_out[0]) is np.bool_
-        assert type(dist1_qnt_out) is np.ndarray
+    @pt.fixture
+    def normal_dist(self):
+        return np.random.normal(size=100).tolist()
 
-    def test_output_value(self):
-        assert sum(dist1_iqr_out) == 0
-        assert sum(dist1_qnt_out) == 10
-        assert sum(dist2_iqr_out) == 3
-        assert sum(dist2_qnt_out) == 12
+    @pt.fixture
+    def outlier_dist(self):
+        return np.append(np.random.normal(size=100), [3, 4, 5, 6, 7]).tolist()
 
-    def test_bad_input(self):  # Bad input data stops execution
+    @pt.fixture
+    def narrow_dist(self):
+        return np.append(
+            np.append(np.random.uniform(size=20), np.repeat(1, 50)), [5, 6, 7]
+        ).tolist()
+
+    @pt.fixture(autouse=True)
+    def setup_dists(self, normal_dist, outlier_dist, narrow_dist):
+        self.normal_iqr = ap.is_outlier(normal_dist, method="iqr")
+        self.normal_quantile = ap.is_outlier(normal_dist, method="quantile")
+        self.outlier_iqr = ap.is_outlier(outlier_dist, method="iqr")
+        self.outlier_quantile = ap.is_outlier(outlier_dist, method="quantile")
+
+    @pt.fixture(autouse=True)
+    def setup_data(self, ccao_data, quintos_data):
+        self.ccao_iqr = ap.is_outlier(ccao_data[0], method="iqr")
+        self.ccao_quantile = ap.is_outlier(ccao_data[0], method="quantile")
+        self.quintos_iqr = ap.is_outlier(quintos_data[0], method="iqr")
+        self.quintos_quantile = ap.is_outlier(quintos_data[0], method="quantile")
+
+    def test_is_outlier_output_is_boolean_array(self):
+        assert isinstance(self.normal_iqr, pd.Series)
+        assert self.normal_iqr.dtype == np.bool_
+        assert isinstance(self.normal_quantile, pd.Series)
+        assert self.normal_quantile.dtype == np.bool_
+
+    @pt.mark.parametrize(
+        "result,expected",
+        [
+            ("normal_iqr", 0),
+            ("normal_quantile", 10),
+            ("outlier_iqr", 2),
+            ("outlier_quantile", 12),
+            ("ccao_iqr", 4),
+            ("ccao_quantile", 98),
+            ("quintos_iqr", 0),
+            ("quintos_quantile", 4),
+        ],
+    )
+    def test_is_outlier_has_outlier_counts(self, result, expected):
+        assert sum(getattr(self, result)) == expected
+
+    @pt.mark.parametrize(
+        "bad_input",
+        [
+            10,
+            pd.DataFrame([1, 2, 3]),
+            [1] * 29 + ["1"],
+        ],
+    )
+    def test_is_outlier_raises_on_bad_input(self, bad_input):
         with pt.raises(Exception):
-            assesspy.is_outlier([1] * 29 + [0])
+            ap.is_outlier(bad_input)
 
+    @pt.mark.parametrize(
+        "input_data",
+        [
+            lambda normal_dist: np.append(normal_dist, float("Inf")),
+            lambda normal_dist: np.append(normal_dist, float("NaN")),
+        ],
+    )
+    def test_is_outlier_raises_on_invalid_values(self, input_data, normal_dist):
         with pt.raises(Exception):
-            assesspy.is_outlier(10)
+            ap.is_outlier(input_data(normal_dist))
 
-        with pt.raises(Exception):
-            assesspy.is_outlier(np.append(test_dist1, float("Inf")))
-
-        with pt.raises(Exception):
-            assesspy.is_outlier(pd.DataFrame(test_dist1))
-
-        with pt.raises(Exception):
-            assesspy.is_outlier(np.append(test_dist1, float("NaN")))
-
-        with pt.raises(Exception):
-            assesspy.is_outlier([1] * 29 + ["1"])
-
-    def test_warnings(self):
+    def test_is_outlier_warns_on_narrow_distribution(self, narrow_dist):
         with pt.warns(UserWarning):
-            assesspy.is_outlier(test_dist3, method="iqr")
+            ap.is_outlier(narrow_dist, method="iqr")
 
+    def test_is_outlier_warns_on_small_sample(self):
         with pt.warns(UserWarning):
-            assesspy.is_outlier(np.random.normal(size=20), method="quantile")
+            ap.is_outlier(np.random.normal(size=20).tolist(), method="quantile")
