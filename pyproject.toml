@@ -24,7 +24,6 @@ dependencies = [
   "numpy >= 1.23.0",
   "pandas >= 1.4.0",
   "pyarrow >= 9.0.0",
-  "scipy >= 1.8.1",
   "statsmodels >= 0.13.0"
 ]
 
@@ -38,7 +37,6 @@ dev = [
   "pytest >= 7.3.0",
   "pytest-cov >= 4.1.0",
   "pandas-stubs>=2.2.3.241009",
-  "scipy-stubs>=1.14.1.4"
 ]
 docs = [
   "setuptools >= 61.0",
