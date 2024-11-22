@@ -1,17 +1,6 @@
-import pandas as pd
 import pytest as pt
 
 import assesspy as ap
-
-# Load random CCAO value sample
-ccao_sample = ap.ccao_sample()
-estimate = ccao_sample.estimate
-sale_price = ccao_sample.sale_price
-
-# Load MKI / KI data from Quintos paper
-gini_data = ap.quintos_sample()
-gini_estimate = gini_data.estimate
-gini_sale_price = gini_data.sale_price
 
 
 class TestMetrics:
@@ -20,10 +9,10 @@ class TestMetrics:
         return request.param
 
     @pt.fixture
-    def metric_val(self, metric):
+    def metric_val(self, metric, ccao_data, quintos_data):
         if metric in ["mki", "ki"]:
-            return getattr(ap, metric)(gini_estimate, gini_sale_price)
-        return getattr(ap, metric)(estimate, sale_price)
+            return getattr(ap, metric)(*quintos_data)
+        return getattr(ap, metric)(*ccao_data)
 
     def test_metric(self, metric, metric_val):
         expected_values = {
@@ -38,39 +27,10 @@ class TestMetrics:
     def test_numeric_output(self, metric_val):
         assert type(metric_val) is float
 
-    @pt.mark.parametrize(
-        "bad_input",
-        [
-            ([1] * 30, [1] * 29),
-            ([0, 0, 0], [0, 0, 0]),
-            ([-1, -2, -3], [-1, -2, -3]),
-            ([], []),
-            ([1], [1]),
-            (
-                pd.concat([estimate, pd.Series([1.0], dtype="float")]),
-                pd.concat(
-                    [sale_price, pd.Series([float("Inf")], dtype="float")]
-                ),
-            ),
-            (
-                pd.concat([estimate, pd.Series([1.0], dtype="float")]),
-                pd.concat(
-                    [sale_price, pd.Series([float("NaN")], dtype="float")]
-                ),
-            ),
-        ],
-    )
     def test_bad_input(self, metric, bad_input):
         with pt.raises(Exception):
             getattr(ap, metric)(*bad_input)
 
-    @pt.mark.parametrize(
-        "good_input",
-        [
-            ([1e10, 2e10, 3e10], [1e10, 2e10, 3e10]),
-            ([1, 2.0, 3], [1.0, 2, 3.0]),
-        ],
-    )
     def test_good_input(self, metric, good_input):
         try:
             result = getattr(ap, metric)(*good_input)
