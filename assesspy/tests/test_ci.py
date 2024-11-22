@@ -13,9 +13,9 @@ class TestCI:
     def alpha(self, request):
         return request.param
 
-    def test_metric_ci(self, metric, alpha, ccao_data):
+    def test_metric_ci_output_with_alpha(self, metric, alpha, ccao_data):
         np.random.seed(42)
-        expected_values = {
+        expected = {
             "cod": {
                 0.50: (17.3, 18.0),
                 0.80: (17.6, 18.0),
@@ -36,14 +36,14 @@ class TestCI:
             },
         }
         ci_l, ci_u = getattr(ap, f"{metric}_ci")(*ccao_data, nboot=200, alpha=alpha)
-        assert pt.approx(ci_l, rel=0.01) == expected_values[metric][alpha][0]
-        assert pt.approx(ci_u, rel=0.01) == expected_values[metric][alpha][1]
+        assert pt.approx(ci_l, rel=0.01) == expected[metric][alpha][0]
+        assert pt.approx(ci_u, rel=0.01) == expected[metric][alpha][1]
 
-    def test_bad_input(self, metric, bad_input):
+    def test_metric_ci_raises_on_bad_input(self, metric, bad_input):
         with pt.raises(Exception):
             getattr(ap, f"{metric}_ci")(*bad_input, nboot=200)
 
-    def test_good_input(self, metric, good_input):
+    def test_metric_ci_succeeds_on_good_input(self, metric, good_input):
         try:
             result = getattr(ap, f"{metric}_ci")(*good_input, nboot=200)
             assert isinstance(result, tuple)
