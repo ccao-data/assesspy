@@ -12,4 +12,5 @@ config = SphinxConfig("../../pyproject.toml", globalns=globals())
 # which can't be parsed by sphinx-pyproject
 source_suffix = {".rst": "restructuredtext", ".ipynb": "myst-nb"}
 nb_render_image_options = {"width": "450px", "align": "center"}
+nb_execution_timeout = 600
 html_sidebars = {"**": []}
