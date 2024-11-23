@@ -190,8 +190,8 @@ def _calculate_gini(
     df = pd.DataFrame(
         {"estimate": estimate, "sale_price": sale_price}
     ).sort_values(by="sale_price", kind="mergesort")
-    a_sorted: pd.Series = df["estimate"]
-    sp_sorted: pd.Series = df["sale_price"]
+    a_sorted: pd.Series = df["estimate"].reset_index(drop=True)
+    sp_sorted: pd.Series = df["sale_price"].reset_index(drop=True)
     n: int = a_sorted.size
 
     assessed_sum: float = sum(a_sorted[i] * (i + 1) for i in range(n))
