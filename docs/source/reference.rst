@@ -61,7 +61,7 @@ equity. The output is the ordered cumulative distribution of assessed values
 divided by the ordered distribution of sale prices.
 
 :doc:`mki() <mki>` |nbsp|
-:doc:`mki_met() <mki>` |nbsp|
+:doc:`mki_met() <mki>`
 
 
 Other functions
