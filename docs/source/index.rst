@@ -34,10 +34,10 @@ this package helpful in monitoring the performance of local assessors
 and conducting research.
 
 For detailed documentation on included functions and data, :doc:`visit the
-full reference list <reference>`_.
+full reference list <reference>`.
 
 For examples of specific tasks you can complete with ``assesspy``
-functions, see the :doc:`vignettes page <vignettes>`_.
+functions, see the :doc:`vignettes page <vignettes>`.
 
 Installation
 ------------

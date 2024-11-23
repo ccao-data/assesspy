@@ -14,7 +14,7 @@ def ccao_sample() -> pd.DataFrame:
 
         ============================== ============================================
         **estimate** (`float`)         Fair market value predicted by CCAO
-                                         assessment models, after any successful appeals
+                                       assessment models, after any successful appeals
         **sale_price** (`float`)       Recorded sale price of this property
         **township_name** (`object`)   Name of the township containing the property
         ============================== ============================================
