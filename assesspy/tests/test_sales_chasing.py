@@ -44,11 +44,7 @@ class TestSalesChasing:
 
     @pt.mark.parametrize(
         "bad_input",
-        [
-            10,
-            pd.DataFrame([1, 2, 3]),
-            [1] * 29 + ["1"],
-        ],
+        [10, pd.DataFrame([1, 2, 3]), [1] * 29 + ["1"], None],
     )
     def test_is_sales_chased_raises_on_bad_input(self, bad_input):
         with pt.raises(Exception):
@@ -76,3 +72,21 @@ class TestSalesChasing:
     def test_is_sales_chased_warns_on_small_sample(self):
         with pt.warns(UserWarning):
             ap.is_sales_chased(np.random.normal(size=29).tolist())
+
+    @pt.mark.parametrize(
+        "bounds",
+        [(0.0, 0.0), [0.5, 0.4], (2.0, 1.0), (2.0, "1.0"), None, "2.0"],
+    )
+    def test_is_sales_chased_raises_on_invalid_bounds(self, bounds):
+        with pt.raises(Exception):
+            ap.is_sales_chased(
+                np.random.normal(size=40).tolist(), bounds=bounds
+            )
+
+    @pt.mark.parametrize(
+        "gap",
+        [0, 1, -1, 2, float("NaN"), float("Inf"), None],
+    )
+    def test_is_sales_chased_raises_on_invalid_gap(self, gap):
+        with pt.raises(Exception):
+            ap.is_sales_chased(np.random.normal(size=40).tolist(), gap=gap)

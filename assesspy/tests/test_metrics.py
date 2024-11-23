@@ -32,11 +32,8 @@ class TestMetrics:
             getattr(ap, metric)(*bad_input)
 
     def test_metric_succeeds_on_good_input(self, metric, good_input):
-        try:
-            result = getattr(ap, metric)(*good_input)
-            assert type(result) is float
-        except Exception as e:
-            pt.fail(f"Unexpected exception {e}")
+        result = getattr(ap, metric)(*good_input)
+        assert type(result) is float
 
     def test_metric_met_function_thresholds(self, metric, metric_val):
         if metric == "ki":
@@ -47,6 +44,4 @@ class TestMetrics:
             "prb": True,
             "mki": False,
         }
-        assert (
-            getattr(ap, f"{metric}_met")(metric_val) == expected[metric]
-        )
+        assert getattr(ap, f"{metric}_met")(metric_val) == expected[metric]

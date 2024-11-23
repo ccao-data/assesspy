@@ -33,7 +33,9 @@ class TestCI:
                 0.95: (0.000916, 0.00097),
             },
         }
-        ci_l, ci_u = getattr(ap, f"{metric}_ci")(*ccao_data, nboot=200, alpha=alpha)
+        ci_l, ci_u = getattr(ap, f"{metric}_ci")(
+            *ccao_data, nboot=200, alpha=alpha
+        )
         assert pt.approx(ci_l, rel=0.01) == expected[metric][alpha][0]
         assert pt.approx(ci_u, rel=0.01) == expected[metric][alpha][1]
 
@@ -42,8 +44,11 @@ class TestCI:
             getattr(ap, f"{metric}_ci")(*bad_input, nboot=200)
 
     def test_metric_ci_succeeds_on_good_input(self, metric, good_input):
-        try:
-            result = getattr(ap, f"{metric}_ci")(*good_input, nboot=200)
-            assert isinstance(result, tuple)
-        except Exception as e:
-            pt.fail(f"Unexpected exception {e}")
+        result = getattr(ap, f"{metric}_ci")(*good_input, nboot=200)
+        assert isinstance(result, tuple)
+
+    @pt.mark.parametrize("metric", ["cod", "prd"])
+    @pt.mark.parametrize("nboot", [0, -10])
+    def test_metric_ci_raises_on_bad_nboot(self, metric, ccao_data, nboot):
+        with pt.raises(Exception):
+            getattr(ap, f"{metric}_ci")(*ccao_data, nboot=nboot)

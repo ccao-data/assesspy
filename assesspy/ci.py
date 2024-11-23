@@ -57,6 +57,8 @@ def boot_ci(
             nboot = 1000
         )
     """
+    if nboot <= 0:
+        raise ValueError("'nboot' must be a positive integer greater than 0.")
     check_inputs(estimate, sale_price)
     df = pd.DataFrame({"estimate": estimate, "sale_price": sale_price})
     n: int = df.size

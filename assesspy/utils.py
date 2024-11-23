@@ -5,12 +5,6 @@ from pandas.api.types import is_numeric_dtype
 
 def check_inputs(*args, check_gt_zero: bool = True) -> None:
     out_msg = [""]
-
-    for x in args:
-        # *args passed into *args can created nested tuples - unnest
-        if isinstance(x, tuple):
-            args = x
-
     for x in args:
         check = pd.Series(x)
 

@@ -142,6 +142,8 @@ def is_sales_chased(
     """
     if not (0 < gap < 1):
         raise ValueError("Gap must be a positive value less than 1.")
+    if not isinstance(bounds, tuple):
+        raise TypeError("Bounds must be a tuple of two floats.")
     if bounds[0] >= bounds[1]:
         raise ValueError(
             "Bounds must have the left value lower than the right value."
