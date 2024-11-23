@@ -34,8 +34,8 @@ def boot_ci(
         Default 0.05. Float value indicating the confidence
         interval to return. 0.05 will return the 95% confidence interval.
     :type fun: function
-    :type estimate: list[int] | list[float] | pd.Series
-    :type sale_price: list[int] | list[float] | pd.Series
+    :type estimate: Array-like numeric values
+    :type sale_price: Array-like numeric values
     :type nboot: int
     :type alpha: float
 

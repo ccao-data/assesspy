@@ -70,7 +70,7 @@ def is_outlier(
     :param mult:
         Default ``3``. Multiple of IQR to use as the outlier detection
         threshold.
-    :type x: list[int] | list[float] | pd.Series,
+    :type x: Array-like numeric values
     :type method: str
     :type probs: tuple[float]
     :type mult: float

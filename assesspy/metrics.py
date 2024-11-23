@@ -35,8 +35,8 @@ def cod(
     :param sale_price:
         A list or ``pd.Series`` of sale prices.
         Must be the same length as ``estimate``.
-    :type estimate: list[int] | list[float] | pd.Series
-    :type sale_price: list[int] | list[float] | pd.Series
+    :type estimate: Array-like numeric values
+    :type sale_price: Array-like numeric values
 
     :return: A single float value containing the COD of the inputs.
     :rtype: float
@@ -92,8 +92,8 @@ def prd(
     :param sale_price:
         A list or ``pd.Series`` of sale prices.
         Must be the same length as ``estimate``.
-    :type estimate: list[int] | list[float] | pd.Series
-    :type sale_price: list[int] | list[float] | pd.Series
+    :type estimate: Array-like numeric values
+    :type sale_price: Array-like numeric values
 
     :return: A single float value containing the PRD of the inputs.
     :rtype: float
@@ -144,8 +144,8 @@ def prb(
     :param sale_price:
         A list or ``pd.Series`` of sale prices.
         Must be the same length as ``estimate``.
-    :type estimate: list[int] | list[float] | pd.Series
-    :type sale_price: list[int] | list[float] | pd.Series
+    :type estimate: Array-like numeric values
+    :type sale_price: Array-like numeric values
 
     :return: A single float value containing the PRB of the inputs.
     :rtype: float
@@ -235,8 +235,8 @@ def mki(
     :param sale_price:
         A list or ``pd.Series`` of sale prices.
         Must be the same length as ``estimate``.
-    :type estimate: list[int] | list[float] | pd.Series
-    :type sale_price: list[int] | list[float] | pd.Series
+    :type estimate: Array-like numeric values
+    :type sale_price: Array-like numeric values
 
     :return: A single float value containing the MKI of the inputs.
     :rtype: float
@@ -284,8 +284,8 @@ def ki(
     :param sale_price:
         A list or ``pd.Series`` of sale prices.
         Must be the same length as ``estimate``.
-    :type estimate: list[int] | list[float] | pd.Series
-    :type sale_price: list[int] | list[float] | pd.Series
+    :type estimate: Array-like numeric values
+    :type sale_price: Array-like numeric values
 
     :return: A single float value containing the PRB of the inputs.
     :rtype: float

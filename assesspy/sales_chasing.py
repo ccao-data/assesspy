@@ -44,7 +44,7 @@ def _dist_sales_chased(
 
     # Return the percentage of x within the specified range
     def pct_in_range(
-        x: np.ndarray | pd.Series, min: float, max: float
+        x: Union[np.ndarray, pd.Series], min: float, max: float
     ) -> float:
         out = float(np.mean(((x >= min) & (x <= max))))
         return out
@@ -107,7 +107,7 @@ def is_sales_chased(
         distribution method, it sets the maximum percentage point difference
         between the percentage of the data between the ``bounds`` in the real
         distribution compared to the ideal distribution.
-    :type x: list[int] | list[float] | pd.Series
+    :type x: Array-like numeric values
     :type method: str
     :type bounds: tuple[float, float]
     :type gap: float
