@@ -1,3 +1,5 @@
+import warnings
+
 import numpy as np
 import pandas as pd
 import pytest as pt
@@ -27,8 +29,10 @@ class TestOutliers:
 
     def test_is_outlier_output_is_boolean_array(self, distribution, method):
         dist_name, dist_data = distribution
-        assert isinstance(ap.is_outlier(dist_data, method), pd.Series)
-        assert ap.is_outlier(dist_data, method).dtype == np.bool_
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            assert isinstance(ap.is_outlier(dist_data, method), pd.Series)
+            assert ap.is_outlier(dist_data, method).dtype == np.bool_
 
     def test_is_outlier_has_expected_outlier_counts(
         self,
@@ -43,10 +47,12 @@ class TestOutliers:
             "ccao": {"iqr": 28, "quantile": 98},
             "quintos": {"iqr": 0, "quantile": 4},
         }
-        assert (
-            ap.is_outlier(dist_data, method).sum()
-            == expected[dist_name][method]
-        )
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            assert (
+                ap.is_outlier(dist_data, method).sum()
+                == expected[dist_name][method]
+            )
 
     @pt.mark.parametrize(
         "bad_input",

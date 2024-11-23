@@ -1,4 +1,5 @@
 import warnings
+from typing import Union
 
 import pandas as pd
 
@@ -6,7 +7,7 @@ from .utils import check_inputs
 
 
 def _quantile_outlier(
-    x: list[int] | list[float] | pd.Series,
+    x: Union[list[int], list[float], pd.Series],
     probs: tuple[float, float] = (0.05, 0.95),
 ) -> pd.Series:
     """
@@ -24,7 +25,7 @@ def _quantile_outlier(
 
 
 def _iqr_outlier(
-    x: list[int] | list[float] | pd.Series, mult: float = 3.0
+    x: Union[list[int], list[float], pd.Series], mult: float = 3.0
 ) -> pd.Series:
     """
     IQR method for identifying outliers as specified in Appendix B.1
@@ -41,7 +42,7 @@ def _iqr_outlier(
 
 
 def is_outlier(
-    x: list[int] | list[float] | pd.Series,
+    x: Union[list[int], list[float], pd.Series],
     method: str = "iqr",
     probs: tuple[float, float] = (0.05, 0.95),
     mult: float = 3.0,

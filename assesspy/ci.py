@@ -1,4 +1,5 @@
 import math
+from typing import Union
 
 import pandas as pd
 import statsmodels.api as sm
@@ -9,8 +10,8 @@ from .utils import check_inputs
 
 def boot_ci(
     fun,
-    estimate: list[int] | list[float] | pd.Series,
-    sale_price: list[int] | list[float] | pd.Series,
+    estimate: Union[list[int], list[float], pd.Series],
+    sale_price: Union[list[int], list[float], pd.Series],
     nboot: int = 1000,
     alpha: float = 0.05,
 ) -> tuple[float, float]:
@@ -76,8 +77,8 @@ def boot_ci(
 
 
 def cod_ci(
-    estimate: list[int] | list[float] | pd.Series,
-    sale_price: list[int] | list[float] | pd.Series,
+    estimate: Union[list[int], list[float], pd.Series],
+    sale_price: Union[list[int], list[float], pd.Series],
     nboot: int = 1000,
     alpha: float = 0.05,
 ) -> tuple[float, float]:
@@ -93,8 +94,8 @@ def cod_ci(
 
 
 def prd_ci(
-    estimate: list[int] | list[float] | pd.Series,
-    sale_price: list[int] | list[float] | pd.Series,
+    estimate: Union[list[int], list[float], pd.Series],
+    sale_price: Union[list[int], list[float], pd.Series],
     nboot: int = 1000,
     alpha: float = 0.05,
 ) -> tuple[float, float]:
@@ -110,8 +111,8 @@ def prd_ci(
 
 
 def prb_ci(
-    estimate: list[int] | list[float] | pd.Series,
-    sale_price: list[int] | list[float] | pd.Series,
+    estimate: Union[list[int], list[float], pd.Series],
+    sale_price: Union[list[int], list[float], pd.Series],
     nboot: int = 1000,
     alpha: float = 0.05,
 ) -> tuple[float, float]:

@@ -1,4 +1,5 @@
 import warnings
+from typing import Union
 
 import numpy as np
 import pandas as pd
@@ -8,7 +9,7 @@ from .utils import check_inputs
 
 
 def _cdf_sales_chased(
-    x: list[int] | list[float] | pd.Series,
+    x: Union[list[int], list[float], pd.Series],
     bounds: tuple[float, float] = (0.98, 1.02),
     gap: float = 0.05,
 ) -> bool:
@@ -34,7 +35,7 @@ def _cdf_sales_chased(
 
 
 def _dist_sales_chased(
-    x: list[int] | list[float] | pd.Series,
+    x: Union[list[int], list[float], pd.Series],
     bounds: tuple[float, float] = (0.98, 1.02),
     gap: float = 0.05,
 ) -> bool:
@@ -60,7 +61,7 @@ def _dist_sales_chased(
 
 
 def is_sales_chased(
-    x: list[int] | list[float] | pd.Series,
+    x: Union[list[int], list[float], pd.Series],
     method="both",
     bounds: tuple[float, float] = (0.98, 1.02),
     gap: float = 0.05,

@@ -1,4 +1,5 @@
 import math
+from typing import Union
 
 import pandas as pd
 import statsmodels.api as sm
@@ -7,8 +8,8 @@ from .utils import check_inputs
 
 
 def cod(
-    estimate: list[int] | list[float] | pd.Series,
-    sale_price: list[int] | list[float] | pd.Series,
+    estimate: Union[list[int], list[float], pd.Series],
+    sale_price: Union[list[int], list[float], pd.Series],
 ) -> float:
     """
     COD is the average absolute percent deviation from the median ratio.
@@ -64,8 +65,8 @@ def cod(
 
 
 def prd(
-    estimate: list[int] | list[float] | pd.Series,
-    sale_price: list[int] | list[float] | pd.Series,
+    estimate: Union[list[int], list[float], pd.Series],
+    sale_price: Union[list[int], list[float], pd.Series],
 ) -> float:
     """
     PRD is the mean ratio divided by the mean ratio weighted by sale
@@ -119,8 +120,8 @@ def prd(
 
 
 def prb(
-    estimate: list[int] | list[float] | pd.Series,
-    sale_price: list[int] | list[float] | pd.Series,
+    estimate: Union[list[int], list[float], pd.Series],
+    sale_price: Union[list[int], list[float], pd.Series],
 ) -> float:
     r"""
     PRB is an index of vertical equity that quantifies the
@@ -176,8 +177,8 @@ def prb(
 
 
 def _calculate_gini(
-    estimate: list[float | int] | pd.Series,
-    sale_price: list[float | int] | pd.Series,
+    estimate: Union[list[int], list[float], pd.Series],
+    sale_price: Union[list[int], list[float], pd.Series],
 ) -> tuple[float, float]:
     """
     Helper function to calculate the Gini coefficients of sales and estimated
@@ -205,8 +206,8 @@ def _calculate_gini(
 
 
 def mki(
-    estimate: list[int] | list[float] | pd.Series,
-    sale_price: list[int] | list[float] | pd.Series,
+    estimate: Union[list[int], list[float], pd.Series],
+    sale_price: Union[list[int], list[float], pd.Series],
 ) -> float:
     r"""
     The Modified Kakwani Index (MKI) is a Gini-based measure to test for
@@ -260,8 +261,8 @@ def mki(
 
 
 def ki(
-    estimate: list[int] | list[float] | pd.Series,
-    sale_price: list[int] | list[float] | pd.Series,
+    estimate: Union[list[int], list[float], pd.Series],
+    sale_price: Union[list[int], list[float], pd.Series],
 ) -> float:
     r"""
     The Kakwani Index (KI) is a Gini-based measure to test for
