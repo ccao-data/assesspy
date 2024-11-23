@@ -1,23 +1,20 @@
 from .ci import (
     boot_ci,
     cod_ci,
-    prd_ci,
     prb_ci,
+    prd_ci,
 )
+from .load_data import ccao_sample, quintos_sample
 from .metrics import (
     cod,
-    prd,
-    prb,
-    mki,
-    ki,
     cod_met,
-    prd_met,
-    prb_met,
+    ki,
+    mki,
     mki_met,
-)
-from .load_data import (
-    ccao_sample,
-    quintos_sample
+    prb,
+    prb_met,
+    prd,
+    prd_met,
 )
 from .outliers import is_outlier
 from .sales_chasing import is_sales_chased

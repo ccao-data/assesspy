@@ -13,7 +13,9 @@ def check_inputs(*args, check_gt_zero: bool = True) -> None:
         if check.isnull().any():
             out_msg.append("\nAll input values cannot be null.")
         if len(check) <= 1:
-            out_msg.append("\nAll input values must have length greater than 1.")
+            out_msg.append(
+                "\nAll input values must have length greater than 1."
+            )
         if not all(np.isfinite(check) | check.isnull()):
             out_msg.append("\nAll input values cannot be infinite.")
         if any(check <= 0) and check_gt_zero:
