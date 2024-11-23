@@ -186,12 +186,21 @@ def _calculate_gini(
     """
     check_inputs(estimate, sale_price)
 
+    estimate = (
+        pd.Series(estimate, dtype=float)
+        .rename("estimate")
+        .reset_index(drop=True)
+    )
+    sale_price = (
+        pd.Series(sale_price, dtype=float)
+        .rename("sale_price")
+        .reset_index(drop=True)
+    )
+    df = pd.concat([estimate, sale_price], axis=1)
     # Mergesort is required for stable sort results
-    df = pd.DataFrame(
-        {"estimate": estimate, "sale_price": sale_price}
-    ).sort_values(by="sale_price", kind="mergesort")
-    a_sorted: pd.Series = df["estimate"].reset_index(drop=True)
-    sp_sorted: pd.Series = df["sale_price"].reset_index(drop=True)
+    df.sort_values(by="sale_price", kind="mergesort", inplace=True)
+    df.reset_index(drop=True, inplace=True)
+    a_sorted, sp_sorted = df["estimate"], df["sale_price"]
     n: int = a_sorted.size
 
     assessed_sum: float = sum(a_sorted[i] * (i + 1) for i in range(n))

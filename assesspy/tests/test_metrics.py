@@ -34,6 +34,7 @@ class TestMetrics:
     def test_metric_succeeds_on_good_input(self, metric, good_input):
         result = getattr(ap, metric)(*good_input)
         assert type(result) is float
+        assert result != float("NaN")
 
     def test_metric_met_function_thresholds(self, metric, metric_val):
         if metric == "ki":

@@ -64,6 +64,19 @@ def bad_input(request) -> tuple:
     params=[
         ([1e10, 2e10, 3e10], [1e10, 2e10, 3e10]),
         ([1, 2.0, 3], [1.0, 2, 3.0]),
+        (ap.ccao_sample()["estimate"], ap.ccao_sample()["sale_price"]),
+        (
+            ap.ccao_sample()["estimate"].set_axis(
+                pd.Index(
+                    np.random.permutation(ap.ccao_sample()["estimate"].index)
+                )
+            ),
+            ap.ccao_sample()["sale_price"].set_axis(
+                pd.Index(
+                    np.random.permutation(ap.ccao_sample()["sale_price"].index)
+                )
+            ),
+        ),
     ],
 )
 def good_input(request) -> tuple:
