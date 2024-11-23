@@ -12,12 +12,12 @@ def ccao_sample() -> pd.DataFrame:
     :return:
         A Pandas DataFrame with 979 observation and 3 variables:
 
-        ======================== =====================================================
-        **estimate** (`float`)       Fair market value predicted by CCAO
+        ===================== ===============================================
+        **estimate**          (`float`) Fair market value predicted by CCAO
                                      assessment models, after any successful appeals
-        **sale_price** (`float`)     Recorded sale price of this property
-        **township_name** (`object`) Name of the township containing the property
-        ======================== =====================================================
+        **sale_price**        (`float`) Recorded sale price of this property
+        **township_name**     (`object`) Name of the township containing the property
+        ===================== ===============================================
 
     :rtype: pd.DataFrame
     """
