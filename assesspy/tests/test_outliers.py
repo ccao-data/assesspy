@@ -25,7 +25,7 @@ class TestOutliers:
     def method(self, request):
         return request.param
 
-    def test_is_outlier_output_is_boolean_array(self, request, distribution, method):
+    def test_is_outlier_output_is_boolean_array(self, distribution, method):
         dist_name, dist_data = distribution
         assert isinstance(ap.is_outlier(dist_data, method), pd.Series)
         assert ap.is_outlier(dist_data, method).dtype == np.bool_
@@ -74,7 +74,7 @@ class TestOutliers:
             dist_name, dist_data = distribution
             ap.is_outlier(input_data(dist_data), method)
 
-    def test_is_outlier_warns_on_narrow_distribution(self, request, distribution):
+    def test_is_outlier_warns_on_narrow_distribution(self, distribution):
         dist_name, dist_data = distribution
         if dist_name == "narrow":
             with pt.warns(UserWarning):

@@ -20,4 +20,4 @@ from .load_data import (
     quintos_sample
 )
 from .outliers import is_outlier
-from .sales_chasing import detect_chasing
+from .sales_chasing import is_sales_chased

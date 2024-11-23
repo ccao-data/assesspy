@@ -1,4 +1,3 @@
-import numpy as np
 import pytest as pt
 
 import assesspy as ap
@@ -14,7 +13,6 @@ class TestCI:
         return request.param
 
     def test_metric_ci_output_with_alpha(self, metric, alpha, ccao_data):
-        np.random.seed(42)
         expected = {
             "cod": {
                 0.50: (17.3, 18.0),

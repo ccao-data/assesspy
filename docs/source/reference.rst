@@ -73,13 +73,11 @@ Other functions
 
 | Detect sales chasing in sale ratios
 
-:doc:`detect_chasing() <sales_chasing>` |nbsp|
-:doc:`detect_chasing_cdf() <sales_chasing>` |nbsp|
-:doc:`detect_chasing_dist() <sales_chasing>`
+:doc:`is_sales_chased() <sales_chasing>`
 
 | Detect outlier values
 
-:doc:`is_outlier() <outliers>` |nbsp|
+:doc:`is_outlier() <outliers>`
 
 
 Data

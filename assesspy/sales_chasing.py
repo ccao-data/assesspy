@@ -7,17 +7,13 @@ from statsmodels.distributions.empirical_distribution import ECDF
 from .utils import check_inputs
 
 
-def _detect_chasing_cdf(
-    estimate: list[int] | list[float] | pd.Series,
-    sale_price: list[int] | list[float] | pd.Series,
+def _cdf_sales_chased(
+    x: list[int] | list[float] | pd.Series,
     bounds: tuple[float, float] = (0.98, 1.02),
-    gap: float = 0.03,
-):
-    check_inputs(estimate, sale_price)
-    estimate = pd.Series(estimate, dtype=float)
-    sale_price = pd.Series(sale_price, dtype=float)
-    ratio: pd.Series = estimate / sale_price
-
+    gap: float = 0.05,
+) -> bool:
+    check_inputs(x, check_gt_zero=False)
+    ratio = pd.Series(x)
     sorted_ratio = ratio.sort_values()
 
     # Calculate the CDF of the sorted ratios and extract percentile ranking
@@ -34,19 +30,16 @@ def _detect_chasing_cdf(
         (diff_loc > bounds[0]) & (diff_loc < bounds[1])
     )
 
-    return out
+    return bool(out)
 
 
-def _detect_chasing_dist(
-    estimate: list[int] | list[float] | pd.Series,
-    sale_price: list[int] | list[float] | pd.Series,
+def _dist_sales_chased(
+    x: list[int] | list[float] | pd.Series,
     bounds: tuple[float, float] = (0.98, 1.02),
-    gap: float = 0.03,
-):
-    check_inputs(estimate, sale_price)
-    estimate = pd.Series(estimate, dtype=float)
-    sale_price = pd.Series(sale_price, dtype=float)
-    ratio: pd.Series = estimate / sale_price
+    gap: float = 0.05,
+) -> bool:
+    check_inputs(x, check_gt_zero=False)
+    ratio = pd.Series(x)
 
     # Return the percentage of x within the specified range
     def pct_in_range(
@@ -63,16 +56,15 @@ def _detect_chasing_dist(
     pct_ideal = pct_in_range(ideal_dist, bounds[0], bounds[1])
     pct_actual = pct_in_range(ratio, bounds[0], bounds[1])
 
-    return abs(pct_actual - pct_ideal) > gap
+    return bool(abs(pct_actual - pct_ideal) > gap)
 
 
-def detect_chasing(
-    estimate: list[int] | list[float] | pd.Series,
-    sale_price: list[int] | list[float] | pd.Series,
-    bounds: tuple[float, float] = (0.98, 1.02),
-    gap: float = 0.03,
+def is_sales_chased(
+    x: list[int] | list[float] | pd.Series,
     method="both",
-):
+    bounds: tuple[float, float] = (0.98, 1.02),
+    gap: float = 0.05,
+) -> bool:
     """
     Sales chasing is when a property is selectively reappraised to
     shift its assessed value toward its recent sale price. Sales chasing is
@@ -96,12 +88,12 @@ def detect_chasing(
 
     .. _IAAO Standard on Ratio Studies: https://www.iaao.org/media/standards/Standard_on_Ratio_Studies.pdf
 
-    :param estimate:
-        A list or ``pd.Series`` of estimated values.
-        Must be the same length as ``sale_price``.
-    :param sale_price:
-        A list or ``pd.Series`` of sale prices.
-        Must be the same length as ``estimate``.
+    :param x:
+        A list or ``pd.Series`` of numeric values. Must be longer than 2
+        and cannot contain ``Inf`` or ``NaN`` values.
+    :param method:
+        Default ``both``. String indicating sales chasing detection
+        method. Options are ``cdf``, ``dist``, or ``both``.
     :param bounds:
         Default ``(0.98, 1.02)``. Tuple of two floats indicating the
         lower and upper bounds of the range of ratios to consider when
@@ -109,19 +101,15 @@ def detect_chasing(
         center of the ratio distribution prevents detecting false positives
         at the tails.
     :param gap:
-        Default ``0.03``. Float tuning factor. For the CDF method, it sets the
+        Default ``0.05``. Float tuning factor. For the CDF method, it sets the
         maximum percentage difference between two adjacent ratios. For the
         distribution method, it sets the maximum percentage point difference
         between the percentage of the data between the ``bounds`` in the real
         distribution compared to the ideal distribution.
-    :param method:
-        Default ``both``. String indicating sales chasing detection
-        method. Options are ``cdf``, ``dist``, or ``both``.
-    :type estimate: list[int] | list[float] | pd.Series
-    :type sale_price: list[int] | list[float] | pd.Series
+    :type x: list[int] | list[float] | pd.Series
+    :type method: str
     :type bounds: tuple[float, float]
     :type gap: float
-    :type method: str
 
     :return:
         A boolean value indicating whether or not the input values may
@@ -138,19 +126,19 @@ def detect_chasing(
         from matplotlib import pyplot
 
         # Generate fake data with normal vs chased ratios
-        normal_ratios = np.random.normal(1, 0.15, 10000)
+        normal_ratios = np.random.normal(1, 0.15, 10000).tolist()
         chased_ratios = list(np.random.normal(1, 0.15, 900)) + [1] * 100
 
         # Plot to view discontinuity
         ecdf = ECDF(normal_ratios)
         pyplot.plot(ecdf.x, ecdf.y)
         pyplot.show()
-        ap.detect_chasing(normal_ratios)
+        ap.is_sales_chased(normal_ratios)
 
         ecdf = ECDF(chased_ratios)
         pyplot.plot(ecdf.x, ecdf.y)
         pyplot.show()
-        ap.detect_chasing(chased_ratios)
+        ap.is_sales_chased(chased_ratios)
     """
     if not (0 < gap < 1):
         raise ValueError("Gap must be a positive value less than 1.")
@@ -158,21 +146,22 @@ def detect_chasing(
         raise ValueError(
             "Bounds must have the left value lower than the right value."
         )
-    if len(estimate) < 30:
+
+    if method == "cdf":
+        out = _cdf_sales_chased(x, bounds, gap)
+    elif method == "dist":
+        out = _dist_sales_chased(x, bounds, gap)
+    elif method == "both":
+        out_cdf = _cdf_sales_chased(x, bounds, gap)
+        out_dist = _dist_sales_chased(x, bounds, gap)
+        out = bool(out_cdf & out_dist)
+    else:
+        raise ValueError("Method must be either 'cdf' or 'dist'")
+
+    if len(x) < 30:
         warnings.warn(
             "Sales chasing detection can be misleading when applied to small "
             "samples (N < 30). Increase N or use a different test method."
         )
-
-    if method == "cdf":
-        out = _detect_chasing_cdf(estimate, sale_price, bounds, gap)
-    elif method == "dist":
-        out = _detect_chasing_dist(estimate, sale_price, bounds, gap)
-    elif method == "both":
-        out_cdf = _detect_chasing_cdf(estimate, sale_price, bounds, gap)
-        out_dist = _detect_chasing_dist(estimate, sale_price, bounds, gap)
-        out = out_cdf & out_dist
-    else:
-        raise ValueError("Method must be either 'cdf' or 'dist'")
 
     return out

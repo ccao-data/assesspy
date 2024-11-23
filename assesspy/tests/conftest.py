@@ -1,7 +1,14 @@
+import numpy as np
 import pandas as pd
 import pytest as pt
 
 import assesspy as ap
+
+
+@pt.fixture(autouse=True, scope="class")
+def set_seed() -> None:
+    np.random.seed(42)
+    return None
 
 
 @pt.fixture(scope="session")
