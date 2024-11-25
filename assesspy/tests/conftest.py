@@ -5,7 +5,7 @@ import pytest as pt
 import assesspy as ap
 
 
-@pt.fixture(autouse=True, scope="class")
+@pt.fixture(autouse=True, scope="session")
 def set_seed() -> None:
     np.random.seed(42)
     return None
