@@ -116,6 +116,7 @@ def prd(
 
     return prd
 
+
 def _calculate_prb(
     estimate: Union[list[int], list[float], pd.Series],
     sale_price: Union[list[int], list[float], pd.Series],
@@ -134,6 +135,7 @@ def _calculate_prb(
     prb_model = sm.OLS(lhs.to_numpy(), rhs.to_numpy()).fit()
 
     return prb_model
+
 
 def prb(
     estimate: Union[list[int], list[float], pd.Series],

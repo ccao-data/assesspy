@@ -1,10 +1,8 @@
-import math
 from typing import Union
 
 import pandas as pd
-import statsmodels.api as sm
 
-from .metrics import cod, prd, _calculate_prb
+from .metrics import _calculate_prb, cod, prd
 from .utils import check_inputs
 
 
