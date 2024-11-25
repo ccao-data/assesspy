@@ -4,7 +4,7 @@ from typing import Union
 import pandas as pd
 import statsmodels.api as sm
 
-from .metrics import cod, prd
+from .metrics import cod, prd, _calculate_prb
 from .utils import check_inputs
 
 
@@ -123,18 +123,7 @@ def prb_ci(
     See also:
         :func:`boot_ci`
     """
-    check_inputs(estimate, sale_price)
-    estimate = pd.Series(estimate, dtype=float)
-    sale_price = pd.Series(sale_price, dtype=float)
-    ratio: pd.Series = estimate / sale_price
-    median_ratio: float = ratio.median()
-
-    lhs: pd.Series = (ratio - median_ratio) / median_ratio
-    rhs: pd.Series = ((estimate / median_ratio) + sale_price).apply(
-        lambda x: math.log2(x / 2)
-    )
-
-    prb_model = sm.OLS(lhs.to_numpy(), rhs.to_numpy()).fit()
+    prb_model = _calculate_prb(estimate, sale_price)
     prb_ci = prb_model.conf_int(alpha=alpha)[0].tolist()
 
     return prb_ci[0], prb_ci[1]

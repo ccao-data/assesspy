@@ -116,6 +116,24 @@ def prd(
 
     return prd
 
+def _calculate_prb(
+    estimate: Union[list[int], list[float], pd.Series],
+    sale_price: Union[list[int], list[float], pd.Series],
+) -> sm.regression.linear_model.RegressionResultsWrapper:
+    check_inputs(estimate, sale_price)
+    estimate = pd.Series(estimate, dtype=float)
+    sale_price = pd.Series(sale_price, dtype=float)
+    ratio: pd.Series = estimate / sale_price
+    median_ratio: float = ratio.median()
+
+    lhs: pd.Series = (ratio - median_ratio) / median_ratio
+    rhs: pd.Series = ((estimate / median_ratio) + sale_price).apply(
+        lambda x: math.log2(x / 2)
+    )
+
+    prb_model = sm.OLS(lhs.to_numpy(), rhs.to_numpy()).fit()
+
+    return prb_model
 
 def prb(
     estimate: Union[list[int], list[float], pd.Series],
@@ -157,18 +175,7 @@ def prb(
 
         ap.prb(ap.ccao_sample().estimate, ap.ccao_sample().sale_price)
     """
-    check_inputs(estimate, sale_price)
-    estimate = pd.Series(estimate, dtype=float)
-    sale_price = pd.Series(sale_price, dtype=float)
-    ratio: pd.Series = estimate / sale_price
-    median_ratio: float = ratio.median()
-
-    lhs: pd.Series = (ratio - median_ratio) / median_ratio
-    rhs: pd.Series = ((estimate / median_ratio) + sale_price).apply(
-        lambda x: math.log2(x / 2)
-    )
-
-    prb_model = sm.OLS(lhs.to_numpy(), rhs.to_numpy()).fit()
+    prb_model = _calculate_prb(estimate, sale_price)
     prb = float(prb_model.params[0])
 
     return prb
