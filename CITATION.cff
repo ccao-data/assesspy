@@ -3,5 +3,5 @@ authors:
 - family-names: "Cook County Assessor's Office"
 title: "AssessPy"
 version: 2.0.0
-date-released: 2024-11-20
+date-released: 2024-11-25
 url: https://github.com/ccao-data/assesspy
