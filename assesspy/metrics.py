@@ -59,7 +59,7 @@ def cod(
     median_ratio: float = ratio.median()
     ratio_minus_med: pd.Series = ratio - median_ratio
     abs_diff_sum: float = ratio_minus_med.abs().sum()
-    cod: float = float(100 / median_ratio * (abs_diff_sum / n))
+    cod = float(100 / median_ratio * (abs_diff_sum / n))
 
     return cod
 
@@ -112,9 +112,7 @@ def prd(
     sale_price = pd.Series(sale_price, dtype=float)
     ratio: pd.Series = estimate / sale_price
 
-    prd: float = float(
-        ratio.mean() / (ratio * sale_price / sale_price.sum()).sum()
-    )
+    prd = float(ratio.mean() / (ratio * sale_price / sale_price.sum()).sum())
 
     return prd
 
