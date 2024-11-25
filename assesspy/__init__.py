@@ -1,9 +1,11 @@
 from .ci import (
     boot_ci,
     cod_ci,
+    prb_ci,
     prd_ci,
 )
-from .formulas import (
+from .load_data import ccao_sample, quintos_sample
+from .metrics import (
     cod,
     cod_met,
     ki,
@@ -14,11 +16,5 @@ from .formulas import (
     prd,
     prd_met,
 )
-from .load_data import ratios_sample
-from .outliers import (
-    iqr_outlier,
-    is_outlier,
-    quantile_outlier,
-)
-from .sales_chasing import detect_chasing
-from .utils import check_inputs
+from .outliers import is_outlier
+from .sales_chasing import is_sales_chased

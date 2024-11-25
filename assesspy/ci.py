@@ -1,38 +1,46 @@
-# Import necessary libraries
-import pandas as pd
-from pandas.api.types import is_numeric_dtype
+from typing import Union
 
-from .formulas import cod, prd
+import pandas as pd
+
+from .metrics import _calculate_prb, cod, prd
 from .utils import check_inputs
 
 
-def boot_ci(fun, nboot=100, alpha=0.05, **kwargs):
+def boot_ci(
+    fun,
+    estimate: Union[list[int], list[float], pd.Series],
+    sale_price: Union[list[int], list[float], pd.Series],
+    nboot: int = 1000,
+    alpha: float = 0.05,
+) -> tuple[float, float]:
     """
     Calculate the non-parametric bootstrap confidence interval
-    for a given numeric input and a chosen function.
+    for a given set of numeric values and a chosen function.
 
     :param fun:
-        Function to bootstrap. Must return a single value.
+        Function to bootstrap. Must return a single float value.
+    :param estimate:
+        A list or ``pd.Series`` of estimated values.
+        Must be the same length as ``sale_price``.
+    :param sale_price:
+        A list or ``pd.Series`` of sale prices.
+        Must be the same length as ``estimate``.
     :param nboot:
-        Default 100. Number of iterations to use to estimate
+        Default 1000. Number of iterations to use to estimate
         the output statistic confidence interval.
     :param alpha:
-        Default 0.05. Numeric value indicating the confidence
+        Default 0.05. Float value indicating the confidence
         interval to return. 0.05 will return the 95% confidence interval.
-    :param kwargs:
-        Arguments passed on to ``fun``.
     :type fun: function
+    :type estimate: Array-like numeric values
+    :type sale_price: Array-like numeric values
     :type nboot: int
     :type alpha: float
-    :type kwargs: numeric
-
-    .. note::
-       Input function should require 1 argument or be ``assesspy.prd()``.
 
     :return:
-        A two-long list of floats containing the bootstrapped confidence
-        interval of the input vector(s).
-    :rtype: list[float]
+        A tuple of floats containing the bootstrapped confidence
+        interval of the input values.
+    :rtype: tuple[float, float]
 
     :Example:
 
@@ -43,69 +51,77 @@ def boot_ci(fun, nboot=100, alpha=0.05, **kwargs):
 
         ap.boot_ci(
             ap.prd,
-            assessed = ap.ratios_sample().assessed,
-            sale_price = ap.ratios_sample().sale_price,
-            nboot = 100
-            )
-    """
-
-    # Make sure prd is passed arguments in correct order
-    if fun.__name__ == "prd" and set(["assessed", "sale_price"]).issubset(
-        kwargs.keys()
-    ):
-        kwargs = (kwargs["assessed"], kwargs["sale_price"])
-    elif fun.__name__ == "prd" and not set(
-        ["assessed", "sale_price"]
-    ).issubset(kwargs.keys()):
-        raise Exception(
-            "PRD function expects argurments 'assessed' and 'sale_price'."
+            estimate = ap.ccao_sample().estimate,
+            sale_price = ap.ccao_sample().sale_price,
+            nboot = 1000
         )
-    else:
-        kwargs = tuple(kwargs.values())
-
-    check_inputs(kwargs)  # Input checking and error handling
-
-    num_kwargs = len(kwargs)
-    kwargs = pd.DataFrame(kwargs).T
-    n = len(kwargs)
-
-    # Check that the input function returns a numeric vector
-    out = (
-        fun(kwargs.iloc[:, 0])
-        if num_kwargs < 2
-        else fun(kwargs.iloc[:, 0], kwargs.iloc[:, 1])
-    )
-    if not is_numeric_dtype(out):
-        raise Exception("Input function outputs non-numeric datatype.")
-
-    ests = []
+    """
+    if nboot <= 0:
+        raise ValueError("'nboot' must be a positive integer greater than 0.")
+    check_inputs(estimate, sale_price)
+    df = pd.DataFrame({"estimate": estimate, "sale_price": sale_price})
+    n: int = df.size
 
     # Take a random sample of input, with the same number of rows as input,
-    # with replacement.
-    for i in list(range(1, nboot)):
-        sample = kwargs.sample(n=n, replace=True)
-        if fun.__name__ == "cod" or num_kwargs == 1:
-            ests.append(fun(sample.iloc[:, 0]))
-        elif fun.__name__ == "prd":
-            ests.append(fun(sample.iloc[:, 0], sample.iloc[:, 1]))
-        else:
-            raise Exception(
-                "Input function should require 1 argument or be assesspy.prd."
-            )
+    # with replacement
+    ests = pd.Series(index=range(nboot), dtype=float)
+    for i in range(nboot):
+        sample = df.sample(n=n, replace=True)
+        ests[i] = fun(sample.iloc[:, 0], sample.iloc[:, 1])
 
-    ests = pd.Series(ests)
-
-    ci = [ests.quantile(alpha / 2), ests.quantile(1 - alpha / 2)]
+    ci = (ests.quantile(alpha / 2), ests.quantile(1 - alpha / 2))
 
     return ci
 
 
-# Formula specific bootstrapping functions
-def cod_ci(ratio, nboot=100, alpha=0.05):
-    return boot_ci(cod, ratio=ratio, nboot=nboot, alpha=alpha)
+def cod_ci(
+    estimate: Union[list[int], list[float], pd.Series],
+    sale_price: Union[list[int], list[float], pd.Series],
+    nboot: int = 1000,
+    alpha: float = 0.05,
+) -> tuple[float, float]:
+    """
+    Calculate the non-parametric bootstrap confidence interval for COD.
 
-
-def prd_ci(assessed, sale_price, nboot=100, alpha=0.05):
+    See also:
+        :func:`boot_ci`
+    """
     return boot_ci(
-        prd, assessed=assessed, sale_price=sale_price, nboot=nboot, alpha=alpha
+        cod, estimate=estimate, sale_price=sale_price, nboot=nboot, alpha=alpha
     )
+
+
+def prd_ci(
+    estimate: Union[list[int], list[float], pd.Series],
+    sale_price: Union[list[int], list[float], pd.Series],
+    nboot: int = 1000,
+    alpha: float = 0.05,
+) -> tuple[float, float]:
+    """
+    Calculate the non-parametric bootstrap confidence interval for PRD.
+
+    See also:
+        :func:`boot_ci`
+    """
+    return boot_ci(
+        prd, estimate=estimate, sale_price=sale_price, nboot=nboot, alpha=alpha
+    )
+
+
+def prb_ci(
+    estimate: Union[list[int], list[float], pd.Series],
+    sale_price: Union[list[int], list[float], pd.Series],
+    nboot: int = 1000,
+    alpha: float = 0.05,
+) -> tuple[float, float]:
+    """
+    Calculate the closed-form confidence interval for PRB. Unlike COD and PRB,
+    this does not use bootstrapping.
+
+    See also:
+        :func:`boot_ci`
+    """
+    prb_model = _calculate_prb(estimate, sale_price)
+    prb_ci = prb_model.conf_int(alpha=alpha)[0].tolist()
+
+    return prb_ci[0], prb_ci[1]

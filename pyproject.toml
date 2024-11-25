@@ -1,6 +1,6 @@
 [project]
 name = "assesspy"
-version = "1.2.0"
+version = "2.0.0"
 description = "Python package for measuring assessment performance"
 keywords = ["assessment", "property taxes", "local government"]
 authors = [
@@ -15,7 +15,8 @@ classifiers = [
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12"
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13"
 ]
 license = {file = "LICENSE"}
 readme = "README.md"
@@ -24,7 +25,6 @@ dependencies = [
   "numpy >= 1.23.0",
   "pandas >= 1.4.0",
   "pyarrow >= 9.0.0",
-  "scipy >= 1.8.1",
   "statsmodels >= 0.13.0"
 ]
 
@@ -33,7 +33,7 @@ Repository = "https://github.com/ccao-data/assesspy"
 Documentation = "https://ccao-data.github.io/assesspy/"
 
 [project.optional-dependencies]
-test = [
+dev = [
   "setuptools >= 61.0",
   "pytest >= 7.3.0",
   "pytest-cov >= 4.1.0",
@@ -71,7 +71,7 @@ testpaths = "assesspy/tests"
 legacy_tox_ini = """
 [tox]
 min_version = 4.0
-envlist = py39, py310, py311, py312
+envlist = py39, py310, py311, py312, py313
 
 [testenv]
 deps =
@@ -94,7 +94,7 @@ reportUnusedImport = false
 github_username = "ccao-data"
 github_repository = "assesspy"
 project = "assesspy"
-copyright = "2022, Cook County Assessor's Office"
+copyright = "2024, Cook County Assessor's Office"
 language = "en"
 package_root = "assesspy"
 extensions = [

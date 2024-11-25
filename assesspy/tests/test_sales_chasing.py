@@ -1,62 +1,92 @@
-# Import necessary libraries
-# Import necessary libraries
 import numpy as np
 import pandas as pd
 import pytest as pt
 
-import assesspy
-
-# Create test vectors of data with certain distributions
-np.random.seed(13378)
-
-# Load the ratios sample dataset for testing
-ratios_sample = assesspy.ratios_sample()
-
-# Extract the components of the dataframe as vectors
-sample_ratios = ratios_sample.ratio
-normal_ratios = np.random.normal(1, 0.15, 100)
-chased_ratios = np.append(np.random.normal(1, 0.15, 900), [1] * 100)
-
-##### TEST CHASING DETECTION ##### # noqa
-
-# Run detection
-sample_out = assesspy.detect_chasing(sample_ratios)
-normal_out = assesspy.detect_chasing(normal_ratios)
-chased_out = assesspy.detect_chasing(chased_ratios)
+import assesspy as ap
 
 
-class TestCHASE:
-    def test_method(self):
+class TestSalesChasing:
+    @pt.fixture
+    def sample_dist(self, ccao_data):
+        estimate, sale_price = ccao_data
+        ratio = estimate / sale_price
+        return ratio
+
+    @pt.fixture(params=["normal", "chased", "sample"])
+    def distribution(self, request, ccao_data, sample_dist):
+        return request.param, {
+            "normal": np.random.normal(1, size=1000).tolist(),
+            "chased": np.append(
+                np.random.normal(1, 0.15, 900), [1] * 100
+            ).tolist(),
+            "sample": sample_dist,
+        }[request.param]
+
+    @pt.fixture(params=["cdf", "dist", "both"])
+    def method(self, request):
+        return request.param
+
+    def test_is_sales_chased_output_is_boolean(self, distribution, method):
+        dist_name, dist_data = distribution
+        assert isinstance(ap.is_sales_chased(dist_data, method), bool)
+
+    def test_is_sales_chased_has_expected_output(self, distribution, method):
+        dist_name, dist_data = distribution
+        expected = {
+            "normal": {"cdf": False, "dist": False, "both": False},
+            "chased": {"cdf": True, "dist": True, "both": True},
+            "sample": {"cdf": False, "dist": True, "both": False},
+        }
+        assert (
+            ap.is_sales_chased(dist_data, method)
+            == expected[dist_name][method]
+        )
+
+    @pt.mark.parametrize(
+        "bad_input",
+        [10, pd.DataFrame([1, 2, 3]), [1] * 29 + ["1"], None],
+    )
+    def test_is_sales_chased_raises_on_bad_input(self, bad_input):
         with pt.raises(Exception):
-            assesspy.detect_chasing(sample_ratios, method="hug")
+            ap.is_sales_chased(bad_input)
 
-    def test_output_type(self):  # Output is logical
-        assert type(sample_out) is np.bool_
-
-    def test_output_value(self):
-        assert not sample_out
-        assert not normal_out
-        assert chased_out
-
-    def test_bad_input(self):  # Bad input data stops execution
+    @pt.mark.parametrize(
+        "input_data",
+        [
+            lambda x: np.append(x, float("Inf")),
+            lambda x: np.append(x, float("NaN")),
+        ],
+    )
+    def test_is_sales_chased_raises_on_invalid_values(
+        self, input_data, distribution, method
+    ):
         with pt.raises(Exception):
-            assesspy.detect_chasing([1] * 29 + [0])
+            dist_name, dist_data = distribution
+            ap.is_outlier(input_data(dist_data), method)
 
+    def test_is_sales_chased_raises_on_invalid_method(self, distribution):
         with pt.raises(Exception):
-            assesspy.detect_chasing(10)
+            dist_name, dist_data = distribution
+            ap.is_sales_chased(dist_data, method="hug")
 
-        with pt.raises(Exception):
-            assesspy.detect_chasing(np.append(sample_ratios, float("Inf")))
-
-        with pt.raises(Exception):
-            assesspy.detect_chasing(pd.DataFrame(sample_ratios))
-
-        with pt.raises(Exception):
-            assesspy.detect_chasing(np.append(sample_ratios, float("NaN")))
-
-        with pt.raises(Exception):
-            assesspy.detect_chasing([1] * 29 + ["1"])
-
-    def test_warnings(self):  # Small sample throughs a warning
+    def test_is_sales_chased_warns_on_small_sample(self):
         with pt.warns(UserWarning):
-            assesspy.detect_chasing(np.random.normal(size=29))
+            ap.is_sales_chased(np.random.normal(size=29).tolist())
+
+    @pt.mark.parametrize(
+        "bounds",
+        [(0.0, 0.0), [0.5, 0.4], (2.0, 1.0), (2.0, "1.0"), None, "2.0"],
+    )
+    def test_is_sales_chased_raises_on_invalid_bounds(self, bounds):
+        with pt.raises(Exception):
+            ap.is_sales_chased(
+                np.random.normal(size=40).tolist(), bounds=bounds
+            )
+
+    @pt.mark.parametrize(
+        "gap",
+        [0, 1, -1, 2, float("NaN"), float("Inf"), None],
+    )
+    def test_is_sales_chased_raises_on_invalid_gap(self, gap):
+        with pt.raises(Exception):
+            ap.is_sales_chased(np.random.normal(size=40).tolist(), gap=gap)
