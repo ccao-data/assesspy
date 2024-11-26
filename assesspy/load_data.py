@@ -45,7 +45,8 @@ def IAAO_sample() -> pd.DataFrame:
     source = files("assesspy").joinpath("data/IAAO_sample.csv")
     with as_file(source) as file:
         return pd.read_csv(file)
-    
+
+
 def quintos_sample() -> pd.DataFrame:
     """
     Sample of sales and estimated market values provided by Quintos in the
