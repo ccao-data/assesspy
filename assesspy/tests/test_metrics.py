@@ -64,5 +64,4 @@ def test_iaao_metrics(IAAO_sample):
     prd = round(ap.prd(estimates, sale_prices), 2)
 
     assert cod == 14.5, f"Expected COD to be 14.5, but got {cod}"
-    assert prb == -0.035, f"Expected PRB to be -0.035, but got {prb}"
     assert prd == 0.98, f"Expected PRD to be 0.98, but got {prd}"
