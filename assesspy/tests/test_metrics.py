@@ -66,3 +66,16 @@ def test_iaao_metrics(IAAO_sample):
     assert cod == 14.5, f"Expected COD to be 14.5, but got {cod}"
     assert prb == 0.001, f"Expected PRB to be .001, but got {prb}"
     assert prd == 0.98, f"Expected PRD to be 0.98, but got {prd}"
+
+def test_mki(quintos_data):
+    """
+    Test that MKI for the quintos_sample returns the expected value.
+    """
+    estimates, sale_prices = quintos_data
+
+    # Calculate MKI
+    mki = round(ap.mki(estimates, sale_prices), 2)
+    ki = round(ap.ki(estimates, sale_prices), 2)
+
+    assert mki == 0.79, f"Expected MKI to be 0.79, but got {mki}" 
+    assert ki == -0.06, f"Expected KI to be -0.06, but got {ki}"
