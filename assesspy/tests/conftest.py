@@ -23,7 +23,7 @@ def quintos_data() -> tuple:
     return sample.estimate, sample.sale_price
 
 @pt.fixture(scope="session")
-def IAAO_data() -> tuple:
+def IAAO_sample() -> tuple:
     sample = ap.IAAO_sample()
     return sample.estimate, sample.sale_price
 
