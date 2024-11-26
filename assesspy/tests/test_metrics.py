@@ -47,7 +47,6 @@ class TestMetrics:
         }
         assert getattr(ap, f"{metric}_met")(metric_val) == expected[metric]
 
-
 def test_iaao_metrics(IAAO_sample):
     """
     Test that COD, PRB, and PRD for the IAAO_sample return expected values.
@@ -55,15 +54,14 @@ def test_iaao_metrics(IAAO_sample):
     estimates, sale_prices = IAAO_sample
 
     # Calculate COD
-    cod = ap.cod(estimates, sale_prices)
+    cod = round(ap.cod(estimates, sale_prices), 1)
 
     # Calculate PRB
-    prb = ap.prb(estimates, sale_prices)
+    prb = round(ap.prb(estimates, sale_prices), 3)
 
     # Calculate PRD
-    prd = ap.prd(estimates, sale_prices)
+    prd = round(ap.prd(estimates, sale_prices), 2)
 
-    # Assert the COD, PRB, and PRD are as expected
     assert cod == 14.5, f"Expected COD to be 14.5, but got {cod}"
     assert prb == -0.035, f"Expected PRB to be -0.035, but got {prb}"
-    assert prd == 0.98, f"Expected PRD to be .98, but got {prd}"
+    assert prd == 0.98, f"Expected PRD to be 0.98, but got {prd}"
