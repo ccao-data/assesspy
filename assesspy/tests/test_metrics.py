@@ -2,6 +2,7 @@ import pytest as pt
 
 import assesspy as ap
 
+
 class TestMetrics:
     @pt.fixture(params=["cod", "prd", "prb", "mki", "ki"])
     def metric(self, request):
