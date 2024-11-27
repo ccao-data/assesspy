@@ -33,7 +33,7 @@ jobs:
       - name: Install tox
         shell: bash
         run: |
-          uv tool install tox --with tox-uv tox-gh-actions
+          uv tool install tox --with tox-uv,tox-gh-actions
           tox --version
 
       - name: Build and test with tox
