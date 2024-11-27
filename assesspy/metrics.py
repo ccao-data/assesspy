@@ -132,7 +132,10 @@ def _calculate_prb(
         lambda x: math.log2(x / 2)
     )
 
-    prb_model = sm.OLS(lhs.to_numpy(), rhs.to_numpy()).fit()
+    prb_model = sm.OLS(
+        endog=lhs.to_numpy(),
+        exog=sm.tools.tools.add_constant(rhs.to_numpy())
+    ).fit(method="qr")
 
     return prb_model
 
@@ -178,7 +181,7 @@ def prb(
         ap.prb(ap.ccao_sample().estimate, ap.ccao_sample().sale_price)
     """
     prb_model = _calculate_prb(estimate, sale_price)
-    prb = float(prb_model.params[0])
+    prb = float(prb_model.params[1])
 
     return prb
 
