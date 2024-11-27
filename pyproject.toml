@@ -22,10 +22,10 @@ license = {file = "LICENSE"}
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-  "numpy>=1.23.0",
-  "pandas>=1.4.0",
+  "numpy>=1.23.1",
+  "pandas>=1.4.3",
   "pyarrow>=9.0.0",
-  "statsmodels>=0.13.0"
+  "statsmodels>=0.13.2"
 ]
 
 [project.urls]
@@ -72,9 +72,8 @@ legacy_tox_ini = """
 [tox]
 min_version = 4.0
 envlist =
-    py39-pandas14-numpy123,
-    py{310, 311, 312, 313}-pandas14-numpy123
-    py{310, 311, 312, 313}-pandas22-numpy21
+    py{39, 310, 311}-pandas14-numpy123
+    py{310, 311, 312, 313}
 
 [gh-actions]
 python =
@@ -87,9 +86,7 @@ python =
 [testenv]
 deps =
     pandas14: pandas==1.4.*
-    pandas22: pandas==2.2.*
     numpy123: numpy==1.23.*
-    numpy21: numpy==2.1.*
 extras = dev
 commands = pytest
 """
