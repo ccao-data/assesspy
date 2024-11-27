@@ -29,8 +29,9 @@ def boot_ci(
         Default 1000. Number of iterations to use to estimate
         the output statistic confidence interval.
     :param alpha:
-        Default 0.05. Float value indicating the confidence
-        interval to return. 0.05 will return the 95% confidence interval.
+        Default ``0.05``. Float value indicating the significance level of the
+        returned confidence interval. ``0.05`` will return the 95% confidence
+        interval.
     :type fun: function
     :type estimate: Array-like numeric values
     :type sale_price: Array-like numeric values
@@ -60,13 +61,13 @@ def boot_ci(
         raise ValueError("'nboot' must be a positive integer greater than 0.")
     check_inputs(estimate, sale_price)
     df = pd.DataFrame({"estimate": estimate, "sale_price": sale_price})
-    n: int = df.size
+    n: int = len(df)
 
     # Take a random sample of input, with the same number of rows as input,
     # with replacement
     ests = pd.Series(index=range(nboot), dtype=float)
     for i in range(nboot):
-        sample = df.sample(n=n, replace=True)
+        sample = df.sample(n=n, replace=True).reset_index(drop=True)
         ests[i] = fun(sample.iloc[:, 0], sample.iloc[:, 1])
 
     ci = (ests.quantile(alpha / 2), ests.quantile(1 - alpha / 2))
@@ -122,6 +123,7 @@ def prb_ci(
         :func:`boot_ci`
     """
     prb_model = _calculate_prb(estimate, sale_price)
-    prb_ci = prb_model.conf_int(alpha=alpha)[0].tolist()
+    # Select index position 1, since 0 is the confint of the intercept term
+    prb_ci = prb_model.conf_int(alpha=alpha)[1].tolist()
 
     return prb_ci[0], prb_ci[1]

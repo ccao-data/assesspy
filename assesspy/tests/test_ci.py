@@ -8,33 +8,33 @@ class TestCI:
     def metric(self, request):
         return request.param
 
-    @pt.fixture(params=[0.80, 0.90, 0.95])
+    @pt.fixture(params=[0.50, 0.20, 0.10, 0.05])
     def alpha(self, request):
         return request.param
 
     def test_metric_ci_output_with_alpha(self, metric, alpha, ccao_data):
         expected = {
             "cod": {
-                0.50: (17.3, 18.0),
-                0.80: (17.6, 18.0),
-                0.90: (17.7, 18.0),
-                0.95: (17.7, 17.9),
+                0.50: (17.30233, 18.27170),
+                0.20: (16.83710, 18.79953),
+                0.10: (16.61336, 18.97916),
+                0.05: (16.49595, 19.19573),
             },
             "prd": {
-                0.50: (1.03, 1.06),
-                0.80: (1.04, 1.06),
-                0.90: (1.04, 1.05),
-                0.95: (1.04, 1.05),
+                0.50: (1.043290, 1.053368),
+                0.20: (1.038444, 1.058439),
+                0.10: (1.036563, 1.061334),
+                0.05: (1.034447, 1.062625),
             },
             "prb": {
-                0.50: (0.000823, 0.00107),
-                0.80: (0.000823, 0.00107),
-                0.90: (0.000885, 0.00100),
-                0.95: (0.000916, 0.00097),
+                0.50: (-0.00320422, 0.00815580),
+                0.20: (-0.00831969, 0.01327127),
+                0.10: (-0.01138384, 0.01633542),
+                0.05: (-0.01404379, 0.01899536),
             },
         }
         ci_l, ci_u = getattr(ap, f"{metric}_ci")(
-            *ccao_data, nboot=200, alpha=alpha
+            *ccao_data, nboot=500, alpha=alpha
         )
         assert pt.approx(ci_l, rel=0.01) == expected[metric][alpha][0]
         assert pt.approx(ci_u, rel=0.01) == expected[metric][alpha][1]
