@@ -6,7 +6,7 @@
 
 AssessPy is a software package for Python developed by the Cook County Assessor’s (CCAO)
 Data Department. It contains many of the functions necessary to perform a standard
-[sales ratio study](https://www.iaao.org/media/standards/Standard_on_Ratio_Studies.pdf).
+[sales ratio study](https://www.iaao.org/wp-content/uploads/Standard_on_Ratio_Studies.pdf).
 
 For assessors, we believe that this package will reduce the complexity of calculating
 ratio statistics and detecting sales chasing. We also hope that reporters, taxpayers,
