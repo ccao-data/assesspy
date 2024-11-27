@@ -121,6 +121,10 @@ def _calculate_prb(
     estimate: Union[list[int], list[float], pd.Series],
     sale_price: Union[list[int], list[float], pd.Series],
 ) -> sm.regression.linear_model.RegressionResultsWrapper:
+    """
+    Helper function to calculate PRB, since the same code gets re-used for
+    both prb() and prb_ci().
+    """
     check_inputs(estimate, sale_price)
     estimate = pd.Series(estimate, dtype=float)
     sale_price = pd.Series(sale_price, dtype=float)
@@ -132,7 +136,9 @@ def _calculate_prb(
         lambda x: math.log2(x / 2)
     )
 
-    prb_model = sm.OLS(lhs.to_numpy(), rhs.to_numpy()).fit()
+    prb_model = sm.OLS(
+        endog=lhs.to_numpy(), exog=sm.tools.tools.add_constant(rhs.to_numpy())
+    ).fit(method="qr")
 
     return prb_model
 
@@ -178,7 +184,8 @@ def prb(
         ap.prb(ap.ccao_sample().estimate, ap.ccao_sample().sale_price)
     """
     prb_model = _calculate_prb(estimate, sale_price)
-    prb = float(prb_model.params[0])
+    # Select index position 1, since 0 is the intercept term
+    prb = float(prb_model.params[1])
 
     return prb
 
