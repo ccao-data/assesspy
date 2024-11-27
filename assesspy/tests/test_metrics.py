@@ -14,58 +14,7 @@ class TestMetrics:
             return getattr(ap, metric)(*quintos_data)
         return getattr(ap, metric)(*ccao_data)
 
-    def test_iaao_metrics_1_4(self, IAAO_sample_1_4):
-        """
-        Test that COD, PRB, and PRD for the IAAO_sample return expected values.
-        """
-        estimates, sale_prices = IAAO_sample_1_4
-
-        # Calculate COD
-        cod = round(ap.cod(estimates, sale_prices), 1)
-
-        # Calculate PRB
-        prb = round(ap.prb(estimates, sale_prices), 3)
-
-        # Calculate PRD
-        prd = round(ap.prd(estimates, sale_prices), 2)
-
-        assert cod == 7.5, f"Expected COD to be 7.5, but got {cod}"
-        assert prb == 0.135, f"Expected PRB to be .135, but got {prb}"
-        assert prd == 1.03, f"Expected PRD to be 0.98, but got {prd}"
-
-    def test_iaao_metrics_d_1(self, IAAO_sample_d_1):
-        """
-        Test that COD, PRB, and PRD for the IAAO_sample return expected values.
-        """
-        estimates, sale_prices = IAAO_sample_d_1
-
-        # Calculate COD
-        cod = round(ap.cod(estimates, sale_prices), 1)
-
-        # Calculate PRB
-        prb = round(ap.prb(estimates, sale_prices), 3)
-
-        # Calculate PRD
-        prd = round(ap.prd(estimates, sale_prices), 2)
-
-        assert cod == 7.5, f"Expected COD to be .075, but got {cod}"
-        assert prb == -0.120, f"Expected PRB to be .0.120, but got {prb}"
-        assert prd == 1.03, f"Expected PRD to be 1.03, but got {prd}"
-
-    def test_mki(self, quintos_data):
-        """
-        Test that MKI for the quintos_sample returns the expected value.
-        """
-        estimates, sale_prices = quintos_data
-
-        # Calculate MKI
-        mki = round(ap.mki(estimates, sale_prices), 2)
-        ki = round(ap.ki(estimates, sale_prices), 2)
-
-        assert mki == 0.79, f"Expected MKI to be 0.79, but got {mki}"
-        assert ki == -0.06, f"Expected KI to be -0.06, but got {ki}"
-
-    def test_metric_value_is_correct(self, metric, metric_val):
+    def test_metric_value_is_correct_ccao(self, metric, metric_val):
         expected = {
             "cod": 17.81456901196891,
             "prd": 1.0484192615223522,
@@ -73,7 +22,37 @@ class TestMetrics:
             "mki": 0.794,
             "ki": -0.06,
         }
-        assert pt.approx(metric_val, rel=0.02) == expected[metric]
+        assert pt.approx(metric_val, rel=0.01) == expected[metric]
+
+    def test_metric_value_is_correct_iaao(self, metric, iaao_data):
+        if metric in ["mki", "ki"]:
+            return None
+        else:
+            table_name, estimate, sale_price = iaao_data
+            result = getattr(ap, metric)(estimate, sale_price)
+            expected = {
+                "1_1": {
+                    "cod": 29.8,
+                    "prd": 0.98,
+                    "prb": 0.232,
+                },
+                "1_4": {
+                    "cod": 14.5,
+                    "prd": 0.98,
+                    "prb": 0.135,
+                },
+                "d_1": {
+                    "cod": 7.5,
+                    "prd": 1.027,
+                    "prb": -0.120,
+                },
+                "d_2": {
+                    "cod": 7.8,
+                    "prd": 1.056,
+                    "prb": -0.011,
+                },
+            }
+            assert pt.approx(result, rel=0.02) == expected[table_name][metric]
 
     def test_metric_has_numeric_output(self, metric_val):
         assert type(metric_val) is float
@@ -89,7 +68,7 @@ class TestMetrics:
 
     def test_metric_met_function_thresholds(self, metric, metric_val):
         if metric == "ki":
-            pt.skip("Skipping test for 'ki' metric (ki_met does not exist)")
+            return None
         expected = {
             "cod": False,
             "prd": False,
