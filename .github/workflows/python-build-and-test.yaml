@@ -4,7 +4,7 @@ on:
   push:
     branches: [main, master]
 
-name: package-build
+name: python-build-and-test
 
 jobs:
   build:
@@ -38,4 +38,4 @@ jobs:
 
       - name: Build and test with tox
         shell: bash
-        run: tox
+        run: tox r

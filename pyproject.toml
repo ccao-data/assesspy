@@ -34,7 +34,7 @@ Documentation = "https://ccao-data.github.io/assesspy/"
 
 [project.optional-dependencies]
 dev = [
-  "setuptools",
+  "setuptools>=61.0",
   "pytest",
   "pytest-cov",
 ]
@@ -60,7 +60,7 @@ include-package-data = true
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "-v --cache-clear -rf --cov=assesspy --cov-report=term --cov-report=html --maxfail=10"
+addopts = "-v --cache-clear -n 3 -rf --cov=assesspy --cov-report=term --cov-report=html --maxfail=10"
 console_output_style = "count"
 python_classes = "Test"
 python_files = "test_*.py"
@@ -72,7 +72,9 @@ legacy_tox_ini = """
 [tox]
 min_version = 4.0
 envlist =
-    py{39, 310, 311, 312, 313}-pandas{14, 22}-numpy{123, 21}
+    py39-pandas14-numpy123,
+    py{310, 311, 312, 313}-pandas14-numpy123
+    py{310, 311, 312, 313}-pandas22-numpy21
 
 [gh-actions]
 python =
@@ -84,11 +86,12 @@ python =
 
 [testenv]
 deps =
-    setuptools>=61.0
     pandas14: pandas==1.4.*
     pandas22: pandas==2.2.*
     numpy123: numpy==1.23.*
     numpy21: numpy==2.1.*
+extras = dev
+commands = pytest
 """
 
 [tool.ruff]
