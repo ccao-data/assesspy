@@ -1,8 +1,12 @@
+import pathlib
+
 import numpy as np
 import pandas as pd
 import pytest as pt
 
 import assesspy as ap
+
+FIXTURE_DIR = pathlib.Path(__file__).parent / "fixtures"
 
 
 @pt.fixture(autouse=True, scope="function")
@@ -20,6 +24,17 @@ def ccao_data() -> tuple:
 @pt.fixture(scope="session")
 def quintos_data() -> tuple:
     sample = ap.quintos_sample()
+    return sample.estimate, sample.sale_price
+
+
+@pt.fixture(scope="session", params=["1_1", "1_4", "d_1", "d_2"])
+def iaao_data_name(request):
+    return request.param
+
+
+@pt.fixture(scope="session")
+def iaao_data(iaao_data_name) -> tuple:
+    sample = pd.read_csv(FIXTURE_DIR / f"iaao_table_{iaao_data_name}.csv")
     return sample.estimate, sample.sale_price
 
 

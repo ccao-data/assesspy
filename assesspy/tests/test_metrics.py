@@ -14,7 +14,7 @@ class TestMetrics:
             return getattr(ap, metric)(*quintos_data)
         return getattr(ap, metric)(*ccao_data)
 
-    def test_metric_value_is_correct(self, metric, metric_val):
+    def test_metric_value_is_correct_ccao(self, metric, metric_val):
         expected = {
             "cod": 17.81456901196891,
             "prd": 1.0484192615223522,
@@ -22,7 +22,40 @@ class TestMetrics:
             "mki": 0.794,
             "ki": -0.06,
         }
-        assert pt.approx(metric_val, rel=0.02) == expected[metric]
+        assert pt.approx(metric_val, rel=0.01) == expected[metric]
+
+    def test_metric_value_is_correct_iaao(
+        self, metric, iaao_data_name, iaao_data
+    ):
+        if metric in ["mki", "ki"]:
+            return None
+        else:
+            result = getattr(ap, metric)(*iaao_data)
+            expected = {
+                "1_1": {
+                    "cod": 29.8,
+                    "prd": 0.98,
+                    "prb": 0.232,
+                },
+                "1_4": {
+                    "cod": 14.5,
+                    "prd": 0.98,
+                    "prb": 0.135,
+                },
+                "d_1": {
+                    "cod": 7.5,
+                    "prd": 1.027,
+                    "prb": -0.120,
+                },
+                "d_2": {
+                    "cod": 7.8,
+                    "prd": 1.056,
+                    "prb": -0.011,
+                },
+            }
+            assert (
+                pt.approx(result, rel=0.02) == expected[iaao_data_name][metric]
+            )
 
     def test_metric_has_numeric_output(self, metric_val):
         assert type(metric_val) is float
@@ -38,7 +71,7 @@ class TestMetrics:
 
     def test_metric_met_function_thresholds(self, metric, metric_val):
         if metric == "ki":
-            pt.skip("Skipping test for 'ki' metric (ki_met does not exist)")
+            return None
         expected = {
             "cod": False,
             "prd": False,

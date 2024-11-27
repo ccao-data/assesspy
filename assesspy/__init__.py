@@ -4,7 +4,10 @@ from .ci import (
     prb_ci,
     prd_ci,
 )
-from .load_data import ccao_sample, quintos_sample
+from .load_data import (
+    ccao_sample,
+    quintos_sample,
+)
 from .metrics import (
     cod,
     cod_met,
