@@ -14,38 +14,43 @@ class TestMetrics:
             return getattr(ap, metric)(*quintos_data)
         return getattr(ap, metric)(*ccao_data)
 
-def test_iaao_metrics(self, IAAO_samples):
-    """
-    Test that COD, PRB, and PRD for the IAAO samples return expected values.
-    """
-    # List of datasets and expected values
-    datasets = [
-        {
-            "name": "1_4",
-            "data": IAAO_samples["IAAO_sample_1_4"],
-            "expected": {"cod": 7.5, "prb": 0.135, "prd": 1.03},
-        },
-        {
-            "name": "d_1",
-            "data": IAAO_samples["IAAO_sample_d_1"],
-            "expected": {"cod": 7.5, "prb": -0.120, "prd": 1.03},
-        },
-    ]
+    def test_iaao_metrics_1_4(self, IAAO_sample_1_4):
+        """
+        Test that COD, PRB, and PRD for the IAAO_sample return expected values.
+        """
+        estimates, sale_prices = IAAO_sample_1_4
 
-    # Iterate through datasets and perform tests
-    for dataset in datasets:
-        estimates, sale_prices = dataset["data"]
-        expected = dataset["expected"]
-
-        # Calculate metrics
+        # Calculate COD
         cod = round(ap.cod(estimates, sale_prices), 1)
+
+        # Calculate PRB
         prb = round(ap.prb(estimates, sale_prices), 3)
+
+        # Calculate PRD
         prd = round(ap.prd(estimates, sale_prices), 2)
 
-        # Assertions
-        assert cod == expected["cod"], f"Expected COD for {dataset['name']} to be {expected['cod']}, but got {cod}"
-        assert prb == expected["prb"], f"Expected PRB for {dataset['name']} to be {expected['prb']}, but got {prb}"
-        assert prd == expected["prd"], f"Expected PRD for {dataset['name']} to be {expected['prd']}, but got {prd}"
+        assert cod == 7.5, f"Expected COD to be 7.5, but got {cod}"
+        assert prb == 0.135, f"Expected PRB to be .135, but got {prb}"
+        assert prd == 1.03, f"Expected PRD to be 0.98, but got {prd}"
+
+    def test_iaao_metrics_d_1(self, IAAO_sample_d_1):
+        """
+        Test that COD, PRB, and PRD for the IAAO_sample return expected values.
+        """
+        estimates, sale_prices = IAAO_sample_d_1
+
+        # Calculate COD
+        cod = round(ap.cod(estimates, sale_prices), 1)
+
+        # Calculate PRB
+        prb = round(ap.prb(estimates, sale_prices), 3)
+
+        # Calculate PRD
+        prd = round(ap.prd(estimates, sale_prices), 2)
+
+        assert cod == 7.5, f"Expected COD to be .075, but got {cod}"
+        assert prb == -0.120, f"Expected PRB to be .0.120, but got {prb}"
+        assert prd == 1.03, f"Expected PRD to be 1.03, but got {prd}"
 
 
     def test_mki(self, quintos_data):

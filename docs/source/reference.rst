@@ -87,6 +87,8 @@ Data
 
 :doc:`ccao_sample() <ccao_sample>`
 :doc:`quintos_sample() <quintos_sample>`
-:doc:`IAAO_sample() <IAAO_sample>`
+:doc:`IAAO_sample_1_4() <IAAO_sample_1_4>`
+:doc:`IAAO_sample_d_1() <IAAO_sample_d_1>`
+:doc:`IAAO_sample_d_2() <IAAO_sample_d_2>`
 
 .. |nbsp| unicode:: 0xA0
