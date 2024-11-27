@@ -87,7 +87,7 @@ python =
 extras = dev
 commands = pytest
 
-[testenv:lowest]
+[testenv:py{39, 310, 311}-lowest]
 uv_resolution = lowest
 """
 
