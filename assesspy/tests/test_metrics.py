@@ -24,12 +24,13 @@ class TestMetrics:
         }
         assert pt.approx(metric_val, rel=0.01) == expected[metric]
 
-    def test_metric_value_is_correct_iaao(self, metric, iaao_data):
+    def test_metric_value_is_correct_iaao(
+        self, metric, iaao_data_name, iaao_data
+    ):
         if metric in ["mki", "ki"]:
             return None
         else:
-            table_name, estimate, sale_price = iaao_data
-            result = getattr(ap, metric)(estimate, sale_price)
+            result = getattr(ap, metric)(*iaao_data)
             expected = {
                 "1_1": {
                     "cod": 29.8,
@@ -52,7 +53,9 @@ class TestMetrics:
                     "prb": -0.011,
                 },
             }
-            assert pt.approx(result, rel=0.02) == expected[table_name][metric]
+            assert (
+                pt.approx(result, rel=0.02) == expected[iaao_data_name][metric]
+            )
 
     def test_metric_has_numeric_output(self, metric_val):
         assert type(metric_val) is float

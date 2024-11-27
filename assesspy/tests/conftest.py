@@ -27,10 +27,15 @@ def quintos_data() -> tuple:
     return sample.estimate, sample.sale_price
 
 
-@pt.fixture(scope="module", params=["1_1", "1_4", "d_1", "d_2"])
-def iaao_data(request) -> tuple:
-    sample = pd.read_csv(FIXTURE_DIR / f"iaao_table_{request.param}.csv")
-    return request.param, sample.estimate, sample.sale_price
+@pt.fixture(scope="session", params=["1_1", "1_4", "d_1", "d_2"])
+def iaao_data_name(request):
+    return request.param
+
+
+@pt.fixture(scope="session")
+def iaao_data(iaao_data_name) -> tuple:
+    sample = pd.read_csv(FIXTURE_DIR / f"iaao_table_{iaao_data_name}.csv")
+    return sample.estimate, sample.sale_price
 
 
 @pt.fixture(
