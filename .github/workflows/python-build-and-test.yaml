@@ -23,6 +23,7 @@ jobs:
         with:
           enable-cache: true
           cache-dependency-glob: pyproject.toml
+          cache-suffix: tox
 
       - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
@@ -32,10 +33,9 @@ jobs:
       - name: Install tox
         shell: bash
         run: |
-          uv tool install tox --with tox-uv
+          uv tool install tox --with tox-uv tox-gh-actions
           tox --version
 
-      - name: Test install with tox
-        run: |
-          env=$(echo ${{ matrix.python-version }} | tr -d '.' | sed 's/^/py/')
-          tox r -v --notest -e "$env"
+      - name: Build and test with tox
+        shell: bash
+        run: tox
