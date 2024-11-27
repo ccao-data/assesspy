@@ -72,7 +72,7 @@ legacy_tox_ini = """
 [tox]
 min_version = 4.0
 envlist =
-    py{39, 310, 311}-lowest
+    py{39, 310}-lowest
     py{310, 311, 312, 313}
 
 [gh-actions]
@@ -87,8 +87,11 @@ python =
 extras = dev
 commands = pytest
 
-[testenv:py{39, 310, 311}-lowest]
+[testenv:py{39, 310}-lowest]
 uv_resolution = lowest-direct
+
+[testenv:py{39, 310, 311, 312, 313}]
+uv_resolution = highest
 """
 
 [tool.ruff]
