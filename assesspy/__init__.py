@@ -5,9 +5,6 @@ from .ci import (
     prd_ci,
 )
 from .load_data import (
-    IAAO_sample_1_4,
-    IAAO_sample_d_1,
-    IAAO_sample_d_2,
     ccao_sample,
     quintos_sample,
 )
