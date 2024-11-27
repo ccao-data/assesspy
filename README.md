@@ -1,7 +1,6 @@
 # AssessPy <a href="https://github.com/ccao-data/assesspy"><img src="https://raw.githubusercontent.com/ccao-data/assesspy/main/docs/images/logo.png" align="right" height="139"/></a>
 
-[![package-build](https://github.com/ccao-data/assesspy/actions/workflows/python-package.yaml/badge.svg)](https://github.com/ccao-data/assesspy/actions/workflows/python-package.yaml)
-[![test-coverage](https://github.com/ccao-data/assesspy/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/ccao-data/assesspy/actions/workflows/test-coverage.yaml)
+[![python-build-and-test](https://github.com/ccao-data/assesspy/actions/workflows/python-build-and-test.yaml/badge.svg)](https://github.com/ccao-data/assesspy/actions/workflows/python-build-and-test.yaml)
 [![pre-commit](https://github.com/ccao-data/assesspy/actions/workflows/pre-commit.yaml/badge.svg)](https://github.com/ccao-data/assesspy/actions/workflows/pre-commit.yaml)
 
 AssessPy is a software package for Python developed by the Cook County Assessor’s (CCAO)
