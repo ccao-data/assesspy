@@ -26,9 +26,9 @@ def ccao_sample() -> pd.DataFrame:
         return pd.read_parquet(file)
 
 
-def IAAO_sample() -> pd.DataFrame:
+def IAAO_sample_1_4() -> pd.DataFrame:
     """
-    Sample of sales and estimated market values provided by the IAAO in the following report:
+    Sample of sales and estimated market values provided in table 1.4 by the IAAO in the following report:
 
     .. IAAO. (2013). Standard on Ratio Studies. https://www.iaao.org/wp-content/uploads/Standard_on_Ratio_Studies.pdf
 
@@ -42,10 +42,31 @@ def IAAO_sample() -> pd.DataFrame:
 
     :rtype: pd.DataFrame
     """
-    source = files("assesspy").joinpath("data/IAAO_sample.csv")
+    source = files("assesspy").joinpath("data/IAAO_sample_1_4.csv")
     with as_file(source) as file:
         return pd.read_csv(file)
 
+
+def IAAO_sample_d_1() -> pd.DataFrame:
+    """
+    Sample of sales and estimated market values provided in table D.1 by the IAAO in the following report:
+
+    .. IAAO. (2013). Standard on Ratio Studies. https://www.iaao.org/wp-content/uploads/Standard_on_Ratio_Studies.pdf
+
+    :return:
+        A Pandas DataFrame with 25 observation and 2 variables:
+
+        ======================== =====================================================
+        **estimate** (`float`)       Assessed fair market value
+        **sale_price** (`float`)     Recorded sale price of this property
+        ======================== =====================================================
+
+    :rtype: pd.DataFrame
+    """
+    source = files("assesspy").joinpath("data/IAAO_sample_d_1.csv")
+    with as_file(source) as file:
+        return pd.read_csv(file)
+    
 
 def quintos_sample() -> pd.DataFrame:
     """

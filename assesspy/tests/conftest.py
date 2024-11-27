@@ -18,8 +18,13 @@ def ccao_data() -> tuple:
 
 
 @pt.fixture(scope="session")
-def IAAO_sample() -> tuple:
-    sample = ap.IAAO_sample()
+def IAAO_sample_1_4() -> tuple:
+    sample = ap.IAAO_sample_1_4()
+    return sample.estimate, sample.sale_price
+
+@pt.fixture(scope="session")
+def IAAO_sample_d_1() -> tuple:
+    sample = ap.IAAO_sample_d_1()
     return sample.estimate, sample.sale_price
 
 
