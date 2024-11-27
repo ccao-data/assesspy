@@ -52,7 +52,6 @@ class TestMetrics:
         assert prb == -0.120, f"Expected PRB to be .0.120, but got {prb}"
         assert prd == 1.03, f"Expected PRD to be 1.03, but got {prd}"
 
-
     def test_mki(self, quintos_data):
         """
         Test that MKI for the quintos_sample returns the expected value.

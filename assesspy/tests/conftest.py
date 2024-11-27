@@ -22,15 +22,18 @@ def IAAO_sample_1_4() -> tuple:
     sample = ap.IAAO_sample_1_4()
     return sample.estimate, sample.sale_price
 
+
 @pt.fixture(scope="session")
 def IAAO_sample_d_1() -> tuple:
     sample = ap.IAAO_sample_d_1()
     return sample.estimate, sample.sale_price
 
+
 @pt.fixture(scope="session")
 def IAAO_sample_d_2() -> tuple:
     sample = ap.IAAO_sample_d_2()
     return sample.estimate, sample.sale_price
+
 
 @pt.fixture(scope="session")
 def quintos_data() -> tuple:
