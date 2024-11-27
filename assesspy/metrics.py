@@ -133,8 +133,7 @@ def _calculate_prb(
     )
 
     prb_model = sm.OLS(
-        endog=lhs.to_numpy(),
-        exog=sm.tools.tools.add_constant(rhs.to_numpy())
+        endog=lhs.to_numpy(), exog=sm.tools.tools.add_constant(rhs.to_numpy())
     ).fit(method="qr")
 
     return prb_model
