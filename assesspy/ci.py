@@ -123,6 +123,7 @@ def prb_ci(
         :func:`boot_ci`
     """
     prb_model = _calculate_prb(estimate, sale_price)
+    # Select index position 1, since 0 is the confint of the intercept term
     prb_ci = prb_model.conf_int(alpha=alpha)[1].tolist()
 
     return prb_ci[0], prb_ci[1]
