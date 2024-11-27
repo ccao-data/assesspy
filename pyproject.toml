@@ -72,7 +72,7 @@ legacy_tox_ini = """
 [tox]
 min_version = 4.0
 envlist =
-    py{39, 310, 311}-pandas14-numpy123
+    py{39, 310, 311}-lowest
     py{310, 311, 312, 313}
 
 [gh-actions]
@@ -84,11 +84,11 @@ python =
     3.13: py313
 
 [testenv]
-deps =
-    pandas14: pandas==1.4.*
-    numpy123: numpy==1.23.*
 extras = dev
 commands = pytest
+
+[testenv:lowest]
+uv_resolution = lowest
 """
 
 [tool.ruff]
