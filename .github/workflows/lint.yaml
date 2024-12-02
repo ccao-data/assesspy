@@ -8,7 +8,6 @@ name: lint
 
 env:
   PYTHONUNBUFFERED: "1"
-  UV_SYSTEM_PYTHON: 1
 
 jobs:
   lint-ruff:
@@ -18,18 +17,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v3
-        with:
-          enable-cache: true
-          cache-dependency-glob: pyproject.toml
+        uses: astral-sh/setup-uv@v4
 
       - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version-file: pyproject.toml
+        shell: bash
+        run: uv python install
 
       - name: Install dependencies
-        run: uv pip install . ruff
+        run: uv pip install ruff
 
       - name: Lint with ruff
         run: ruff check --output-format=github .
