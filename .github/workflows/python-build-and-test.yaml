@@ -26,7 +26,7 @@ jobs:
         with:
           enable-cache: true
           cache-dependency-glob: pyproject.toml
-          cache-suffix: tox
+          cache-suffix: dev
           prune-cache: false
 
       - name: Install tox

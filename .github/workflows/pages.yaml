@@ -25,7 +25,7 @@ jobs:
         with:
           enable-cache: true
           cache-dependency-glob: pyproject.toml
-          cache-suffix: pypi
+          cache-suffix: docs
           prune-cache: false
 
       - name: Setup Python
