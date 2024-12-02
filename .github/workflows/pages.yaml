@@ -30,13 +30,13 @@ jobs:
 
       - name: Setup Python
         shell: bash
-        run: uv python install
+        run: uv venv
 
       - name: Install Python dependencies
         run: uv pip install .[docs]
 
       - name: Generate HTML
-        run: sphinx-build -d _build/doctrees docs/source _build/html
+        run: uv run sphinx-build -d _build/doctrees docs/source _build/html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

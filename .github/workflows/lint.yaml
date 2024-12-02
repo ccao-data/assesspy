@@ -21,10 +21,10 @@ jobs:
 
       - name: Setup Python
         shell: bash
-        run: uv python install
+        run: uv venv
 
       - name: Install dependencies
         run: uv pip install ruff
 
       - name: Lint with ruff
-        run: ruff check --output-format=github .
+        run: uv run ruff check --output-format=github .

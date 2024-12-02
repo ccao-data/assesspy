@@ -29,10 +29,6 @@ jobs:
           cache-suffix: tox
           prune-cache: false
 
-      - name: Setup Python ${{ matrix.python-version }}
-        shell: bash
-        run: uv python install ${{ matrix.python-version }}
-
       - name: Install tox
         shell: bash
         run: |
