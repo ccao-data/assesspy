@@ -8,6 +8,7 @@ name: python-build-and-test
 
 env:
   PYTHONUNBUFFERED: "1"
+  UV_SYSTEM_PYTHON: 1
 
 jobs:
   build-and-test:
@@ -29,6 +30,11 @@ jobs:
           cache-suffix: dev
           prune-cache: false
 
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
       - name: Install tox
         shell: bash
         run: |
@@ -37,4 +43,4 @@ jobs:
 
       - name: Build and test with tox
         shell: bash
-        run: tox r -vv
+        run: tox r
