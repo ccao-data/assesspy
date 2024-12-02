@@ -8,7 +8,6 @@ name: python-build-and-test
 
 env:
   PYTHONUNBUFFERED: "1"
-  UV_SYSTEM_PYTHON: 1
 
 jobs:
   build-and-test:
