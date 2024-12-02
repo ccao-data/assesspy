@@ -24,11 +24,11 @@ jobs:
           enable-cache: true
           cache-dependency-glob: pyproject.toml
           cache-suffix: tox
+          prune-cache: false
 
       - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
+        shell: bash
+        run: uv python install ${{ matrix.python-version }}
 
       - name: Install tox
         shell: bash
@@ -36,17 +36,9 @@ jobs:
           uv tool install tox --with tox-uv,tox-gh-actions
           tox --version
 
-      - name: Setup tox test suite
-        run: tox run -vv --notest
-
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        with:
-          limit-access-to-actor: true
-
-      - name: Run tox test suite
+      - name: Build and test with tox
         shell: bash
-        run: tox run -vv --skip-pkg-install
+        run: tox r
 
       # https://docs.astral.sh/uv/concepts/cache/#caching-in-continuous-integration
       # - name: Minimize uv cache
