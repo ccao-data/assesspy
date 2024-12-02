@@ -18,10 +18,6 @@ jobs:
 
       - name: Install uv
         uses: astral-sh/setup-uv@v4
-        with:
-          enable-cache: true
-          cache-dependency-glob: pyproject.toml
-          prune-cache: false
 
       - name: Setup Python
         shell: bash
