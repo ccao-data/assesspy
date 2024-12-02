@@ -23,6 +23,7 @@ jobs:
         with:
           enable-cache: true
           cache-dependency-glob: pyproject.toml
+          cache-local-path: ${{ env.UV_CACHE_DIR }}
           cache-suffix: tox
 
       - name: Setup Python ${{ matrix.python-version }}
@@ -35,10 +36,20 @@ jobs:
         run: |
           uv tool install tox --with tox-uv,tox-gh-actions
           tox --version
+        env:
+          UV_CACHE_DIR: ${{ runner.temp }}/setup-uv-cache
 
       - name: Setup tox test suite
         run: tox run -vv --notest
+        env:
+          UV_CACHE_DIR: ${{ runner.temp }}/setup-uv-cache
 
       - name: Run tox test suite
         shell: bash
-        run: tox run --skip-pkg-install
+        run: tox run -vv --skip-pkg-install
+        env:
+          UV_CACHE_DIR: ${{ runner.temp }}/setup-uv-cache
+
+      # https://docs.astral.sh/uv/concepts/cache/#caching-in-continuous-integration
+      # - name: Minimize uv cache
+      #   run: uv cache prune --ci
