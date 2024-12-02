@@ -26,8 +26,7 @@ jobs:
         with:
           enable-cache: true
           cache-dependency-glob: pyproject.toml
-          cache-suffix: dev
-          prune-cache: false
+          cache-suffix: ${{ matrix.python-version }}-tox
 
       - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
