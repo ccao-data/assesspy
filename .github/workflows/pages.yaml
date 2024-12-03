@@ -42,8 +42,16 @@ jobs:
         with:
           limit-access-to-actor: true
 
+      - name: Install and run git-restore-mtime
+        shell: bash
+        run: |
+          apt-get update
+          apt-get install git-restore-mtime -y
+          git-restore-mtime
+
       - name: Generate HTML
-        run: uv run sphinx-build -d _build/doctrees docs/source _build/html
+        run: |
+          uv run sphinx-build -j auto -d _build/doctrees docs/source _build/html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
