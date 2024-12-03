@@ -37,11 +37,6 @@ jobs:
       - name: Install Python dependencies
         run: uv pip install .[docs]
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        with:
-          limit-access-to-actor: true
-
       - name: Generate HTML
         run: |
           uv run sphinx-build -j auto \
