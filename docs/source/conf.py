@@ -14,3 +14,4 @@ source_suffix = {".rst": "restructuredtext", ".ipynb": "myst-nb"}
 nb_render_image_options = {"width": "450px", "align": "center"}
 nb_execution_timeout = 600
 html_sidebars = {"**": []}
+jupyter_execute_notebooks = "cache"
