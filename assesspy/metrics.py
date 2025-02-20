@@ -347,18 +347,6 @@ def median_ratio_met(x: float) -> bool:
     """
     return .9 < x <= 1.1
 
-def vertical_equity_met(prd: float, prb: float) -> bool:
-    """
-    Check whether vertical equity meets IAAO standards:
-    - PRD should be between 0.98 and 1.03 (inclusive).
-    - PRB should be between -0.05 and +0.05 (inclusive).
-
-    :param prd: A single float value for the Price-Related Differential (PRD).
-    :param prb: A single float value for the Price-Related Bias (PRB).
-    :return: A boolean value indicating whether either PRD or PRB meets IAAO standards.
-    """
-    return 0.98 <= prd <= 1.03 or -0.05 <= prb <= 0.05
-
 def cod_met(x: float) -> bool:
     """
     Check whether COD meets IAAO standards (between 5 and 15, inclusive).
