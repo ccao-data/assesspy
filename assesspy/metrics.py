@@ -345,7 +345,7 @@ def med_ratio_met(x: float) -> bool:
     :return: A boolean value indicating whether the median_ratio meets IAAO standards.
     :rtype: bool
     """
-    return .9 < x <= 1.1
+    return 0.9 < x <= 1.1
 
 def cod_met(x: float) -> bool:
     """
