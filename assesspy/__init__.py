@@ -18,7 +18,7 @@ from .metrics import (
     prb_met,
     prd,
     prd_met,
-    median_ratio_met
+    med_ratio_met
 )
 from .outliers import is_outlier
 from .sales_chasing import is_sales_chased
