@@ -1,6 +1,6 @@
 [project]
 name = "assesspy"
-version = "2.0.1"
+version = "2.0.2"
 description = "Python package for measuring assessment performance"
 keywords = ["assessment", "property taxes", "local government"]
 authors = [
