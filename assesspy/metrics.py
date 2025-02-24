@@ -334,6 +334,21 @@ def ki(
 
 
 # Functions to determine whether IAAO/Quintos fairness criteria is met
+
+
+def med_ratio_met(x: float) -> bool:
+    """
+    Check whether median_ratio meets IAAO standards (between .9 and 1.1, inclusive).
+
+    :param x: A single float value containing the median_ratio.
+    :type x: float
+
+    :return: A boolean value indicating whether the median_ratio meets IAAO standards.
+    :rtype: bool
+    """
+    return 0.9 < x <= 1.1
+
+
 def cod_met(x: float) -> bool:
     """
     Check whether COD meets IAAO standards (between 5 and 15, inclusive).

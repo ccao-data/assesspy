@@ -12,6 +12,7 @@ from .metrics import (
     cod,
     cod_met,
     ki,
+    med_ratio_met,
     mki,
     mki_met,
     prb,

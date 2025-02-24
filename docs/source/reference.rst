@@ -79,6 +79,10 @@ Other functions
 
 :doc:`is_outlier() <outliers>`
 
+| Calculate if median_ratio is within the acceptable range
+
+:doc:`med_ratio_met() <med_ratio_met>`
+
 
 Data
 ----
