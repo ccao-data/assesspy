@@ -212,7 +212,7 @@ def _calculate_gini(
     )
     df = pd.concat([estimate, sale_price], axis=1)
     # Mergesort is required for stable sort results
-    df.sort_values(by="sale_price", kind="mergesort", inplace=True)
+    df.sort_values(by=["sale_price", "estimate"], kind="mergesort", inplace=True)
     df.reset_index(drop=True, inplace=True)
     a_sorted, sp_sorted = df["estimate"], df["sale_price"]
     n: int = a_sorted.size
