@@ -79,3 +79,22 @@ class TestMetrics:
             "mki": False,
         }
         assert getattr(ap, f"{metric}_met")(metric_val) == expected[metric]
+
+def test_quintos_mki_ki_match():
+    """MKI and KI results should be identical regardless of estimate1/2/3."""
+    sample = ap.quintos_sample()
+    estimates = [sample["estimate1"], sample["estimate2"], sample["estimate3"]]
+    sales = sample["sale_price"]
+
+    # Compute MKI + KI for each estimate column
+    results = []
+    for est in estimates:
+        mki_val = ap.mki(est, sales)
+        ki_val = ap.ki(est, sales)
+        results.append((mki_val, ki_val))
+
+    # Use the first as reference and check all others match
+    ref_mki, ref_ki = results[0]
+    for i, (mki_val, ki_val) in enumerate(results[1:], start=2):
+        assert mki_val == ref_mki, f"MKI differs for estimate{i}"
+        assert ki_val == ref_ki, f"KI differs for estimate{i}"

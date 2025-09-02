@@ -24,7 +24,7 @@ def ccao_data() -> tuple:
 @pt.fixture(scope="session")
 def quintos_data() -> tuple:
     sample = ap.quintos_sample()
-    return sample.estimate, sample.sale_price
+    return sample.estimate1, sample.sale_price
 
 
 @pt.fixture(scope="session", params=["1_1", "1_4", "d_1", "d_2"])
