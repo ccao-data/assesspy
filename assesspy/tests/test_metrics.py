@@ -101,7 +101,7 @@ def test_quintos_metric_matches_across_estimates(metric):
         for c in ["estimate", "estimate1", "estimate2"]
         if c in sample.columns
     ]
-    
+
     sales = sample["sale_price"]
 
     # Use the first present estimate column as the reference
