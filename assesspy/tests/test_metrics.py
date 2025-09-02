@@ -89,13 +89,6 @@ def test_quintos_metric_matches_across_estimates(metric):
     on the ordering of estimates.
     """
     sample = ap.quintos_sample()
-    # Clean header whitespace/tabs just in case
-    sample.columns = sample.columns.astype(str).str.strip()
-
-    assert (
-        "sale_price" in sample.columns
-    ), "sale_price missing from quintos_sample"
-
     estimate_cols = [
         c
         for c in ["estimate", "estimate1", "estimate2"]
