@@ -216,7 +216,7 @@ def _calculate_gini(
         by=["sale_price", "estimate"],
         ascending=[True, False],
         kind="mergesort",
-        inplace=True
+        inplace=True,
     )
     df.reset_index(drop=True, inplace=True)
     a_sorted, sp_sorted = df["estimate"], df["sale_price"]

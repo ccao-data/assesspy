@@ -1,14 +1,13 @@
-import numpy as np
-import pandas as pd
 import random
-from pandas.api.types import is_numeric_dtype
-import math
 from typing import Union
 
-import statsmodels.api as sm
+import numpy as np
+import pandas as pd
+from pandas.api.types import is_numeric_dtype
 
-CCAO_LOWER_QUANTILE = .05
-CCAO_UPPER_QUANTILE = .95
+CCAO_LOWER_QUANTILE = 0.05
+CCAO_UPPER_QUANTILE = 0.95
+
 
 # Pulled from data architecture master
 def ccao_drop_outliers(
@@ -33,8 +32,8 @@ def ccao_drop_outliers(
     return estimate_no_outliers, sale_price_no_outliers, n
 
 
-
 # Copied from master
+
 
 def check_inputs(*args, check_gt_zero: bool = True) -> None:
     out_msg = [""]
@@ -59,7 +58,8 @@ def check_inputs(*args, check_gt_zero: bool = True) -> None:
     out_msg_set = set(out_msg)
     if len(out_msg_set) > 1:
         raise Exception("\n".join(out_msg_set))
-    
+
+
 def _calculate_gini(
     estimate: Union[list[int], list[float], pd.Series],
     sale_price: Union[list[int], list[float], pd.Series],
@@ -97,6 +97,7 @@ def _calculate_gini(
     gini_sale_price: float = g_sale_price / float(n)
 
     return gini_assessed, gini_sale_price
+
 
 def mki(
     estimate: Union[list[int], list[float], pd.Series],
@@ -152,15 +153,13 @@ def mki(
 
     return mki
 
+
 df = pd.read_csv("assesspy/data/test_data.csv")
 
 # Exported two datasets here with different random seeds and they were identical
 # There were no differences in the non-outliers
 df_1 = ccao_drop_outliers(df.fmv, df.sale_price)
-df_1 = pd.DataFrame({
-    'fmv': df_1[0],
-    'sale_price': df_1[1]
-})
+df_1 = pd.DataFrame({"fmv": df_1[0], "sale_price": df_1[1]})
 
 output = mki(df_1.fmv, df_1.sale_price)
 
