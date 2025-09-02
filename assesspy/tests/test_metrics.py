@@ -1,3 +1,4 @@
+import numpy as np
 import pytest as pt
 
 import assesspy as ap
@@ -79,3 +80,37 @@ class TestMetrics:
             "mki": False,
         }
         assert getattr(ap, f"{metric}_met")(metric_val) == expected[metric]
+
+
+@pt.mark.parametrize("metric", ["mki", "ki"])
+def test_quintos_metric_matches_across_estimates(metric):
+    """
+    For the quintos dataset, MKI/KI should be identical based
+    on the ordering of estimates.
+    """
+    sample = ap.quintos_sample()
+    # Clean header whitespace/tabs just in case
+    sample.columns = sample.columns.astype(str).str.strip()
+
+    assert (
+        "sale_price" in sample.columns
+    ), "sale_price missing from quintos_sample"
+
+    estimate_cols = [
+        c
+        for c in ["estimate", "estimate1", "estimate2"]
+        if c in sample.columns
+    ]
+    
+    sales = sample["sale_price"]
+
+    # Use the first present estimate column as the reference
+    ref_col = estimate_cols[0]
+    ref_val = getattr(ap, metric)(sample[ref_col], sales)
+
+    for col in estimate_cols[1:]:
+        val = getattr(ap, metric)(sample[col], sales)
+        assert np.isclose(val, ref_val, rtol=1e-9, atol=1e-12), (
+            f"{metric.upper()} differs between {ref_col} and {col}: "
+            f"{ref_val} vs {val}"
+        )
