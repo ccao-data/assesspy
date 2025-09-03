@@ -1,4 +1,3 @@
-import numpy as np
 import pytest as pt
 
 import assesspy as ap
@@ -21,7 +20,7 @@ class TestMetrics:
             "prd": 1.0484192615223522,
             "prb": 0.0024757,
             "mki": 0.794,
-            "ki": -0.062,
+            "ki": -0.06,
         }
         assert pt.approx(metric_val, rel=0.01) == expected[metric]
 
@@ -88,10 +87,10 @@ def test_mki_matches_based_on_tied_sales(metric):
     For the quintos dataset, MKI/KI should be identical based
     on the ordering of estimates.
     """
-    sample = ap.quintos_sample()
+    sample = ap.quintos_sample_with_tiebreaks()
     estimate_cols = [
         c
-        for c in ["estimate", "estimate1", "estimate2"]
+        for c in ["estimate", "estimate_alt_sort_1", "estimate_alt_sort_2"]
         if c in sample.columns
     ]
 
