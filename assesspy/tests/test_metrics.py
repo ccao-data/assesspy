@@ -83,7 +83,7 @@ class TestMetrics:
 
 
 @pt.mark.parametrize("metric", ["mki", "ki"])
-def test_quintos_metric_matches_across_estimates(metric):
+def test_mki_matches_based_on_tied_estimates(metric):
     """
     For the quintos dataset, MKI/KI should be identical based
     on the ordering of estimates.
