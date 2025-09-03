@@ -103,7 +103,7 @@ def test_mki_matches_based_on_tied_sales(metric):
 
     for col in estimate_cols[1:]:
         val = getattr(ap, metric)(sample[col], sales)
-        assert np.isclose(val, ref_val, rtol=1e-9, atol=1e-12), (
+        assert val == ref_val, (
             f"{metric.upper()} differs between {ref_col} and {col}: "
             f"{ref_val} vs {val}"
         )
