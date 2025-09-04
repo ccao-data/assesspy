@@ -96,7 +96,6 @@ def test_mki_matches_based_on_tied_sales(metric):
 
     sales = sample["sale_price"]
 
-    # Use the first present estimate column as the reference
     ref_col = estimate_cols[0]
     ref_val = getattr(ap, metric)(sample[ref_col], sales)
 

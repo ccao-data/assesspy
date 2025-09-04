@@ -1,3 +1,5 @@
+import pandas as pd
+
 from .ci import (
     boot_ci,
     cod_ci,
@@ -23,4 +25,3 @@ from .metrics import (
 )
 from .outliers import is_outlier
 from .sales_chasing import is_sales_chased
-import pandas as pd
