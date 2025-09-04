@@ -58,7 +58,7 @@ class TestMetrics:
             )
 
     @pt.fixture
-    def quintos_tie(self, metric):
+    def mki_tie(self, metric):
         if metric not in ("mki", "ki"):
             return None
 
@@ -82,7 +82,7 @@ class TestMetrics:
         return ref_val
 
     @pt.mark.parametrize("metric", ["mki", "ki"])
-    def test_quintos_tiebreaks_consistent(metric, quintos_tie):
+    def test_mki_tiebreaks_consistent(metric, mki_tie):
         assert True
 
     def test_metric_has_numeric_output(self, metric_val):
