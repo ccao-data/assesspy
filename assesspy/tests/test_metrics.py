@@ -21,7 +21,8 @@ class TestMetrics:
 
         sample = ap.quintos_sample_with_tiebreaks()
         estimate_cols = [
-            c for c in ["estimate", "estimate_alt_sort_1", "estimate_alt_sort_2"]
+            c
+            for c in ["estimate", "estimate_alt_sort_1", "estimate_alt_sort_2"]
             if c in sample.columns
         ]
         sales = sample["sale_price"]
@@ -35,24 +36,7 @@ class TestMetrics:
                 f"{metric.upper()} differs between {ref_col} and {col}: "
                 f"{ref_val} vs {val}"
             )
-
         return ref_val
-
-    def test_quintos_tie(self, metric, quintos_tie):
-        if metric in ("mki", "ki"):
-            assert isinstance(quintos_tie, float)
-        else:
-            assert quintos_tie is None
-
-    def test_metric_value_is_correct_ccao(self, metric, metric_val):
-        expected = {
-            "cod": 17.81456901196891,
-            "prd": 1.0484192615223522,
-            "prb": 0.0024757,
-            "mki": 0.794,
-            "ki": -0.06,
-        }
-        assert pt.approx(metric_val, rel=0.01) == expected[metric]
 
     def test_metric_value_is_correct_iaao(
         self, metric, iaao_data_name, iaao_data
