@@ -7,6 +7,7 @@ from .ci import (
 from .load_data import (
     ccao_sample,
     quintos_sample,
+    quintos_sample_with_tiebreaks,
 )
 from .metrics import (
     cod,
@@ -22,3 +23,4 @@ from .metrics import (
 )
 from .outliers import is_outlier
 from .sales_chasing import is_sales_chased
+import pandas as pd

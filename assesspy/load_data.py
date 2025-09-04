@@ -50,3 +50,25 @@ def quintos_sample() -> pd.DataFrame:
     source = files("assesspy").joinpath("data/quintos_sample.csv")
     with as_file(source) as file:
         return pd.read_csv(file)
+
+
+def quintos_sample_with_tiebreaks() -> pd.DataFrame:
+    """
+    Sample of sales and estimated market values modified to include tiebreak situations
+    :return:
+        A Pandas DataFrame with 30 observation and 4 variables:
+
+        ======================== =====================================================
+        **estimate** (`float`)       Assessed fair market value
+        **estimate_alt_sort_1** (`float`)  Alternative sort 1 for tiebreaks
+        **estimate_alt_sort_2** (`float`)  Alternative sort 2 for tiebreaks
+        **sale_price** (`float`)     Recorded sale price of this property
+        ======================== =====================================================
+
+    :rtype: pd.DataFrame
+    """
+    source = files("assesspy").joinpath(
+        "data/quintos_sample_with_tiebreaks.csv"
+    )
+    with as_file(source) as file:
+        return pd.read_csv(file)
