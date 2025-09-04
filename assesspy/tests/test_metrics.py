@@ -80,28 +80,37 @@ class TestMetrics:
         }
         assert getattr(ap, f"{metric}_met")(metric_val) == expected[metric]
 
-
-@pt.mark.parametrize("metric", ["mki", "ki"])
-def test_mki_matches_based_on_tied_sales(metric):
+@pt.fixture
+def compute_quintos_tie_equal():
     """
-    For the quintos dataset, MKI/KI should be identical based
-    on the ordering of estimates.
+    Compute MKI/KI for the quintos tiebreak sample and assert equality
+    across all estimate variants. Returns the common value.
     """
-    sample = ap.quintos_sample_with_tiebreaks()
-    estimate_cols = [
-        c
-        for c in ["estimate", "estimate_alt_sort_1", "estimate_alt_sort_2"]
-        if c in sample.columns
-    ]
+    def _compute(metric_name: str) -> float:
+        
+        sample = ap.quintos_sample_with_tiebreaks()
+        estimate_cols = [
+            c for c in ["estimate", "estimate_alt_sort_1", "estimate_alt_sort_2"]
+            if c in sample.columns
+        ]
+        sales = sample["sale_price"]
 
-    sales = sample["sale_price"]
+        ref_col = estimate_cols[0]
+        ref_val = getattr(ap, metric_name)(sample[ref_col], sales)
 
-    ref_col = estimate_cols[0]
-    ref_val = getattr(ap, metric)(sample[ref_col], sales)
+        for col in estimate_cols[1:]:
+            val = getattr(ap, metric_name)(sample[col], sales)
+            assert val == ref_val, (
+                f"{metric_name.upper()} differs between {ref_col} and {col}: "
+                f"{ref_val} vs {val}"
+            )
 
-    for col in estimate_cols[1:]:
-        val = getattr(ap, metric)(sample[col], sales)
-        assert val == ref_val, (
-            f"{metric.upper()} differs between {ref_col} and {col}: "
-            f"{ref_val} vs {val}"
-        )
+        return ref_val
+
+    return _compute
+
+
+@pt.mark.parametrize("metric_name", ["mki", "ki"])
+def test_quintos_tie_equal(compute_quintos_tie_equal, metric_name):
+    val = compute_quintos_tie_equal(metric_name)
+    assert isinstance(val, float)
