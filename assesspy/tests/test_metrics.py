@@ -24,30 +24,6 @@ class TestMetrics:
         }
         assert pt.approx(metric_val, rel=0.01) == expected[metric]
 
-    @pt.fixture
-    def quintos_tie(self, metric):
-        if metric not in ("mki", "ki"):
-            return None
-
-        sample = ap.quintos_sample_with_tiebreaks()
-        estimate_cols = [
-            c
-            for c in ["estimate", "estimate_alt_sort_1", "estimate_alt_sort_2"]
-            if c in sample.columns
-        ]
-        sales = sample["sale_price"]
-
-        ref_col = estimate_cols[0]
-        ref_val = getattr(ap, metric)(sample[ref_col], sales)
-
-        for col in estimate_cols[1:]:
-            val = getattr(ap, metric)(sample[col], sales)
-            assert val == ref_val, (
-                f"{metric.upper()} differs between {ref_col} and {col}: "
-                f"{ref_val} vs {val}"
-            )
-        return ref_val
-
     def test_metric_value_is_correct_iaao(
         self, metric, iaao_data_name, iaao_data
     ):
@@ -80,6 +56,34 @@ class TestMetrics:
             assert (
                 pt.approx(result, rel=0.02) == expected[iaao_data_name][metric]
             )
+
+    @pt.fixture
+    def quintos_tie(self, metric):
+        if metric not in ("mki", "ki"):
+            return None
+
+        sample = ap.quintos_sample_with_tiebreaks()
+        estimate_cols = [
+            c
+            for c in ["estimate", "estimate_alt_sort_1", "estimate_alt_sort_2"]
+            if c in sample.columns
+        ]
+        sales = sample["sale_price"]
+
+        ref_col = estimate_cols[0]
+        ref_val = getattr(ap, metric)(sample[ref_col], sales)
+
+        for col in estimate_cols[1:]:
+            val = getattr(ap, metric)(sample[col], sales)
+            assert val == ref_val, (
+                f"{metric.upper()} differs between {ref_col} and {col}: "
+                f"{ref_val} vs {val}"
+            )
+        return ref_val
+
+    @pt.mark.parametrize("metric", ["mki", "ki"])
+    def test_quintos_tiebreaks_consistent(metric, quintos_tie):
+        assert True
 
     def test_metric_has_numeric_output(self, metric_val):
         assert type(metric_val) is float
