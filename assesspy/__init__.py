@@ -1,5 +1,3 @@
-import pandas as pd
-
 from .ci import (
     boot_ci,
     cod_ci,
