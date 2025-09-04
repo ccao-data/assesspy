@@ -14,6 +14,36 @@ class TestMetrics:
             return getattr(ap, metric)(*quintos_data)
         return getattr(ap, metric)(*ccao_data)
 
+    @pt.fixture
+    def quintos_tie(self, metric):
+        if metric not in ("mki", "ki"):
+            return None
+
+        sample = ap.quintos_sample_with_tiebreaks()
+        estimate_cols = [
+            c for c in ["estimate", "estimate_alt_sort_1", "estimate_alt_sort_2"]
+            if c in sample.columns
+        ]
+        sales = sample["sale_price"]
+
+        ref_col = estimate_cols[0]
+        ref_val = getattr(ap, metric)(sample[ref_col], sales)
+
+        for col in estimate_cols[1:]:
+            val = getattr(ap, metric)(sample[col], sales)
+            assert val == ref_val, (
+                f"{metric.upper()} differs between {ref_col} and {col}: "
+                f"{ref_val} vs {val}"
+            )
+
+        return ref_val
+
+    def test_quintos_tie(self, metric, quintos_tie):
+        if metric in ("mki", "ki"):
+            assert isinstance(quintos_tie, float)
+        else:
+            assert quintos_tie is None
+
     def test_metric_value_is_correct_ccao(self, metric, metric_val):
         expected = {
             "cod": 17.81456901196891,
@@ -79,40 +109,3 @@ class TestMetrics:
             "mki": False,
         }
         assert getattr(ap, f"{metric}_met")(metric_val) == expected[metric]
-
-
-@pt.fixture
-def compute_quintos_tie_equal():
-    """
-    Compute MKI/KI for the quintos tiebreak sample and assert equality
-    across all estimate variants. Returns the common value.
-    """
-
-    def _compute(metric_name: str) -> float:
-        sample = ap.quintos_sample_with_tiebreaks()
-        estimate_cols = [
-            c
-            for c in ["estimate", "estimate_alt_sort_1", "estimate_alt_sort_2"]
-            if c in sample.columns
-        ]
-        sales = sample["sale_price"]
-
-        ref_col = estimate_cols[0]
-        ref_val = getattr(ap, metric_name)(sample[ref_col], sales)
-
-        for col in estimate_cols[1:]:
-            val = getattr(ap, metric_name)(sample[col], sales)
-            assert val == ref_val, (
-                f"{metric_name.upper()} differs between {ref_col} and {col}: "
-                f"{ref_val} vs {val}"
-            )
-
-        return ref_val
-
-    return _compute
-
-
-@pt.mark.parametrize("metric_name", ["mki", "ki"])
-def test_quintos_tie_equal(compute_quintos_tie_equal, metric_name):
-    val = compute_quintos_tie_equal(metric_name)
-    assert isinstance(val, float)
