@@ -26,6 +26,16 @@ def quintos_data() -> tuple:
     sample = ap.quintos_sample()
     return sample.estimate, sample.sale_price
 
+@pt.fixture(scope="session")
+def quintos_data_with_tiebreaks() -> tuple:
+    sample = ap.quintos_sample()
+    return (
+        sample.estimate,
+        sample.estimate_alt_sort_1,
+        sample.estimate_alt_sort_2,
+        sample.sale_price,
+    )
+
 
 @pt.fixture(scope="session", params=["1_1", "1_4", "d_1", "d_2"])
 def iaao_data_name(request):
