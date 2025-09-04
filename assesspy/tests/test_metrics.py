@@ -80,17 +80,19 @@ class TestMetrics:
         }
         assert getattr(ap, f"{metric}_met")(metric_val) == expected[metric]
 
+
 @pt.fixture
 def compute_quintos_tie_equal():
     """
     Compute MKI/KI for the quintos tiebreak sample and assert equality
     across all estimate variants. Returns the common value.
     """
+
     def _compute(metric_name: str) -> float:
-        
         sample = ap.quintos_sample_with_tiebreaks()
         estimate_cols = [
-            c for c in ["estimate", "estimate_alt_sort_1", "estimate_alt_sort_2"]
+            c
+            for c in ["estimate", "estimate_alt_sort_1", "estimate_alt_sort_2"]
             if c in sample.columns
         ]
         sales = sample["sale_price"]
