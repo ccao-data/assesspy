@@ -28,7 +28,7 @@ def quintos_data() -> tuple:
 
 @pt.fixture(scope="session")
 def quintos_data_with_tiebreaks() -> tuple:
-    sample = ap.quintos_sample()
+    sample = ap.quintos_sample_with_tiebreaks()
     return (
         sample.estimate,
         sample.estimate_alt_sort_1,
