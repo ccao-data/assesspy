@@ -26,6 +26,7 @@ def quintos_data() -> tuple:
     sample = ap.quintos_sample()
     return sample.estimate, sample.sale_price
 
+
 @pt.fixture(scope="session")
 def quintos_data_with_tiebreaks() -> tuple:
     sample = ap.quintos_sample_with_tiebreaks()
