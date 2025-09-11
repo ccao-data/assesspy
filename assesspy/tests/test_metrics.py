@@ -57,11 +57,6 @@ class TestMetrics:
                 pt.approx(result, rel=0.02) == expected[iaao_data_name][metric]
             )
 
-    @pt.fixture
-    def mki_tie(self, metric):
-        if metric not in ("mki", "ki"):
-            return None
-
     @pt.mark.parametrize("metric", ["mki", "ki"])
     def test_mki_tiebreaks_consistent(
         self, metric, quintos_data_with_tiebreaks
