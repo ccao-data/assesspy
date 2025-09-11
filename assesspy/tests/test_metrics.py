@@ -61,7 +61,7 @@ class TestMetrics:
     def mki_tie(self, metric):
         if metric not in ("mki", "ki"):
             return None
-
+# This block is just reformatting the data
         sample = ap.quintos_sample_with_tiebreaks()
         estimate_cols = [
             c
@@ -69,7 +69,7 @@ class TestMetrics:
             if c in sample.columns
         ]
         sales = sample["sale_price"]
-
+# This block here is testing the values
         ref_col = estimate_cols[0]
         ref_val = getattr(ap, metric)(sample[ref_col], sales)
 
@@ -80,9 +80,14 @@ class TestMetrics:
                 f"{ref_val} vs {val}"
             )
         return ref_val
+    
+    # We need to adapt the code above so that it's using the shape of the data in the quintos data with tiebreaks.
+    # Fixture just returns the data and we should just reference the column indexes rather than column names
+    # The parmetize should test the process and test the data
 
     @pt.mark.parametrize("metric", ["mki", "ki"])
-    def test_mki_tiebreaks_consistent(metric, mki_tie):
+    def test_mki_tiebreaks_consistent(metric, quintos_data_with_tiebreaks):
+        estimate_cols = [quintos_data_with_tiebreaks]
         assert True
 
     def test_metric_has_numeric_output(self, metric_val):
