@@ -72,7 +72,7 @@ class TestMetrics:
 # This block here is testing the values
         ref_col = estimate_cols[0]
         ref_val = getattr(ap, metric)(sample[ref_col], sales)
-
+# Assert calls should always be in the test functions
         for col in estimate_cols[1:]:
             val = getattr(ap, metric)(sample[col], sales)
             assert val == ref_val, (
@@ -84,6 +84,7 @@ class TestMetrics:
     # We need to adapt the code above so that it's using the shape of the data in the quintos data with tiebreaks.
     # Fixture just returns the data and we should just reference the column indexes rather than column names
     # The parmetize should test the process and test the data
+    # In this case we don't need the fixture in this file since its in conftest
 
     @pt.mark.parametrize("metric", ["mki", "ki"])
     def test_mki_tiebreaks_consistent(metric, quintos_data_with_tiebreaks):
