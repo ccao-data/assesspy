@@ -61,35 +61,26 @@ class TestMetrics:
     def mki_tie(self, metric):
         if metric not in ("mki", "ki"):
             return None
-# This block is just reformatting the data
-        sample = ap.quintos_sample_with_tiebreaks()
-        estimate_cols = [
-            c
-            for c in ["estimate", "estimate_alt_sort_1", "estimate_alt_sort_2"]
-            if c in sample.columns
-        ]
-        sales = sample["sale_price"]
-# This block here is testing the values
-        ref_col = estimate_cols[0]
-        ref_val = getattr(ap, metric)(sample[ref_col], sales)
-# Assert calls should always be in the test functions
-        for col in estimate_cols[1:]:
-            val = getattr(ap, metric)(sample[col], sales)
-            assert val == ref_val, (
-                f"{metric.upper()} differs between {ref_col} and {col}: "
-                f"{ref_val} vs {val}"
-            )
-        return ref_val
-    
-    # We need to adapt the code above so that it's using the shape of the data in the quintos data with tiebreaks.
-    # Fixture just returns the data and we should just reference the column indexes rather than column names
-    # The parmetize should test the process and test the data
-    # In this case we don't need the fixture in this file since its in conftest
 
     @pt.mark.parametrize("metric", ["mki", "ki"])
-    def test_mki_tiebreaks_consistent(metric, quintos_data_with_tiebreaks):
-        estimate_cols = [quintos_data_with_tiebreaks]
-        assert True
+    def test_mki_tiebreaks_consistent(
+        self, metric, quintos_data_with_tiebreaks
+    ):
+        sale_price, estimate, estimate_alt_sort_1, estimate_alt_sort_2 = (
+            quintos_data_with_tiebreaks
+        )
+        fn = getattr(ap, metric)
+
+        ref_val = fn(estimate, sale_price)
+
+        for idx, est in enumerate(
+            (estimate_alt_sort_1, estimate_alt_sort_2), start=1
+        ):
+            val = fn(est, sale_price)
+            assert val == ref_val, (
+                f"{metric.upper()} differs between estimate[0] and estimate_alt_sort_{idx}: "
+                f"{ref_val} vs {val}"
+            )
 
     def test_metric_has_numeric_output(self, metric_val):
         assert type(metric_val) is float

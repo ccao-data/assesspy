@@ -31,10 +31,10 @@ def quintos_data() -> tuple:
 def quintos_data_with_tiebreaks() -> tuple:
     sample = ap.quintos_sample_with_tiebreaks()
     return (
+        sample.sale_price,
         sample.estimate,
         sample.estimate_alt_sort_1,
         sample.estimate_alt_sort_2,
-        sample.sale_price,
     )
 
 
