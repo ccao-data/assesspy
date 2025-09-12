@@ -57,7 +57,7 @@ def quintos_sample_with_tiebreaks() -> pd.DataFrame:
     Modified version of the Quintos sample of sales and estimated market values
     that can be used to ensure that MKI/KI implementations are consistent when
     some sales have the same sale price but different estimates.
-    
+
     :return:
         A Pandas DataFrame with 30 observation and 4 variables:
 
