@@ -64,8 +64,8 @@ def quintos_sample_with_tiebreaks() -> pd.DataFrame:
         ======================== =====================================================
         **sale_price** (`float`)     Recorded sale price of this property
         **estimate** (`float`)       Assessed fair market value
-        **estimate_alt_sort_1** (`float`)  Alternative sort 1 for tiebreaks
-        **estimate_alt_sort_2** (`float`)  Alternative sort 2 for tiebreaks
+        **estimate_alt_sort_1** (`float`)  Alternative FMV sort 1 for testing tiebreaks
+        **estimate_alt_sort_2** (`float`)  Alternative FMV sort 2 for testing tiebreaks
         ======================== =====================================================
 
     :rtype: pd.DataFrame
