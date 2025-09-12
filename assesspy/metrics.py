@@ -211,8 +211,21 @@ def _calculate_gini(
         .reset_index(drop=True)
     )
     df = pd.concat([estimate, sale_price], axis=1)
-    # Mergesort is required for stable sort results
-    df.sort_values(by="sale_price", kind="mergesort", inplace=True)
+    # This Gini coefficient algorithm is sensitive to the order of the input
+    # observations: If multiple observations share the same sale price but have
+    # different estimates, the output coefficients will be different depending
+    # on which of the sales with identical prices gets ordered first in the
+    # input dataframe. To ensure a stable sort order, Quintos recommends
+    # sorting by ascending sale price and then by descending estimate to break
+    # any ties. This produces "worst case" MKI/KI statistics, but ensures those
+    # statistics are deterministic. See this issue for more discussion:
+    # https://github.com/ccao-data/assesspy/issues/33#issuecomment-3180632954
+    df.sort_values(
+        by=["sale_price", "estimate"],
+        ascending=[True, False],
+        kind="mergesort",
+        inplace=True,
+    )
     df.reset_index(drop=True, inplace=True)
     a_sorted, sp_sorted = df["estimate"], df["sale_price"]
     n: int = a_sorted.size

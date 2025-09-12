@@ -57,6 +57,26 @@ class TestMetrics:
                 pt.approx(result, rel=0.02) == expected[iaao_data_name][metric]
             )
 
+    @pt.mark.parametrize("metric", ["mki", "ki"])
+    def test_mki_tiebreaks_consistent(
+        self, metric, quintos_data_with_tiebreaks
+    ):
+        sale_price, estimate, estimate_alt_sort_1, estimate_alt_sort_2 = (
+            quintos_data_with_tiebreaks
+        )
+        fn = getattr(ap, metric)
+
+        ref_val = fn(estimate, sale_price)
+
+        for idx, est in enumerate(
+            (estimate_alt_sort_1, estimate_alt_sort_2), start=1
+        ):
+            val = fn(est, sale_price)
+            assert val == ref_val, (
+                f"{metric.upper()} differs between estimate[0] and estimate_alt_sort_{idx}: "
+                f"{ref_val} vs {val}"
+            )
+
     def test_metric_has_numeric_output(self, metric_val):
         assert type(metric_val) is float
 

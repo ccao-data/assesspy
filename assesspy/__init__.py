@@ -7,6 +7,7 @@ from .ci import (
 from .load_data import (
     ccao_sample,
     quintos_sample,
+    quintos_sample_with_tiebreaks,
 )
 from .metrics import (
     cod,
